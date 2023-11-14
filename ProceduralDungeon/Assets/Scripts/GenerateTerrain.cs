@@ -8,7 +8,7 @@ public class GenerateTerrain : MonoBehaviour
 {
    [Header("Terrain Parameters")]
    [SerializeField] private Vector2 terrainDimensions = new (50, 50);
-   //[SerializeField] [Range(1,10)] int subdivisionLevel = 1; //TODO : Subdivision
+   [SerializeField] [Range(1,10)] int subdivisionLevel = 1; //TODO : Subdivision
    [SerializeField] private Transform terrainTransform;
    
    [SerializeField] private List<TileSO> Layers = new ();
@@ -28,9 +28,9 @@ public class GenerateTerrain : MonoBehaviour
       Mesh mesh = new Mesh();
       meshFilter.mesh = mesh;
       meshFilter.sharedMesh.name = "ME_Terrain_01";
-      mesh.vertices = UtilsToolTerrain.GenerateTerrainVertices(terrainDimensions);
-      mesh.triangles = UtilsToolTerrain.GenerateTerrainTriangles(terrainDimensions);
-      mesh.uv = UtilsToolTerrain.GenerateTerrainUVs(terrainDimensions);
+      mesh.vertices = UtilsToolTerrain.GenerateSimpleFloorVertices(terrainDimensions);
+      mesh.triangles = UtilsToolTerrain.GenerateSimpleFloorTriangles();
+      mesh.uv = UtilsToolTerrain.GenerateSimpleFloorUV(terrainDimensions);
       mesh.RecalculateNormals();
       
       //RendererPart
