@@ -49,6 +49,11 @@ public class GenerateTerrain : MonoBehaviour
         int min = (positions.Count < so.numMinGenerated) ? positions.Count : so.numMinGenerated;
 
         numToUse = Random.Range(min, numToUse + 1);
+        GameObject goP = new GameObject
+        {
+            name = Wall.type.ToString()
+        };
+        
         for (int i = 0; i < numToUse; i++)
         {
             int index = Random.Range(0, positions.Count);
@@ -57,15 +62,15 @@ public class GenerateTerrain : MonoBehaviour
             mapData[pos.x, pos.y] = (int)so.type;
             positions.RemoveAt(index);
 
-            GameObject tile = Instantiate(so.tilePrefab, transform);
+            GameObject tile = Instantiate(so.tilePrefab, goP.transform);
             tile.transform.position = new Vector3(pos.x, 0.1f, pos.y);
             tile.GetComponent<Renderer>().material = so.color2D;
         }
     }
 
-    public void GenerateWall(Vector2Int pos)
+    public void GenerateWall(Vector2Int pos, Transform goP)
     {
-        GameObject go = Instantiate(Wall.tilePrefab, transform);
+        GameObject go = Instantiate(Wall.tilePrefab, goP.transform);
         go.transform.position = new Vector3(pos.x, 0.1f, pos.y);
         go.GetComponent<Renderer>().material = Wall.color2D;
     }
@@ -78,9 +83,14 @@ public class GenerateTerrain : MonoBehaviour
         UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions,
             ref  unavailablePositions);
 
+        GameObject goP = new GameObject
+        {
+            name = Wall.type.ToString()
+        };
+
         for (int i = 0; i < unavailablePositions.Count; i++)
         {
-            GenerateWall(unavailablePositions[i]);
+            GenerateWall(unavailablePositions[i], goP.transform);
         }
 
         List<Vector2Int> ValidPositions = new List<Vector2Int>();

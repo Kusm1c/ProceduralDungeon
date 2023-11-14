@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <tilePrefab>k__BackingField: {fileID: 3686948791130865070, guid: 8cc6e48c263fd2040b9e5820979f9dae,
     type: 3}
-  <numMaxGenerated>k__BackingField: 9999
-  <numMinGenerated>k__BackingField: 2140
-  <type>k__BackingField: 2
+  <numMaxGenerated>k__BackingField: 40
+  <numMinGenerated>k__BackingField: 30
+  <type>k__BackingField: 3
   <conditions>k__BackingField:
   - type: 1
     possibility: 0
