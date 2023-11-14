@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.AI.Navigation;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -41,6 +42,14 @@ public class GenerateTerrain : MonoBehaviour
     {
         GenerateTerrainMesh();
         GenerateData();
+        BuildNavMesh();
+        PlayerManager.instance.SpawnPlayer();
+    }
+
+    private void BuildNavMesh()
+    {
+        NavMeshSurface navMeshSurface = terrainRef.GetComponent<NavMeshSurface>();
+        navMeshSurface.BuildNavMesh();
     }
 
     private GameObject GenerateTile(GameObject prefab, Transform parent, Vector3 pos, Material _mat)
@@ -173,9 +182,18 @@ public class GenerateTerrain : MonoBehaviour
         meshRenderer.sharedMaterial.SetColor(pathLineColorInShader, lineColor);
        
         terrainRef = terrain;
+        
+        //Setup terrain Collider
+        terrain.AddComponent<MeshCollider>();
+        MeshCollider meshCollider = terrain.GetComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;
+        
+        //NavMesh
+        terrain.AddComponent<NavMeshSurface>();
     }
     
-   [ContextMenu("Update Terrain Material")]
+
+    [ContextMenu("Update Terrain Material")]
    public void UpdateMaterial()
    {
        MeshRenderer meshRenderer = terrainRef.GetComponent<MeshRenderer>();
