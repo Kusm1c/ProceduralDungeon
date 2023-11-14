@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c78ea971585e54cb2e3cd93993463b, type: 3}
   m_Name: Lava
   m_EditorClassIdentifier: 
-  <tilePrefab>k__BackingField: {fileID: 0}
-  <numMaxGenerated>k__BackingField: 12
+  <tilePrefab>k__BackingField: {fileID: 3686948791130865070, guid: 8cc6e48c263fd2040b9e5820979f9dae,
+    type: 3}
+  <numMaxGenerated>k__BackingField: 1
   <type>k__BackingField: 2
   <conditions>k__BackingField:
   - type: 1
@@ -26,6 +27,6 @@ MonoBehaviour:
     possibility: 0
     position: 3
   - type: 1
-    possibility: 1
+    possibility: 0
     position: 2
   <color2D>k__BackingField: {r: 1, g: 0, b: 0, a: 0}

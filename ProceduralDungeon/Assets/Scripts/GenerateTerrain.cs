@@ -1,34 +1,32 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GenerateTerrain : MonoBehaviour
 {
     [Header("Terrain Parameters")] [SerializeField]
-    private Vector2Int terrainDimensions = new(50, 50);
+    private Vector2Int terrainDimensions;
 
     [SerializeField] private GameObject terrainPrefab;
 
-    [SerializeField] private List<TileSO> Layers = new();
+    [Header("Terrain data")] [SerializeField]
+    private List<TileSO> Layers = new();
+
+    [Header("Random parameters")] [SerializeField] [Range(1, 10000)]
+    int worldSeed = 1;
+
+    [SerializeField] bool useRandomSeed = false;
+
 
     private float[,] mapData;
     private List<Vector2Int> AvailablePositions = new();
-    [SerializeField] [Range(1, 10000)] int worldSeed = 1;
+    private Random.State stateBeforeStep3;
 
-    private bool CheckAllConditions(TileSO so, Vector2Int position)
+    private void Start()
     {
-        for (int i = 0; i < so.conditions.Count; i++)
-        {
-            if (!CheckCondition(so.conditions[i], so, position)) return false;
-        }
-
-        return true;
-    }
-
-    private bool CheckMustOrNot(Vector2Int pos, Type type, bool isMust)
-    {
-        bool cond = mapData[pos.x, pos.y] == (int)type;
-        return (isMust) ? cond : !cond;
+        GenerateTerrainMesh();
     }
 
     private void ChoosePosToUse(TileSO so, List<Vector2Int> positions)
@@ -36,7 +34,6 @@ public class GenerateTerrain : MonoBehaviour
         int numToUse = (positions.Count > so.numMaxGenerated) ? so.numMaxGenerated : positions.Count;
 
         numToUse = Random.Range(1, numToUse + 1);
-
         for (int i = 0; i < numToUse; i++)
         {
             int index = Random.Range(0, positions.Count);
@@ -44,36 +41,16 @@ public class GenerateTerrain : MonoBehaviour
             AvailablePositions.Remove(pos);
             mapData[pos.x, pos.y] = (int)so.type;
             positions.RemoveAt(index);
+
+            GameObject tile = Instantiate(so.tilePrefab, transform);
+            tile.transform.position = new Vector3(pos.x, 0.1f, pos.y);
         }
-    }
-
-    private bool CheckCondition(Condition soCondition, TileSO so, Vector2Int pos)
-    {
-        TileSO tile = Layers.Find(x => x.type == soCondition.type);
-
-        Vector2Int posCond = (soCondition.position == Position.Top && pos.y < terrainDimensions.y - 1)
-            ?
-            pos + Vector2Int.up
-            :
-            (soCondition.position == Position.Bottom && pos.y > 0)
-                ? pos + Vector2Int.down
-                :
-                (soCondition.position == Position.Left && pos.x > 0)
-                    ? pos + Vector2Int.left
-                    :
-                    (soCondition.position == Position.Right && pos.x < terrainDimensions.x - 1)
-                        ? pos + Vector2Int.right
-                        :
-                        pos;
-
-        return (soCondition.possibility == Possibility.Must) ? CheckMustOrNot(posCond, soCondition.type, true) :
-            (soCondition.possibility == Possibility.MustNot) ? CheckMustOrNot(posCond, soCondition.type, false) :
-            throw new System.Exception("Error");
     }
 
     private void GenerateData()
     {
-        Random.InitState(worldSeed);
+        if (!useRandomSeed)
+            Random.InitState(worldSeed);
         UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions);
 
         List<Vector2Int> ValidPositions = new List<Vector2Int>();
@@ -83,7 +60,7 @@ public class GenerateTerrain : MonoBehaviour
             ValidPositions.Clear();
             for (int j = 0; j < AvailablePositions.Count; j++)
             {
-                if (CheckAllConditions(Layers[i], AvailablePositions[j]))
+                if (UtilsTerrainData.CheckAllConditions(Layers, i, AvailablePositions[j], terrainDimensions, mapData))
                     ValidPositions.Add(AvailablePositions[j]);
             }
 
@@ -94,6 +71,13 @@ public class GenerateTerrain : MonoBehaviour
     [ContextMenu("Generate Terrain")]
     private void GenerateTerrainMesh()
     {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+            DestroyImmediate(child);
+            i--;
+        }
+
         GameObject terrain = Instantiate(terrainPrefab, transform);
         terrain.name = "Terrain";
         MeshFilter meshFilter = terrain.GetComponent<MeshFilter>();
