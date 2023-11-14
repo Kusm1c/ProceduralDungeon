@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class GenerateTerrain : MonoBehaviour
 {
    [Header("Terrain Parameters")]
-   [SerializeField] private Vector2Int terrainDimensions;
+   [HideInInspector] [SerializeField] private Vector2Int terrainDimensions;
    [SerializeField] private Transform terrainTransform;
    [SerializeField] private Transform cameraLaveRT;
    [SerializeField] private TileSO Wall;
@@ -35,6 +35,7 @@ public class GenerateTerrain : MonoBehaviour
    private float[,] mapData;
    private List<Vector2Int> AvailablePositions = new();
    private Random.State stateBeforeStep3;
+   [HideInInspector] [SerializeField] private bool regenerateAtRuntime = false; 
    
    private Dictionary<int, TileSO> _dicTileSO = new ();
 
@@ -46,7 +47,7 @@ public class GenerateTerrain : MonoBehaviour
         BuildNavMesh();
         PlayerManager.instance.SpawnPlayer();
     }
-
+    
     private void BuildNavMesh()
     {
         NavMeshSurface navMeshSurface = terrainRef.GetComponent<NavMeshSurface>();
