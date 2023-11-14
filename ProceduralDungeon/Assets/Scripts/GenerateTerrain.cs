@@ -101,7 +101,7 @@ public class GenerateTerrain : MonoBehaviour
 
         //Setup Shader 
         meshRenderer.sharedMaterial.SetFloat(pathThicknessInShader, thicknessParam);
-        //meshRenderer.sharedMaterial.SetVector(pathTilingInShader, terrainDimensions);
+        meshRenderer.sharedMaterial.SetVector(pathTilingInShader, new Vector4(terrainDimensions.x, terrainDimensions.y, 0, 0));
         meshRenderer.sharedMaterial.SetColor(pathGridColorInShader, gridColor);
         meshRenderer.sharedMaterial.SetColor(pathLineColorInShader, lineColor);
        
@@ -113,8 +113,8 @@ public class GenerateTerrain : MonoBehaviour
    {
        MeshRenderer meshRenderer = terrainRef.GetComponent<MeshRenderer>();
        meshRenderer.sharedMaterial.SetFloat(pathThicknessInShader, thicknessParam);
-       //meshRenderer.sharedMaterial.SetVector(pathTilingInShader, terrainDimensions);
-       //meshRenderer.sharedMaterial.SetColor(pathGridColorInShader, gridColor);
+       meshRenderer.sharedMaterial.SetVector(pathTilingInShader, new Vector4(terrainDimensions.x, terrainDimensions.y, 0, 0));
+       meshRenderer.sharedMaterial.SetColor(pathGridColorInShader, gridColor);
        meshRenderer.sharedMaterial.SetColor(pathLineColorInShader, lineColor);
    }
 }
