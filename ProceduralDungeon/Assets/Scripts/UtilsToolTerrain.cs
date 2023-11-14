@@ -106,4 +106,18 @@ public static class UtilsToolTerrain
         int[] triangles = clockwise ? new int[] { 0, 2, 1, 0, 3, 2 } : new int[] { 0, 1, 2, 0, 2, 3 };
         return triangles;
     }
+
+    public static void InitData(ref float[,] mapData, ref List<Vector2Int> generatedPositions, Vector2Int size)
+    {
+        mapData = new float[size.x, size.y];
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int y = 0; y < size.y; y++)
+            {
+                mapData[x, y] = (y == 0 || y == size.y - 1 || x == 0 || x == size.x - 1) ? (float)Type.Wall : 0.0f;
+                if (mapData[x, y] == 0.0f)
+                    generatedPositions.Add(new Vector2Int(x, y));
+            }
+        }
+    }
 }

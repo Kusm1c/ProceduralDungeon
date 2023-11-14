@@ -1,5 +1,5 @@
 ﻿public enum Possibility
 {
-    MustNot,
+    MustNot = 0,
     Must,
 }
