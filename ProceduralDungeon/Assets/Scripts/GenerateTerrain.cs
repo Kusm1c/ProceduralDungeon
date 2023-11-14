@@ -34,6 +34,8 @@ public class GenerateTerrain : MonoBehaviour
    private float[,] mapData;
    private List<Vector2Int> AvailablePositions = new();
    private Random.State stateBeforeStep3;
+   
+   private Dictionary<int, TileSO> _dicTileSO = new ();
 
     private void Start()
     {
@@ -73,19 +75,48 @@ public class GenerateTerrain : MonoBehaviour
         }
     }
 
+    public void Generate3DWorld()
+    {
+        for (int i = 0; i < terrainDimensions.y; i++)
+        {
+            for (int j = 0; j < terrainDimensions.x; j++)
+            {
+                TileSO so = _dicTileSO[(int)mapData[j, i]];
+                if (so.Model3D_S1.Count > 0)
+                {
+                    int index = Random.Range(0, so.Model3D_S1.Count);
+                    GameObject go = Instantiate(so.Model3D_S1[index], transform);
+                    go.transform.position = new Vector3(j, 0, i);
+                }
+            }
+        }
+    }
+    
     public void GenerateData()
     {
+        AvailablePositions.Clear();
         if (!useRandomSeed)
             Random.InitState(worldSeed);
         List<Vector2Int> unavailablePositions = new List<Vector2Int>();
         UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions,
             ref  unavailablePositions);
+        
+        Debug.Log("Initial mapData values:");
+        for (int y = 0; y < terrainDimensions.y; y++)
+        {
+            for (int x = 0; x < terrainDimensions.x; x++)
+            {
+                Debug.Log($"mapData[{y}, {x}] = {mapData[y, x]}");
+            }
+        }
 
         GameObject goP = new GameObject
         {
             name = Wall.type.ToString()
         };
         goP.transform.parent = transform;
+        
+        //_dicTileSO.Add((int)Wall.type, Wall);
 
         for (int i = 0; i < unavailablePositions.Count; i++)
         {
@@ -98,12 +129,12 @@ public class GenerateTerrain : MonoBehaviour
         for (int i = 0; i < Layers.Count; i++)
         {
             ValidPositions.Clear();
+            //_dicTileSO.Add((int)Layers[i].type, Layers[i]);
             for (int j = 0; j < AvailablePositions.Count; j++)
             {
                 if (UtilsTerrainData.CheckAllConditions(Layers, i, AvailablePositions[j], terrainDimensions, mapData))
                     ValidPositions.Add(AvailablePositions[j]);
             }
-
             ChoosePosToUse(Layers[i], ValidPositions);
         }
     }

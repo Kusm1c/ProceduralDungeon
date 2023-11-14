@@ -1,25 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(GenerateTerrain))]
 public class GenerateTerrainEditor : Editor
 {
-    public override void OnInspectorGUI() {
+    SerializedProperty terrainDimensionsProp;
+
+    private void OnEnable()
+    {
+        terrainDimensionsProp = serializedObject.FindProperty("terrainDimensions");
+    }
+
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
         base.OnInspectorGUI();
-        GenerateTerrain terrain = (GenerateTerrain) target;
-        if(GUILayout.Button("Generate Terrain"))
+
+        GenerateTerrain terrain = (GenerateTerrain)target;
+
+        if (GUILayout.Button("Generate Terrain"))
         {
             terrain.GenerateTerrainMesh();
         }
-        
-        if(GUILayout.Button("Generate Terrain Data"))
+
+        if (GUILayout.Button("Generate Terrain Data"))
         {
+            serializedObject.ApplyModifiedProperties();
+
             terrain.GenerateData();
+            EditorUtility.SetDirty(terrain);
         }
-        
-        if(GUILayout.Button("Update Terrain Material"))
+
+        if (GUILayout.Button("Update Terrain Material"))
         {
             terrain.UpdateMaterial();
             Debug.Log("Update Material");
