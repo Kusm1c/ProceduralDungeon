@@ -57,8 +57,9 @@ public class GenerateTerrain : MonoBehaviour
         numToUse = Random.Range(min, numToUse + 1);
         GameObject goP = new GameObject
         {
-            name = Wall.type.ToString()
+            name = so.type.ToString()
         };
+        goP.transform.parent = transform;
         
         for (int i = 0; i < numToUse; i++)
         {
@@ -72,7 +73,7 @@ public class GenerateTerrain : MonoBehaviour
         }
     }
 
-    private void GenerateData()
+    public void GenerateData()
     {
         if (!useRandomSeed)
             Random.InitState(worldSeed);
@@ -84,6 +85,7 @@ public class GenerateTerrain : MonoBehaviour
         {
             name = Wall.type.ToString()
         };
+        goP.transform.parent = transform;
 
         for (int i = 0; i < unavailablePositions.Count; i++)
         {

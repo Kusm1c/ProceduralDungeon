@@ -14,6 +14,11 @@ public class GenerateTerrainEditor : Editor
             terrain.GenerateTerrainMesh();
         }
         
+        if(GUILayout.Button("Generate Terrain Data"))
+        {
+            terrain.GenerateData();
+        }
+        
         if(GUILayout.Button("Update Terrain Material"))
         {
             terrain.UpdateMaterial();
