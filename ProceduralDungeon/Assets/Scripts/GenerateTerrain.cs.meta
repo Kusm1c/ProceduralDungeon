@@ -6,6 +6,7 @@ MonoImporter:
   defaultReferences:
   - terrainTransform: {fileID: 9201668891353074973, guid: 1410e84462789fa45adb42e95d5024fc,
       type: 3}
+  - terrainRef: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

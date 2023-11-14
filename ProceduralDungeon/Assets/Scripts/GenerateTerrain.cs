@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class GenerateTerrain : MonoBehaviour
 {
    [Header("Terrain Parameters")]
-   [SerializeField] private Vector2 terrainDimensions;
+   [SerializeField] private Vector2Int terrainDimensions;
    [SerializeField] private Transform terrainTransform;
    [SerializeField] private List<TileSO> Layers = new ();
    [Header("Shader Parameters")]
@@ -20,35 +20,16 @@ public class GenerateTerrain : MonoBehaviour
    private string pathGridColorInShader = "_GridColor";
    private string pathLineColorInShader = "_LineColor";
    [HideInInspector]public GameObject terrainRef;
+   
+   [Header("Random parameters")]
+   [SerializeField] [Range(1, 10000)] int worldSeed = 1;
+
+   [SerializeField] bool useRandomSeed = false;
 
 
-   [ContextMenu("Generate Terrain")]
-   public void GenerateTerrainMesh()
-   {
-       //Get Transform
-       GameObject terrain = Instantiate(terrainTransform.gameObject, transform);
-       terrain.name = "Terrain";
-
-       //VAO Component
-       terrain.AddComponent<MeshFilter>();
-       MeshFilter meshFilter = terrain.GetComponent<MeshFilter>();
-       Mesh mesh = new Mesh();
-       meshFilter.mesh = mesh;
-       meshFilter.sharedMesh.name = "ME_Terrain_01";
-       mesh.vertices = UtilsToolTerrain.GenerateSimpleFloorVertices(terrainDimensions);
-       mesh.triangles = UtilsToolTerrain.GenerateSimpleFloorTriangles();
-       mesh.uv = UtilsToolTerrain.GenerateSimpleFloorUV(terrainDimensions);
-       mesh.RecalculateNormals();
-
-    [Header("Random parameters")] [SerializeField] [Range(1, 10000)]
-    int worldSeed = 1;
-
-    [SerializeField] bool useRandomSeed = false;
-
-
-    private float[,] mapData;
-    private List<Vector2Int> AvailablePositions = new();
-    private Random.State stateBeforeStep3;
+   private float[,] mapData;
+   private List<Vector2Int> AvailablePositions = new();
+   private Random.State stateBeforeStep3;
 
     private void Start()
     {
@@ -93,49 +74,46 @@ public class GenerateTerrain : MonoBehaviour
             ChoosePosToUse(Layers[i], ValidPositions);
         }
     }
-
+    
     [ContextMenu("Generate Terrain")]
-    private void GenerateTerrainMesh()
+    public void GenerateTerrainMesh()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            GameObject child = transform.GetChild(i).gameObject;
-            DestroyImmediate(child);
-            i--;
-        }
-
-        GameObject terrain = Instantiate(terrainPrefab, transform);
+        //Get Transform
+        GameObject terrain = Instantiate(terrainTransform.gameObject, transform);
         terrain.name = "Terrain";
+
+        //VAO Component
+        terrain.AddComponent<MeshFilter>();
         MeshFilter meshFilter = terrain.GetComponent<MeshFilter>();
         Mesh mesh = new Mesh();
         meshFilter.mesh = mesh;
-        mesh.vertices = UtilsToolTerrain.GenerateTerrainVertices(terrainDimensions);
-        mesh.triangles = UtilsToolTerrain.GenerateTerrainTriangles(terrainDimensions);
-        mesh.uv = UtilsToolTerrain.GenerateTerrainUVs(terrainDimensions);
+        meshFilter.sharedMesh.name = "ME_Terrain_01";
+        mesh.vertices = UtilsToolTerrain.GenerateSimpleFloorVertices(terrainDimensions);
+        mesh.triangles = UtilsToolTerrain.GenerateSimpleFloorTriangles();
+        mesh.uv = UtilsToolTerrain.GenerateSimpleFloorUV(terrainDimensions);
         mesh.RecalculateNormals();
-        GenerateData();
+       
+        //RendererPart
+        terrain.AddComponent<MeshRenderer>();
+        MeshRenderer meshRenderer = terrain.GetComponent<MeshRenderer>();
+        meshRenderer.sharedMaterial = new Material(Shader.Find(pathFloorShader));
+        meshRenderer.sharedMaterial.name = "M_Terrain_01";
+
+        //Setup Shader 
+        meshRenderer.sharedMaterial.SetFloat(pathThicknessInShader, thicknessParam);
+        //meshRenderer.sharedMaterial.SetVector(pathTilingInShader, terrainDimensions);
+        meshRenderer.sharedMaterial.SetColor(pathGridColorInShader, gridColor);
+        meshRenderer.sharedMaterial.SetColor(pathLineColorInShader, lineColor);
+       
+        terrainRef = terrain;
     }
-       //RendererPart
-       terrain.AddComponent<MeshRenderer>();
-       MeshRenderer meshRenderer = terrain.GetComponent<MeshRenderer>();
-       meshRenderer.sharedMaterial = new Material(Shader.Find(pathFloorShader));
-       meshRenderer.sharedMaterial.name = "M_Terrain_01";
-
-       //Setup Shader 
-       meshRenderer.sharedMaterial.SetFloat(pathThicknessInShader, thicknessParam);
-       meshRenderer.sharedMaterial.SetVector(pathTilingInShader, terrainDimensions);
-       meshRenderer.sharedMaterial.SetColor(pathGridColorInShader, gridColor);
-       meshRenderer.sharedMaterial.SetColor(pathLineColorInShader, lineColor);
-
-       terrainRef = terrain;
-   }
-   
+    
    [ContextMenu("Update Terrain Material")]
    public void UpdateMaterial()
    {
        MeshRenderer meshRenderer = terrainRef.GetComponent<MeshRenderer>();
        meshRenderer.sharedMaterial.SetFloat(pathThicknessInShader, thicknessParam);
-       meshRenderer.sharedMaterial.SetVector(pathTilingInShader, terrainDimensions);
+       //meshRenderer.sharedMaterial.SetVector(pathTilingInShader, terrainDimensions);
        //meshRenderer.sharedMaterial.SetColor(pathGridColorInShader, gridColor);
        meshRenderer.sharedMaterial.SetColor(pathLineColorInShader, lineColor);
    }
