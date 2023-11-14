@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ADBannerView = UnityEngine.iOS.ADBannerView;
 
 public static class UtilsToolTerrain
 {
@@ -59,5 +60,18 @@ public static class UtilsToolTerrain
         }
 
         return vertices;
+    }
+    
+    public static void InitData(ref float[,] mapData, ref List<Vector2Int> generatedPositions, Vector2Int size)
+    {
+        mapData = new float[size.x, size.y];
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int y = 0; y < size.y; y++)
+            {
+                mapData[x, y] = (y == 0 || y == size.y - 1 || x == 0 || x == size.x - 1) ? (float)Type.Wall : 0;
+                generatedPositions.Add(new Vector2Int(x, y));
+            }
+        }
     }
 }

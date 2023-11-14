@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TileSO", menuName = "ScriptableObjects/TileSO", order = 1)]
 public class TileSO : ScriptableObject
 {
-    [SerializeField] private GameObject tilePrefab;
-    [SerializeField] private int numMaxGenerated;
-    [SerializeField] private Type type;
-    [SerializeField] private List<Condition> conditions;
-    [SerializeField] private Color color2D;
+    [field:SerializeField] public GameObject tilePrefab{ get; private set; }
+    [field:SerializeField] public int numMaxGenerated{ get; private set; }
+    [field:SerializeField] public Type type{ get; private set; }
+    [field:SerializeField] public List<Condition> conditions { get; private set; }
+    [field:SerializeField] public Color color2D{ get; private set; }
 }
