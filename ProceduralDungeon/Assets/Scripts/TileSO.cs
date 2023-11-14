@@ -9,4 +9,5 @@ public class TileSO : ScriptableObject
     [SerializeField] private int numMaxGenerated;
     [SerializeField] private Type type;
     [SerializeField] private List<Condition> conditions;
+    [SerializeField] private Color color2D;
 }
