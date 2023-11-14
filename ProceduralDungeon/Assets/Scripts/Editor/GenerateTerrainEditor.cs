@@ -39,6 +39,7 @@ public class GenerateTerrainEditor : Editor
             {
                 terrain.GenerateTerrainMesh();
                 terrain.GenerateData();
+                terrain.BuildNavMesh();
                 EditorUtility.SetDirty(terrain);
             }
         }
@@ -58,6 +59,12 @@ public class GenerateTerrainEditor : Editor
         if (GUILayout.Button("Update Terrain Material"))
         {
             terrain.UpdateMaterial();
+            Debug.Log("Update Material");
+        } 
+        
+        if (GUILayout.Button("Build Nav Mesh"))
+        {
+            terrain.BuildNavMesh();
             Debug.Log("Update Material");
         }
 

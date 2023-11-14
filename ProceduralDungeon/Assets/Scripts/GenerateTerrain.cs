@@ -48,7 +48,7 @@ public class GenerateTerrain : MonoBehaviour
         PlayerManager.instance.SpawnPlayer();
     }
     
-    private void BuildNavMesh()
+    public void BuildNavMesh()
     {
         NavMeshSurface navMeshSurface = terrainRef.GetComponent<NavMeshSurface>();
         navMeshSurface.BuildNavMesh();
