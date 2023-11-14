@@ -42,6 +42,7 @@ public class GenerateTerrain : MonoBehaviour
     {
         GenerateTerrainMesh();
         GenerateData();
+        Generate3DWorld();
         BuildNavMesh();
         PlayerManager.instance.SpawnPlayer();
     }
@@ -86,38 +87,41 @@ public class GenerateTerrain : MonoBehaviour
 
     public void Generate3DWorld()
     {
-        for (int i = 0; i < terrainDimensions.y; i++)
+        for (int y = 0; y < terrainDimensions.y; y++)
         {
-            for (int j = 0; j < terrainDimensions.x; j++)
+            for (int x = 0; x < terrainDimensions.x; x++)
             {
-                TileSO so = _dicTileSO[(int)mapData[j, i]];
+                _dicTileSO.TryGetValue((int)mapData[x, y], out TileSO so);
+                if (so == null) continue;
                 if (so.Model3D_S1.Count > 0)
                 {
                     int index = Random.Range(0, so.Model3D_S1.Count);
                     GameObject go = Instantiate(so.Model3D_S1[index], transform);
-                    go.transform.position = new Vector3(j, 0, i);
+                    go.transform.position = new Vector3(x, go.transform.localScale.y/2f, y);
+                    if (x == 0 || x == terrainDimensions.x - 1)
+                        go.transform.Rotate(Vector3.up, 90);
                 }
+
             }
         }
+    }
+
+    private void ResetData()
+    {
+        AvailablePositions.Clear();
+        _dicTileSO.Clear();
+        mapData = new float[terrainDimensions.x, terrainDimensions.y];
     }
     
     public void GenerateData()
     {
-        AvailablePositions.Clear();
+        ResetData();
+        
         if (!useRandomSeed)
             Random.InitState(worldSeed);
         List<Vector2Int> unavailablePositions = new List<Vector2Int>();
         UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions,
             ref  unavailablePositions);
-        
-        Debug.Log("Initial mapData values:");
-        for (int y = 0; y < terrainDimensions.y; y++)
-        {
-            for (int x = 0; x < terrainDimensions.x; x++)
-            {
-                Debug.Log($"mapData[{y}, {x}] = {mapData[y, x]}");
-            }
-        }
 
         GameObject goP = new GameObject
         {
@@ -125,7 +129,7 @@ public class GenerateTerrain : MonoBehaviour
         };
         goP.transform.parent = transform;
         
-        //_dicTileSO.Add((int)Wall.type, Wall);
+        _dicTileSO.Add((int)Wall.type, Wall);
 
         for (int i = 0; i < unavailablePositions.Count; i++)
         {
@@ -138,7 +142,7 @@ public class GenerateTerrain : MonoBehaviour
         for (int i = 0; i < Layers.Count; i++)
         {
             ValidPositions.Clear();
-            //_dicTileSO.Add((int)Layers[i].type, Layers[i]);
+            _dicTileSO.Add((int)Layers[i].type, Layers[i]);
             for (int j = 0; j < AvailablePositions.Count; j++)
             {
                 if (UtilsTerrainData.CheckAllConditions(Layers, i, AvailablePositions[j], terrainDimensions, mapData))
@@ -151,6 +155,12 @@ public class GenerateTerrain : MonoBehaviour
     [ContextMenu("Generate Terrain")]
     public void GenerateTerrainMesh()
     {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            DestroyImmediate(transform.GetChild(i).gameObject);
+            i--;
+        }
+        
         //Get Transform
         GameObject terrain = Instantiate(terrainTransform.gameObject, transform);
         terrain.name = "Terrain";

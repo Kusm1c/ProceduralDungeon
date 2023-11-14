@@ -11,6 +11,8 @@ public class TileSO : ScriptableObject
     
     [field:SerializeField] public List<GameObject> Model3D_S2{ get; private set; }
     
+    [field:SerializeField] public bool TillingTextureModel { get; private set; }
+    
     [field:SerializeField] public int numMaxGenerated{ get; private set; }
     [field:SerializeField] public int numMinGenerated{ get; private set; }
     [field:SerializeField] public Type type{ get; private set; }
