@@ -7,7 +7,8 @@ public class TileSO : ScriptableObject
 {
     [field:SerializeField] public GameObject tilePrefab{ get; private set; }
     [field:SerializeField] public int numMaxGenerated{ get; private set; }
+    [field:SerializeField] public int numMinGenerated{ get; private set; }
     [field:SerializeField] public Type type{ get; private set; }
     [field:SerializeField] public List<Condition> conditions { get; private set; }
-    [field:SerializeField] public Color color2D{ get; private set; }
+    [field:SerializeField] public Material color2D{ get; private set; }
 }

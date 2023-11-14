@@ -9,7 +9,9 @@ public class GenerateTerrain : MonoBehaviour
    [Header("Terrain Parameters")]
    [SerializeField] private Vector2Int terrainDimensions;
    [SerializeField] private Transform terrainTransform;
+   [SerializeField] private TileSO Wall;
    [SerializeField] private List<TileSO> Layers = new ();
+   
    [Header("Shader Parameters")]
    [SerializeField] private float thicknessParam = 0.95f;
    [SerializeField] private Color gridColor = Color.red ;
@@ -34,13 +36,15 @@ public class GenerateTerrain : MonoBehaviour
     private void Start()
     {
         GenerateTerrainMesh();
+        GenerateData();
     }
 
     private void ChoosePosToUse(TileSO so, List<Vector2Int> positions)
     {
         int numToUse = (positions.Count > so.numMaxGenerated) ? so.numMaxGenerated : positions.Count;
+        int min = (positions.Count < so.numMinGenerated) ? positions.Count : so.numMinGenerated;
 
-        numToUse = Random.Range(1, numToUse + 1);
+        numToUse = Random.Range(min, numToUse + 1);
         for (int i = 0; i < numToUse; i++)
         {
             int index = Random.Range(0, positions.Count);
@@ -51,14 +55,29 @@ public class GenerateTerrain : MonoBehaviour
 
             GameObject tile = Instantiate(so.tilePrefab, transform);
             tile.transform.position = new Vector3(pos.x, 0.1f, pos.y);
+            tile.GetComponent<Renderer>().material = so.color2D;
         }
+    }
+
+    public void GenerateWall(Vector2Int pos)
+    {
+        GameObject go = Instantiate(Wall.tilePrefab, transform);
+        go.transform.position = new Vector3(pos.x, 0.1f, pos.y);
+        go.GetComponent<Renderer>().material = Wall.color2D;
     }
 
     private void GenerateData()
     {
         if (!useRandomSeed)
             Random.InitState(worldSeed);
-        UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions);
+        List<Vector2Int> unavailablePositions = new List<Vector2Int>();
+        UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions,
+            ref  unavailablePositions);
+
+        for (int i = 0; i < unavailablePositions.Count; i++)
+        {
+            GenerateWall(unavailablePositions[i]);
+        }
 
         List<Vector2Int> ValidPositions = new List<Vector2Int>();
 

@@ -74,7 +74,7 @@ public static class UtilsToolTerrain
 
         return vertices;
     }
-    
+
     public static Vector3[] GenerateSimpleFloorVertices(Vector2 terrainDimensions)
     {
         Vector3[] vertices = new Vector3[4];
@@ -92,7 +92,7 @@ public static class UtilsToolTerrain
     public static Vector2[] GenerateSimpleFloorUV(Vector2 terrainDimensions)
     {
         Vector2[] uvs = new Vector2[4];
-    
+
         uvs[0] = new Vector2(0, 0);
         uvs[1] = new Vector2(1, 0);
         uvs[2] = new Vector2(1, 1);
@@ -107,7 +107,8 @@ public static class UtilsToolTerrain
         return triangles;
     }
 
-    public static void InitData(ref float[,] mapData, ref List<Vector2Int> generatedPositions, Vector2Int size)
+    public static void InitData(ref float[,] mapData, ref List<Vector2Int> generatedPositions,
+        Vector2Int size, ref List<Vector2Int> unavailablePositions)
     {
         mapData = new float[size.x, size.y];
         for (int x = 0; x < size.x; x++)
@@ -117,6 +118,8 @@ public static class UtilsToolTerrain
                 mapData[x, y] = (y == 0 || y == size.y - 1 || x == 0 || x == size.x - 1) ? (float)Type.Wall : 0.0f;
                 if (mapData[x, y] == 0.0f)
                     generatedPositions.Add(new Vector2Int(x, y));
+                else
+                    unavailablePositions.Add(new Vector2Int(x, y));
             }
         }
     }
