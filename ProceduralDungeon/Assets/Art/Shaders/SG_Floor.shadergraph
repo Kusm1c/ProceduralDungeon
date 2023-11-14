@@ -747,7 +747,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "10e08889ac8942429ae017fbb8591c66",
     "m_Id": 0,
-    "m_DisplayName": "LineColor",
+    "m_DisplayName": "LineGridColor",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -779,10 +779,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -6.000006198883057,
-            "y": 217.00001525878907,
-            "width": 126.99981689453125,
-            "height": 33.99995422363281
+            "x": -4.000000476837158,
+            "y": 210.0,
+            "width": 126.99999237060547,
+            "height": 34.00001525878906
         }
     },
     "m_Slots": [
@@ -2342,9 +2342,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -85.99998474121094,
-            "y": 532.0,
-            "width": 127.0,
+            "x": -108.00001525878906,
+            "y": 532.0000610351563,
+            "width": 149.0,
             "height": 34.0
         }
     },
@@ -2977,10 +2977,10 @@
     "m_Guid": {
         "m_GuidSerialized": "a040d309-c0a5-448f-8dcb-f654b6bca2fa"
     },
-    "m_Name": "LineColor",
+    "m_Name": "LineGridColor",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "LineColor",
-    "m_DefaultReferenceName": "_LineColor",
+    "m_RefNameGeneratedByDisplayName": "LineGridColor",
+    "m_DefaultReferenceName": "_LineGridColor",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -3373,9 +3373,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 212.99996948242188,
+            "x": 286.0000305175781,
             "y": 549.0,
-            "width": 130.00009155273438,
+            "width": 130.00003051757813,
             "height": 118.0
         }
     },
@@ -3396,7 +3396,7 @@
         "plus"
     ],
     "m_Precision": 0,
-    "m_PreviewExpanded": true,
+    "m_PreviewExpanded": false,
     "m_DismissedVersion": 0,
     "m_PreviewMode": 0,
     "m_CustomColors": {
