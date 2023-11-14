@@ -4,19 +4,44 @@ using UnityEngine;
 [CustomEditor(typeof(GenerateTerrain))]
 public class GenerateTerrainEditor : Editor
 {
-    SerializedProperty terrainDimensionsProp;
+    SerializedProperty terrainDimensions;
+    private SerializedProperty regenerateAtRuntime;
 
     private void OnEnable()
     {
-        terrainDimensionsProp = serializedObject.FindProperty("terrainDimensions");
+        terrainDimensions = serializedObject.FindProperty("terrainDimensions");
+        regenerateAtRuntime = serializedObject.FindProperty("regenerateAtRuntime");
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
-        base.OnInspectorGUI();
 
         GenerateTerrain terrain = (GenerateTerrain)target;
+        EditorGUILayout.LabelField("Terrain Dimensions", EditorStyles.boldLabel);
+
+        EditorGUI.BeginChangeCheck(); // Start change check
+
+        Vector2Int newDimensions = new Vector2Int(
+            EditorGUILayout.IntSlider("Terrain Dimensions X", terrainDimensions.vector2IntValue.x, 1, 100),
+            EditorGUILayout.IntSlider("Terrain Dimensions Y", terrainDimensions.vector2IntValue.y, 1, 100)
+        );
+
+        EditorGUILayout.PropertyField(regenerateAtRuntime, new GUIContent("Regenerate At Runtime"));
+
+        if (EditorGUI.EndChangeCheck())
+        {
+            // Update serialized property with new values
+            terrainDimensions.vector2IntValue = newDimensions;
+            serializedObject.ApplyModifiedProperties();
+
+            if (regenerateAtRuntime.boolValue)
+            {
+                terrain.GenerateTerrainMesh();
+                terrain.GenerateData();
+                EditorUtility.SetDirty(terrain);
+            }
+        }
 
         if (GUILayout.Button("Generate Terrain"))
         {
@@ -26,7 +51,6 @@ public class GenerateTerrainEditor : Editor
         if (GUILayout.Button("Generate Terrain Data"))
         {
             serializedObject.ApplyModifiedProperties();
-
             terrain.GenerateData();
             EditorUtility.SetDirty(terrain);
         }
@@ -36,5 +60,8 @@ public class GenerateTerrainEditor : Editor
             terrain.UpdateMaterial();
             Debug.Log("Update Material");
         }
+
+        serializedObject.ApplyModifiedProperties(); // Move this outside of the if condition
+        base.OnInspectorGUI();
     }
 }
