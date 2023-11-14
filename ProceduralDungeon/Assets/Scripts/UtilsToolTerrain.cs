@@ -6,11 +6,15 @@ public static class UtilsToolTerrain
 {
     public static Vector2[] GenerateTerrainUVs(Vector2 terrainDimensions)
     {
-        Vector2[] uvs = new Vector2[(int)(terrainDimensions.x * terrainDimensions.y)];
+        int numVerticesX = (int)terrainDimensions.x + 1;
+        int numVerticesZ = (int)terrainDimensions.y + 1;
+
+        Vector2[] uvs = new Vector2[numVerticesX * numVerticesZ];
         int index = 0;
-        for (int x = 0; x < terrainDimensions.x; x++)
+
+        for (int x = 0; x < numVerticesX; x++)
         {
-            for (int z = 0; z < terrainDimensions.y; z++)
+            for (int z = 0; z < numVerticesZ; z++)
             {
                 uvs[index] = new Vector2((float)x / terrainDimensions.x, (float)z / terrainDimensions.y);
                 index++;
@@ -20,21 +24,27 @@ public static class UtilsToolTerrain
         return uvs;
     }
 
+    
     public static int[] GenerateTerrainTriangles(Vector2 terrainDimensions)
     {
-        int[] triangles = new int[(int)(terrainDimensions.x * terrainDimensions.y * 6)];
+        int numVerticesX = (int)terrainDimensions.x + 1;
+        int numVerticesZ = (int)terrainDimensions.y + 1;
+
+        int[] triangles = new int[(numVerticesX - 1) * (numVerticesZ - 1) * 6];
         int triangleIndex = 0;
         int vertexIndex = 0;
-        for (int x = 0; x < terrainDimensions.x - 1; x++)
+
+        for (int x = 0; x < numVerticesX - 1; x++)
         {
-            for (int z = 0; z < terrainDimensions.y - 1; z++)
+            for (int z = 0; z < numVerticesZ - 1; z++)
             {
                 triangles[triangleIndex] = vertexIndex;
                 triangles[triangleIndex + 1] = vertexIndex + 1;
-                triangles[triangleIndex + 2] = vertexIndex + (int)terrainDimensions.y;
+                triangles[triangleIndex + 2] = vertexIndex + numVerticesZ;
                 triangles[triangleIndex + 3] = vertexIndex + 1;
-                triangles[triangleIndex + 4] = vertexIndex + 1 + (int)terrainDimensions.y;
-                triangles[triangleIndex + 5] = vertexIndex + (int)terrainDimensions.y;
+                triangles[triangleIndex + 4] = vertexIndex + 1 + numVerticesZ;
+                triangles[triangleIndex + 5] = vertexIndex + numVerticesZ;
+
                 triangleIndex += 6;
                 vertexIndex++;
             }
@@ -45,13 +55,19 @@ public static class UtilsToolTerrain
         return triangles;
     }
 
+
+    //TODO : Subdivision
     public static Vector3[] GenerateTerrainVertices(Vector2 terrainDimensions)
     {
-        Vector3[] vertices = new Vector3[(int)(terrainDimensions.x * terrainDimensions.y)];
+        int numVerticesX = (int)terrainDimensions.x + 1;
+        int numVerticesZ = (int)terrainDimensions.y + 1;
+
+        Vector3[] vertices = new Vector3[numVerticesX * numVerticesZ];
         int index = 0;
-        for (int x = 0; x < terrainDimensions.x; x++)
+
+        for (int x = 0; x < numVerticesX; x++)
         {
-            for (int z = 0; z < terrainDimensions.y; z++)
+            for (int z = 0; z < numVerticesZ; z++)
             {
                 vertices[index] = new Vector3(x, 0, z);
                 index++;
