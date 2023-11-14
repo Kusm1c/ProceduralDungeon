@@ -8,10 +8,16 @@ public class GenerateTerrainEditor : Editor
 {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
+        GenerateTerrain terrain = (GenerateTerrain) target;
         if(GUILayout.Button("Generate Terrain"))
         {
-            GenerateTerrain terrain = (GenerateTerrain) target;
             terrain.GenerateTerrainMesh();
+        }
+        
+        if(GUILayout.Button("Update Terrain Material"))
+        {
+            terrain.UpdateMaterial();
+            Debug.Log("Update Material");
         }
     }
 }
