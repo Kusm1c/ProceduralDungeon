@@ -3,4 +3,6 @@
     Wall = 1,
     Lava,
     Hole,
+    Table,
+    Chair,
 }
