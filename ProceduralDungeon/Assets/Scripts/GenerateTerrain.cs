@@ -28,11 +28,9 @@ public class GenerateTerrain : MonoBehaviour
    [HideInInspector]public GameObject cameraLavaRef;
    
    [Header("Random parameters")]
-   [SerializeField] [Range(1, 10000)] int worldSeed = 1;
-
-   [SerializeField] bool useRandomSeed = false;
-
-
+   [SerializeField] [Range(1, 10000)] private int worldSeed = 1;
+   [SerializeField] private bool useRandomSeed = false;
+   
    private float[,] mapData;
    private List<Vector2Int> AvailablePositions = new();
    private Random.State stateBeforeStep3;
@@ -41,6 +39,14 @@ public class GenerateTerrain : MonoBehaviour
     {
         GenerateTerrainMesh();
         GenerateData();
+    }
+
+    private GameObject GenerateTile(GameObject prefab, Transform parent, Vector3 pos, Material _mat)
+    {
+        GameObject go = Instantiate(prefab, parent);
+        go.transform.position = pos;
+        go.GetComponent<Renderer>().material = _mat;
+        return go;
     }
 
     private void ChoosePosToUse(TileSO so, List<Vector2Int> positions)
@@ -61,18 +67,9 @@ public class GenerateTerrain : MonoBehaviour
             AvailablePositions.Remove(pos);
             mapData[pos.x, pos.y] = (int)so.type;
             positions.RemoveAt(index);
-
-            GameObject tile = Instantiate(so.tilePrefab, goP.transform);
-            tile.transform.position = new Vector3(pos.x, 0.1f, pos.y);
-            tile.GetComponent<Renderer>().material = so.color2D;
+            
+            GenerateTile(so.tilePrefab, goP.transform, new Vector3(pos.x, 0.1f, pos.y), so.color2D);
         }
-    }
-
-    public void GenerateWall(Vector2Int pos, Transform goP)
-    {
-        GameObject go = Instantiate(Wall.tilePrefab, goP.transform);
-        go.transform.position = new Vector3(pos.x, 0.1f, pos.y);
-        go.GetComponent<Renderer>().material = Wall.color2D;
     }
 
     private void GenerateData()
@@ -90,7 +87,8 @@ public class GenerateTerrain : MonoBehaviour
 
         for (int i = 0; i < unavailablePositions.Count; i++)
         {
-            GenerateWall(unavailablePositions[i], goP.transform);
+           GenerateTile(Wall.tilePrefab, goP.transform, 
+               new Vector3(unavailablePositions[i].x, 0.1f, unavailablePositions[i].y), Wall.color2D);
         }
 
         List<Vector2Int> ValidPositions = new List<Vector2Int>();
