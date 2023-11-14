@@ -9,6 +9,7 @@ public class GenerateTerrain : MonoBehaviour
    [Header("Terrain Parameters")]
    [SerializeField] private Vector2Int terrainDimensions;
    [SerializeField] private Transform terrainTransform;
+   [SerializeField] private Transform cameraLaveRT;
    [SerializeField] private List<TileSO> Layers = new ();
    [Header("Shader Parameters")]
    [SerializeField] private float thicknessParam = 0.95f;
@@ -18,8 +19,11 @@ public class GenerateTerrain : MonoBehaviour
    private string pathTilingInShader = "_Tiling";
    private string pathThicknessInShader = "_LineThickness";
    private string pathGridColorInShader = "_GridColor";
-   private string pathLineColorInShader = "_LineColor";
+   private string pathLineColorInShader = "_LineGridColor";
+   
+   //Reférence Object
    [HideInInspector]public GameObject terrainRef;
+   [HideInInspector]public GameObject cameraLavaRef;
    
    [Header("Random parameters")]
    [SerializeField] [Range(1, 10000)] int worldSeed = 1;
@@ -98,6 +102,9 @@ public class GenerateTerrain : MonoBehaviour
         MeshRenderer meshRenderer = terrain.GetComponent<MeshRenderer>();
         meshRenderer.sharedMaterial = new Material(Shader.Find(pathFloorShader));
         meshRenderer.sharedMaterial.name = "M_Terrain_01";
+        
+        //Setup Camera
+        SetupCameraLava();
 
         //Setup Shader 
         meshRenderer.sharedMaterial.SetFloat(pathThicknessInShader, thicknessParam);
@@ -116,5 +123,13 @@ public class GenerateTerrain : MonoBehaviour
        meshRenderer.sharedMaterial.SetVector(pathTilingInShader, new Vector4(terrainDimensions.x, terrainDimensions.y, 0, 0));
        meshRenderer.sharedMaterial.SetColor(pathGridColorInShader, gridColor);
        meshRenderer.sharedMaterial.SetColor(pathLineColorInShader, lineColor);
+   }
+
+   public void SetupCameraLava()
+   {
+       GameObject cameraLava = Instantiate(cameraLaveRT.gameObject, transform);
+       cameraLava.transform.position = new Vector3((float)terrainDimensions.x / 2, 5, (float)terrainDimensions.y / 2);
+       cameraLava.GetComponent<Camera>().orthographicSize = (float)(terrainDimensions.x + terrainDimensions.y) / 4;
+       cameraLavaRef = cameraLava;
    }
 }
