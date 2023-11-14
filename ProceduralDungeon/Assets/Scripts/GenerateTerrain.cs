@@ -7,8 +7,8 @@ using Random = UnityEngine.Random;
 
 public class GenerateTerrain : MonoBehaviour
 {
-    [Header("Terrain Parameters")] [SerializeField]
-    private Vector2Int terrainDimensions;
+    [Header("Terrain Parameters")]
+    [SerializeField] private Vector2Int terrainDimensions;
 
     [SerializeField] private Transform terrainTransform;
     [SerializeField] private Transform cameraLaveRT;
@@ -49,8 +49,8 @@ public class GenerateTerrain : MonoBehaviour
         BuildNavMesh();
         PlayerManager.instance.SpawnPlayer();
     }
-
-    private void BuildNavMesh()
+    
+    public void BuildNavMesh()
     {
         NavMeshSurface navMeshSurface = terrainRef.GetComponent<NavMeshSurface>();
         navMeshSurface.BuildNavMesh();
