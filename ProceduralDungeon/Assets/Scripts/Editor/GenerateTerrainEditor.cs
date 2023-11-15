@@ -37,9 +37,9 @@ public class GenerateTerrainEditor : Editor
         
         EditorGUILayout.LabelField("Runtime Parameters", EditorStyles.boldLabel);
         regenerateAtRuntime.boolValue = EditorGUILayout.Toggle("Regenerate TerrainData", regenerateAtRuntime.boolValue);
-        //GUI.enabled = regenerateAtRuntime.boolValue;
+        GUI.enabled = regenerateAtRuntime.boolValue;
         recookedAtRuntime.boolValue = EditorGUILayout.Toggle("ReCooked",recookedAtRuntime.boolValue);
-        //GUI.enabled = true;
+        GUI.enabled = true;
 
         if (EditorGUI.EndChangeCheck())
         { 
