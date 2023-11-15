@@ -82,7 +82,7 @@ public class GenerateTerrain : MonoBehaviour
             int index = Random.Range(0, positions.Count);
             Vector2Int pos = positions[index];
             AvailablePositions.Remove(pos);
-            mapData[pos.x, pos.y] = (int)so.type;
+            mapData[pos.y, pos.x] = (int)so.type;
             positions.RemoveAt(index);
 
             GenerateTile(so.tilePrefab, goP.transform, new Vector3(pos.x, 0.1f, pos.y), so.color2D);
@@ -91,12 +91,12 @@ public class GenerateTerrain : MonoBehaviour
 
     private void Generate3DWorld()
     {
-        float[,] mapDataSave = new float[terrainDimensions.x, terrainDimensions.y];
+        float[,] mapDataSave = new float[terrainDimensions.y, terrainDimensions.x];
         for (int y = 0; y < terrainDimensions.y; y++)
         {
             for (int x = 0; x < terrainDimensions.x; x++)
             {
-                mapDataSave[x, y] = mapData[x, y];
+                mapDataSave[y, x] = mapData[y, x];
             }
         }
 
@@ -116,7 +116,6 @@ public class GenerateTerrain : MonoBehaviour
                     {
                         if ((posTile + x + 1 < terrainDimensions.x && indexTile == mapDataSave[y, x + posTile + 1]) || posTile > 0)
                             mapDataSave[y, x + posTile] = -1;
-                        //mapDataSave[y, x + posTile] = -1;
 
                         posTile++;
                     }
@@ -145,7 +144,7 @@ public class GenerateTerrain : MonoBehaviour
                     go = Instantiate(so.Model3D_S1[index], transform);
 
                     Vector3 scale = go.transform.localScale;
-                    scale.x = (float)posTile;
+                    scale.x += (float)posTile;
                     go.transform.localScale = scale;
                     go.transform.position = new Vector3((x + posTile) / 2f, scale.y / 2f, y);
                 }
@@ -156,7 +155,7 @@ public class GenerateTerrain : MonoBehaviour
                     go = Instantiate(so.Model3D_S1[index], transform);
 
                     Vector3 scale = go.transform.localScale;
-                    scale.x = (float)posTile;
+                    scale.x += (float)posTile ;
                     go.transform.localScale = scale;
                     go.transform.position = new Vector3(x, scale.y / 2f, (y + posTile) / 2f);
                 }
@@ -164,10 +163,9 @@ public class GenerateTerrain : MonoBehaviour
                 else if (XisGood && so.Model3D_S1.Count > 0) // just one tile
                 {
                     int index = Random.Range(0, so.Model3D_S1.Count);
-
+                    
                     go = Instantiate(so.Model3D_S1[index], transform);
-
-                    go.transform.position = new Vector3(x, transform.localScale.y / 2f, y);
+                    go.transform.position = new Vector3(y, transform.localScale.y / 2f, x);
                 }
                 
                 if (go != null && (x == 0 && y != 0) || x == terrainDimensions.x - 1)
@@ -180,7 +178,7 @@ public class GenerateTerrain : MonoBehaviour
     {
         AvailablePositions.Clear();
         _dicTileSO.Clear();
-        mapData = new float[terrainDimensions.x, terrainDimensions.y];
+        mapData = new float[terrainDimensions.y, terrainDimensions.x];
     }
 
     public void GenerateData()
@@ -204,7 +202,7 @@ public class GenerateTerrain : MonoBehaviour
         for (int i = 0; i < unavailablePositions.Count; i++)
         {
             GenerateTile(Wall.tilePrefab, goP.transform,
-                new Vector3(unavailablePositions[i].x, 0.1f, unavailablePositions[i].y), Wall.color2D);
+                new Vector3(unavailablePositions[i].y, 0.1f, unavailablePositions[i].x), Wall.color2D);
         }
 
         List<Vector2Int> ValidPositions = new List<Vector2Int>();
