@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6699571098463151798}
   - component: {fileID: 8127373833517620311}
   - component: {fileID: 5671172398022752585}
+  - component: {fileID: -2171184987179123523}
   m_Layer: 0
   m_Name: Chair
   m_TagString: Untagged
@@ -105,3 +106,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &-2171184987179123523
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3705331789912959411}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.25, y: 2, z: 0.25}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
