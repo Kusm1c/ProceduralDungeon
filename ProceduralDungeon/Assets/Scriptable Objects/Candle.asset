@@ -23,6 +23,7 @@ MonoBehaviour:
   - {fileID: 103482, guid: b8bf93473c538e9438e008b08ea75354, type: 3}
   - {fileID: 152554, guid: 3f4cd64e876070c40b64e92d6ad7daf0, type: 3}
   <TillingTextureModel>k__BackingField: 0
+  <CustomOffsetY>k__BackingField: 0.125
   <RotationModel3D>k__BackingField: 0
   <numMaxGenerated>k__BackingField: 20
   <numMinGenerated>k__BackingField: 10
