@@ -7,11 +7,13 @@ public class GenerateTerrainEditor : Editor
     SerializedProperty terrainDimensions;
     SerializedProperty worldSeed;
     SerializedProperty regenerateAtRuntime;
+    SerializedProperty recookedAtRuntime;
 
     private void OnEnable()
     {
         terrainDimensions = serializedObject.FindProperty("terrainDimensions");
         regenerateAtRuntime = serializedObject.FindProperty("regenerateAtRuntime");
+        recookedAtRuntime = serializedObject.FindProperty("recookedAtRuntime");
         worldSeed = serializedObject.FindProperty("worldSeed");
     }
 
@@ -33,10 +35,10 @@ public class GenerateTerrainEditor : Editor
         EditorGUILayout.LabelField("Seed Parameters", EditorStyles.boldLabel);
         int newWorldSeed = EditorGUILayout.IntSlider("World Seed", worldSeed.intValue, 1, 10000);
         
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Regenerate At Runtime", EditorStyles.boldLabel);
-        regenerateAtRuntime.boolValue = EditorGUILayout.Toggle(regenerateAtRuntime.boolValue);
-        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.LabelField("Runtime Parameters", EditorStyles.boldLabel);
+        regenerateAtRuntime.boolValue = EditorGUILayout.Toggle("Regenerate TerrainData", regenerateAtRuntime.boolValue);
+        recookedAtRuntime.boolValue = EditorGUILayout.Toggle("ReCooked",recookedAtRuntime.boolValue);
+
         
 
         if (EditorGUI.EndChangeCheck())
@@ -50,6 +52,10 @@ public class GenerateTerrainEditor : Editor
                 terrain.GenerateTerrainMesh();
                 terrain.GenerateData();
                 terrain.BuildNavMesh();
+                if (recookedAtRuntime.boolValue)
+                {
+                    terrain.Generate3DWorld();
+                }
                 EditorUtility.SetDirty(terrain);
             }
         }
@@ -76,6 +82,12 @@ public class GenerateTerrainEditor : Editor
         {
             terrain.BuildNavMesh();
             Debug.Log("Update Material");
+        }
+
+        if (GUILayout.Button("Cook 3D World"))
+        {
+            terrain.Generate3DWorld();
+            Debug.Log("Cook 3D World");
         }
 
         serializedObject.ApplyModifiedProperties(); // Move this outside of the if condition

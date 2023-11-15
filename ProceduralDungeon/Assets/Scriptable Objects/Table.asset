@@ -34,5 +34,17 @@ MonoBehaviour:
   - type: 1
     possibility: 0
     position: 7
+  - type: 2
+    possibility: 0
+    position: 0
+  - type: 2
+    possibility: 0
+    position: 1
+  - type: 2
+    possibility: 0
+    position: 3
+  - type: 2
+    possibility: 0
+    position: 2
   <color2D>k__BackingField: {fileID: 2100000, guid: 414468581171d444a83ce6059f50455e,
     type: 2}

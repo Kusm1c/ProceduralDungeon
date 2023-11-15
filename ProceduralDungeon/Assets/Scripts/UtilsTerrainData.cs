@@ -9,18 +9,17 @@ public static class UtilsTerrainData
     {
         for (int i = 0; i < layers[indexLayer].conditions.Count; i++)
         {
-            if (!CheckCondition(layers[indexLayer].conditions[i], layers, position, terrainDimensions, mapData))
+            if (!CheckCondition(layers[indexLayer].conditions[i], layers[indexLayer], position, terrainDimensions , mapData))
                 return false;
         }
 
         return true;
     }
 
-    private static bool CheckCondition(Condition soCondition, List<TileSO> layers, Vector2Int pos,
+    private static bool CheckCondition(Condition soCondition, TileSO tile, Vector2Int pos,
         Vector2Int terrainDimensions, float[,] mapData)
     {
-        TileSO tile = layers.Find(x => x.type == soCondition.type);
-
+        
         Vector2Int posCond = (soCondition.position == Position.Top && pos.y < terrainDimensions.y - 1)
             ? pos + Vector2Int.up
             : (soCondition.position == Position.Bottom && pos.y > 0)
@@ -44,28 +43,23 @@ public static class UtilsTerrainData
 
         if (posCond is { x: -1, y: -1 }) return false;
 
-        return (soCondition.possibility == Possibility.Must)
-            ? CheckMustOrNot(posCond, soCondition.type, mapData, true)
-            :
-            (soCondition.possibility == Possibility.MustNot)
-                ? CheckMustOrNot(posCond, soCondition.type, mapData, false)
-                :
-                (soCondition.possibility == Possibility.Can)
-                    ? CheckCanOrCant(posCond, soCondition.type, mapData , true)
-                    :
-                    (soCondition.possibility == Possibility.Cant)
-                        ? CheckCanOrCant(posCond, soCondition.type, mapData , false)
-                        :
-                        throw new System.Exception("Error in UtilsTerrainData.CheckCondition");
+        return soCondition.possibility switch
+        {
+            Possibility.Must => CheckMustOrNot(posCond, soCondition.type, mapData, true),
+            Possibility.MustNot => CheckMustOrNot(posCond, soCondition.type, mapData, false),
+            Possibility.Can => CheckCanOrCant(posCond, soCondition.type, tile, mapData , true),
+            Possibility.Cant => CheckCanOrCant(posCond, soCondition.type, tile, mapData , false),
+            _ => throw new System.Exception("Error in UtilsTerrainData.CheckCondition")
+        };
     }
 
-    private static bool CheckCanOrCant(Vector2Int posCond, Type soConditionType, float[,] mapData, bool can)
+    private static bool CheckCanOrCant(Vector2Int posCond, Type soConditionType, TileSO so, float[,] mapData, bool can)
     {
         bool cond = mapData[posCond.x, posCond.y] == (int)soConditionType;
         return can switch
         {
-            true when Random.Range(0, 100) < 25 => true,
-            false when Random.Range(0, 100) < 25 => false,
+            true when Random.Range(0, 100) < so.canProbability => true,
+            false when Random.Range(0, 100) < so.cantProbability => false,
             _ => (can) ? cond : !cond
         };
     }

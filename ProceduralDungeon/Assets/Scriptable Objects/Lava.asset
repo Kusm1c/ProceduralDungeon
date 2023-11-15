@@ -22,17 +22,29 @@ MonoBehaviour:
   <numMinGenerated>k__BackingField: 10
   <type>k__BackingField: 2
   <conditions>k__BackingField:
-  - type: 1
+  - type: 2
     possibility: 0
     position: 0
-  - type: 1
-    possibility: 0
-    position: 1
-  - type: 1
-    possibility: 0
-    position: 3
-  - type: 1
+  - type: 2
     possibility: 0
     position: 2
+  - type: 2
+    possibility: 0
+    position: 1
+  - type: 2
+    possibility: 2
+    position: 3
+  - type: 1
+    possibility: 2
+    position: 3
+  - type: 1
+    possibility: 2
+    position: 2
+  - type: 1
+    possibility: 2
+    position: 1
+  - type: 1
+    possibility: 2
+    position: 0
   <color2D>k__BackingField: {fileID: 2100000, guid: 5a07c9bf703ead54f872ba47f301234a,
     type: 2}
