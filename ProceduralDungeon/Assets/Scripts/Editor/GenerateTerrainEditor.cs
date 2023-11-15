@@ -37,9 +37,9 @@ public class GenerateTerrainEditor : Editor
         
         EditorGUILayout.LabelField("Runtime Parameters", EditorStyles.boldLabel);
         regenerateAtRuntime.boolValue = EditorGUILayout.Toggle("Regenerate TerrainData", regenerateAtRuntime.boolValue);
+        GUI.enabled = regenerateAtRuntime.boolValue;
         recookedAtRuntime.boolValue = EditorGUILayout.Toggle("ReCooked",recookedAtRuntime.boolValue);
-
-        
+        GUI.enabled = true;
 
         if (EditorGUI.EndChangeCheck())
         { 
@@ -65,13 +65,14 @@ public class GenerateTerrainEditor : Editor
             terrain.GenerateTerrainMesh();
         }
 
+        GUI.enabled = terrain.terrainRef != null;
         if (GUILayout.Button("Generate Terrain Data"))
         {
             serializedObject.ApplyModifiedProperties();
             terrain.GenerateData();
             EditorUtility.SetDirty(terrain);
         }
-
+        
         if (GUILayout.Button("Update Terrain Material"))
         {
             terrain.UpdateMaterial();
@@ -83,14 +84,30 @@ public class GenerateTerrainEditor : Editor
             terrain.BuildNavMesh();
             Debug.Log("Update Material");
         }
+        GUI.enabled = true; 
 
+        GUI.enabled = terrain.mapData != null;
         if (GUILayout.Button("Cook 3D World"))
         {
-            terrain.Generate3DWorld();
-            Debug.Log("Cook 3D World");
+            if (terrain.mapData != null)
+            {
+                terrain.Generate3DWorld();
+                Debug.Log("Cook 3D World");
+            }
+            else
+            {
+                Debug.LogError("Cannot cook 3D world. Map data is missing or empty.");
+            }
+        }
+        GUI.enabled = true; 
+        
+        if (GUILayout.Button("Clear World"))
+        {
+            terrain.ClearWorld();
+            Debug.Log("Clear World");
         }
 
-        serializedObject.ApplyModifiedProperties(); // Move this outside of the if condition
+        serializedObject.ApplyModifiedProperties();
         base.OnInspectorGUI();
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -35,13 +36,16 @@ public class GenerateTerrain : MonoBehaviour
 
     [SerializeField] private bool useRandomSeed = false;
 
-    private float[,] mapData;
+    [HideInInspector][SerializeField] public float[,] mapData;
     private List<Vector2Int> AvailablePositions = new();
     private Random.State stateBeforeStep3;
 
     private Dictionary<int, TileSO> _dicTileSO = new();
     [HideInInspector] [SerializeField] private bool regenerateAtRuntime = false;
     [HideInInspector] [SerializeField] private bool recookedAtRuntime = false;
+    
+    
+
 
     private void Start()
     {
@@ -254,6 +258,13 @@ public class GenerateTerrain : MonoBehaviour
         mapData = new float[terrainDimensions.x, terrainDimensions.y];
     }
 
+    private void ClearData()
+    {
+        AvailablePositions.Clear();
+        _dicTileSO.Clear();
+        mapData = null;
+    }
+
     public void GenerateData()
     {
         ResetData();
@@ -284,11 +295,7 @@ public class GenerateTerrain : MonoBehaviour
         {
             ValidPositions.Clear();
             _dicTileSO.Add((int)Layers[i].type, Layers[i]);
-            for (int j = 0; j < AvailablePositions.Count; j++)
-            {
-                if (UtilsTerrainData.CheckAllConditions(Layers, i, AvailablePositions[j], terrainDimensions, mapData))
-                    ValidPositions.Add(AvailablePositions[j]);
-            }
+            ValidPositions.AddRange(AvailablePositions.Where(t => UtilsTerrainData.CheckAllConditions(Layers, i, t, terrainDimensions, mapData)));
 
             ChoosePosToUse(Layers[i], ValidPositions);
         }
@@ -297,11 +304,7 @@ public class GenerateTerrain : MonoBehaviour
     [ContextMenu("Generate Terrain")]
     public void GenerateTerrainMesh()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            DestroyImmediate(transform.GetChild(i).gameObject);
-            i--;
-        }
+        ClearWorld();
 
         //Get Transform
         GameObject terrain = Instantiate(terrainTransform.gameObject, transform);
@@ -363,5 +366,15 @@ public class GenerateTerrain : MonoBehaviour
         cameraLava.transform.position = new Vector3((float)terrainDimensions.x / 2, 5, (float)terrainDimensions.y / 2);
         cameraLava.GetComponent<Camera>().orthographicSize = (float)(terrainDimensions.x + terrainDimensions.y) / 4;
         cameraLavaRef = cameraLava;
+    }
+
+    public void ClearWorld()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            DestroyImmediate(transform.GetChild(i).gameObject);
+            i--;
+        }
+        ClearData();
     }
 }

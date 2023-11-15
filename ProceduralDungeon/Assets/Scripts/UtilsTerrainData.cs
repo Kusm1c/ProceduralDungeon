@@ -4,53 +4,78 @@ using UnityEngine;
 
 public static class UtilsTerrainData
 {
+    private static List<bool> conditions = new();
+
+    
     public static bool CheckAllConditions(List<TileSO> layers, int indexLayer, Vector2Int position,
         Vector2Int terrainDimensions, float[,] mapData)
     {
+        // if (layers[indexLayer].type == Type.Lava) Debug.Log("num Conditions " + (layers[indexLayer].conditions.Count - 1));
         for (int i = 0; i < layers[indexLayer].conditions.Count; i++)
         {
-            if (!CheckCondition(layers[indexLayer].conditions[i], layers[indexLayer], position, terrainDimensions , mapData))
-                return false;
+            for (int j = 0; j < layers[indexLayer].conditions[i].position.Count -1; j++)
+            {
+                if (!CheckCondition(layers[indexLayer].conditions[i], j,layers[indexLayer], position, terrainDimensions,
+                        mapData))
+                    return false;
+            }
         }
-
         return true;
     }
 
-    private static bool CheckCondition(Condition soCondition, TileSO tile, Vector2Int pos,
+    private static bool CheckCondition(Condition soCondition, int index,TileSO tile, Vector2Int pos,
         Vector2Int terrainDimensions, float[,] mapData)
     {
-        
-        Vector2Int posCond = (soCondition.position == Position.Top && pos.y < terrainDimensions.y - 1)
+        // if (tile.type == Type.Lava) Debug.Log("index : " + index + " Position " + soCondition.position[index]);
+        Vector2Int posCond = (soCondition.position[index] == Position.Top && pos.y < terrainDimensions.y - 1)
             ? pos + Vector2Int.up
-            : (soCondition.position == Position.Bottom && pos.y > 0)
+            : (soCondition.position[index] == Position.Bottom && pos.y > 0)
                 ? pos + Vector2Int.down
-                : (soCondition.position == Position.Left && pos.x > 0)
+                : (soCondition.position[index] == Position.Left && pos.x > 0)
                     ? pos + Vector2Int.left
-                    : (soCondition.position == Position.Right && pos.x < terrainDimensions.x - 1)
+                    : (soCondition.position[index] == Position.Right && pos.x < terrainDimensions.x - 1)
                         ? pos + Vector2Int.right
-                        : (soCondition.position == Position.BottomLeft && pos.y > 0 && pos.x > 0)
+                        : (soCondition.position[index] == Position.BottomLeft && pos.y > 0 && pos.x > 0)
                             ? pos + Vector2Int.one * -1
-                            : (soCondition.position == Position.BottomRight && pos.y > 0 &&
+                            : (soCondition.position[index] == Position.BottomRight && pos.y > 0 &&
                                pos.x < terrainDimensions.x - 1)
                                 ? pos + Vector2Int.down + Vector2Int.right
-                                : (soCondition.position == Position.TopLeft && pos.y < terrainDimensions.y - 1 &&
+                                : (soCondition.position[index] == Position.TopLeft && pos.y < terrainDimensions.y - 1 &&
                                    pos.x > 0)
                                     ? pos + Vector2Int.up + Vector2Int.left
-                                    : (soCondition.position == Position.TopRight && pos.y < terrainDimensions.y - 1 &&
+                                    : (soCondition.position[index] == Position.TopRight && pos.y < terrainDimensions.y - 1 &&
                                        pos.x < terrainDimensions.x - 1)
                                         ? pos + Vector2Int.up + Vector2Int.right
                                         : Vector2Int.one * -1;
 
         if (posCond is { x: -1, y: -1 }) return false;
-
+        // if (tile.type == Type.Lava) Debug.Log("posCond : " + posCond);
         return soCondition.possibility switch
         {
             Possibility.Must => CheckMustOrNot(posCond, soCondition.type, mapData, true),
             Possibility.MustNot => CheckMustOrNot(posCond, soCondition.type, mapData, false),
             Possibility.Can => CheckCanOrCant(posCond, soCondition.type, tile, mapData , true),
             Possibility.Cant => CheckCanOrCant(posCond, soCondition.type, tile, mapData , false),
+            Possibility.Choose => ChooseCondition(posCond, soCondition.type, tile, mapData),
             _ => throw new System.Exception("Error in UtilsTerrainData.CheckCondition")
         };
+    }
+
+    private static bool ChooseCondition(Vector2Int posCond, Type soConditionType, TileSO tile, float[,] mapData)
+    {
+        conditions.Add(CheckMustOrNot(posCond, soConditionType, mapData, true));
+        // if (tile.type == Type.Chair) Debug.Log("TableChoose: " + TableChoose);
+        if (conditions.Count == tile.conditions[0].position.Count - 1)
+        {
+            bool cond = mapData[posCond.x, posCond.y] == (int)soConditionType;
+            foreach (bool b in conditions)
+            {
+                cond = cond || b;
+            }
+            conditions.Clear();
+            return cond;
+        }
+        return true;
     }
 
     private static bool CheckCanOrCant(Vector2Int posCond, Type soConditionType, TileSO so, float[,] mapData, bool can)

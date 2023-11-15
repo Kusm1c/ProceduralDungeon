@@ -3,5 +3,6 @@
     MustNot = 0,
     Must,
     Can,
-    Cant
+    Cant,
+    Choose
 }
