@@ -290,7 +290,7 @@ public class GenerateTerrain : MonoBehaviour
         goPCorner.transform.parent = transform;
 
         _dicTileSO.Add((int)Layers[0].type, Layers[0]);
-//wall
+        //wall
         GameObject goPWall = new GameObject
         {
             name = Layers[1].type.ToString()
