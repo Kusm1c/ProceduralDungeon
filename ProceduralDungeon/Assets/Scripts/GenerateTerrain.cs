@@ -238,9 +238,10 @@ public class GenerateTerrain : MonoBehaviour
                 else if (so.Model3D_S1.Count > 0) // just one tile
                 {
                     go.transform.position = new Vector3(x, transform.localScale.y *0.5f, y);
+                    
                 }
                 go.transform.localScale = scale;
-                if ((x == 0 && y == 0) || (x == terrainDimensions.x - 1 && y == 1) || so.RotationModel3D)
+                if ((x == 0) || (x == terrainDimensions.x - 1) || so.RotationModel3D)
                     go.transform.Rotate(Vector3.up, !so.RotationModel3D ? 90 : Random.Range(0, 4) * 90);
             }
         }
