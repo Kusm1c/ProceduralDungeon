@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class GenerateTerrain : MonoBehaviour
 {
     [Header("Terrain Parameters")] 
-    [SerializeField] private Vector2Int terrainDimensions;
+    [HideInInspector][SerializeField] private Vector2Int terrainDimensions;
 
     [SerializeField] private Transform terrainTransform;
     [SerializeField] private Transform cameraLaveRT;
