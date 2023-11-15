@@ -3,7 +3,7 @@
     Wall = 1,
     Lava,
     Hole,
-    Table,
+    Candle,
     Chair,
     WallCorner,
 }

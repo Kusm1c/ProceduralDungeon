@@ -10,15 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72c78ea971585e54cb2e3cd93993463b, type: 3}
-  m_Name: Table
+  m_Name: Candle
   m_EditorClassIdentifier: 
   <tilePrefab>k__BackingField: {fileID: 3686948791130865070, guid: 8cc6e48c263fd2040b9e5820979f9dae,
     type: 3}
   <Model3D_S1>k__BackingField:
-  - {fileID: 3140927148216986765, guid: 03cdd79664766b04bbf43d5bc59dbd14, type: 3}
+  - {fileID: 187572, guid: 54267a896609f27488a9af10dbd11557, type: 3}
+  - {fileID: 142838, guid: a3eea591edd85e94e9c893525e335cb0, type: 3}
+  - {fileID: 109636, guid: 635c0c417a0e8354ab3fbaf97c4820db, type: 3}
   <Model3D_S2>k__BackingField:
-  - {fileID: 3140927148216986765, guid: 67961f33b8392854381ea7f3aba64c40, type: 3}
+  - {fileID: 156492, guid: 6bae6d1df8faaf748abc9bb8d4df81c7, type: 3}
+  - {fileID: 103482, guid: b8bf93473c538e9438e008b08ea75354, type: 3}
+  - {fileID: 152554, guid: 3f4cd64e876070c40b64e92d6ad7daf0, type: 3}
   <TillingTextureModel>k__BackingField: 0
+  <RotationModel3D>k__BackingField: 0
   <numMaxGenerated>k__BackingField: 20
   <numMinGenerated>k__BackingField: 10
   <canProbability>k__BackingField: 0
@@ -27,28 +32,27 @@ MonoBehaviour:
   <conditions>k__BackingField:
   - type: 1
     possibility: 0
-    position: 2
+    position: 
   - type: 1
     possibility: 0
-    position: 6
+    position: 
   - type: 1
     possibility: 0
-    position: 7
+    position: 
   - type: 1
     possibility: 0
-    position: 7
+    position: 
   - type: 2
     possibility: 0
-    position: 0
+    position: 
   - type: 2
     possibility: 0
-    position: 1
+    position: 
   - type: 2
     possibility: 0
-    position: 3
+    position: 
   - type: 2
     possibility: 0
-    position: 2
+    position: 
   <color2D>k__BackingField: {fileID: 2100000, guid: 414468581171d444a83ce6059f50455e,
     type: 2}
-  <RotationModel3D>k__BackingField: 0
