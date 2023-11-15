@@ -30,8 +30,8 @@ public class GenerateTerrain : MonoBehaviour
     [HideInInspector] public GameObject terrainRef;
     [HideInInspector] public GameObject cameraLavaRef;
 
-    [Header("Random parameters")] [SerializeField] [Range(1, 10000)]
-    private int worldSeed = 1;
+    [Header("Random parameters")] 
+    [HideInInspector][SerializeField] [Range(1, 10000)] private int worldSeed = 1;
 
     [SerializeField] private bool useRandomSeed = false;
 
