@@ -46,7 +46,7 @@ public class GenerateTerrain : MonoBehaviour
     {
         GenerateTerrainMesh();
         GenerateData();
-        Generate3DWorld();
+        //Generate3DWorld();
         BuildNavMesh();
         PlayerManager.instance.SpawnPlayer();
     }
@@ -211,6 +211,8 @@ public class GenerateTerrain : MonoBehaviour
         {
             ValidPositions.Clear();
             _dicTileSO.Add((int)Layers[i].type, Layers[i]);
+            if (Layers[i].type == Type.Table) 
+            Debug.Log("Table");
             for (int j = 0; j < AvailablePositions.Count; j++)
             {
                 if (UtilsTerrainData.CheckAllConditions(Layers, i, AvailablePositions[j], terrainDimensions, mapData))
