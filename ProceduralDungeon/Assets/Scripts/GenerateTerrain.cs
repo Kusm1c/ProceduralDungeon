@@ -7,8 +7,8 @@ using Random = UnityEngine.Random;
 
 public class GenerateTerrain : MonoBehaviour
 {
-    [Header("Terrain Parameters")]
-    [SerializeField] private Vector2Int terrainDimensions;
+    [Header("Terrain Parameters")] [SerializeField]
+    private Vector2Int terrainDimensions;
 
     [SerializeField] private Transform terrainTransform;
     [SerializeField] private Transform cameraLaveRT;
@@ -40,6 +40,7 @@ public class GenerateTerrain : MonoBehaviour
     private Random.State stateBeforeStep3;
 
     private Dictionary<int, TileSO> _dicTileSO = new();
+    private bool regenerateAtRuntime = false;
 
     private void Start()
     {
@@ -49,7 +50,7 @@ public class GenerateTerrain : MonoBehaviour
         BuildNavMesh();
         PlayerManager.instance.SpawnPlayer();
     }
-    
+
     public void BuildNavMesh()
     {
         NavMeshSurface navMeshSurface = terrainRef.GetComponent<NavMeshSurface>();
@@ -88,7 +89,7 @@ public class GenerateTerrain : MonoBehaviour
         }
     }
 
-    public void Generate3DWorld()
+    private void Generate3DWorld()
     {
         float[,] mapDataSave = new float[terrainDimensions.x, terrainDimensions.y];
         for (int y = 0; y < terrainDimensions.y; y++)
@@ -107,16 +108,16 @@ public class GenerateTerrain : MonoBehaviour
                 if (so == null) continue;
 
                 byte XisGood = 0;
-                
+
                 int posTile = 0;
                 int indexTile = (int)mapDataSave[y, x];
-                if (indexTile == -1) continue;
-                while (posTile + x < terrainDimensions.x && indexTile == mapDataSave[y, x + posTile])
-                {
-                    mapDataSave[y, x + posTile] = -1;
+                if (indexTile != -1)
+                    while (posTile + x < terrainDimensions.x && indexTile == mapDataSave[y, x + posTile])
+                    {
+                        mapDataSave[y, x + posTile] = -1;
 
-                    posTile++;
-                }
+                        posTile++;
+                    }
 
                 if (posTile <= 1)
                 {
@@ -129,6 +130,7 @@ public class GenerateTerrain : MonoBehaviour
                             mapDataSave[y + posTile, x] = -1;
                             posTile++;
                         }
+
                     if (posTile <= 1)
                         XisGood = 2;
                 }
@@ -138,21 +140,32 @@ public class GenerateTerrain : MonoBehaviour
                     int index = Random.Range(0, so.Model3D_S1.Count);
 
                     GameObject go = Instantiate(so.Model3D_S1[index], transform);
-                    
+
                     Vector3 scale = go.transform.localScale;
                     scale.x = (float)posTile;
                     go.transform.localScale = scale;
-                    go.transform.position = new Vector3((x + posTile)/2f, scale.y/2f, y);
+                    go.transform.position = new Vector3((x + posTile) / 2f, scale.y / 2f, y);
                 }
-                
-                
+
+                if (XisGood == 1 && so.TillingTextureModel && so.Model3D_S1.Count > 0)
+                {
+                    int index = Random.Range(0, so.Model3D_S1.Count);
+                    GameObject go = Instantiate(so.Model3D_S1[index], transform);
+
+                    Vector3 scale = go.transform.localScale;
+                    scale.z = (float)posTile;
+                    go.transform.localScale = scale;
+                    go.transform.position = new Vector3(x, scale.y / 2f, (y + posTile) / 2f);
+                }
+
+
                 if (XisGood == 2 && so.Model3D_S1.Count > 0)
                 {
                     int index = Random.Range(0, so.Model3D_S1.Count);
 
                     GameObject go = Instantiate(so.Model3D_S1[index], transform);
-                    
-                    go.transform.position = new Vector3(x, transform.localScale.y/2f, y);
+
+                    go.transform.position = new Vector3(x, transform.localScale.y / 2f, y);
 
                     if ((x == 0 && y != 0) || x == terrainDimensions.x - 1)
                         go.transform.Rotate(Vector3.up, 90);
