@@ -1,9 +1,9 @@
 ﻿using System;
-
+using System.Collections.Generic;
 [Serializable]
 public struct Condition
 {
     public Type type;
     public Possibility possibility;
-    public Position position;
+    public List<Position> position;
 }
