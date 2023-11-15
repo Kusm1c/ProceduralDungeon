@@ -9,18 +9,17 @@ public static class UtilsTerrainData
     {
         for (int i = 0; i < layers[indexLayer].conditions.Count; i++)
         {
-            if (!CheckCondition(layers[indexLayer].conditions[i], layers, position, terrainDimensions, mapData))
+            if (!CheckCondition(layers[indexLayer].conditions[i], layers[indexLayer], position, terrainDimensions , mapData))
                 return false;
         }
 
         return true;
     }
 
-    private static bool CheckCondition(Condition soCondition, List<TileSO> layers, Vector2Int pos,
+    private static bool CheckCondition(Condition soCondition, TileSO tile, Vector2Int pos,
         Vector2Int terrainDimensions, float[,] mapData)
     {
-        TileSO tile = layers.Find(x => x.type == soCondition.type);
-
+        
         Vector2Int posCond = (soCondition.position == Position.Top && pos.y < terrainDimensions.y - 1)
             ? pos + Vector2Int.up
             : (soCondition.position == Position.Bottom && pos.y > 0)
