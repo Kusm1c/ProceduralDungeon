@@ -42,6 +42,9 @@ public class GenerateTerrain : MonoBehaviour
     private Dictionary<int, TileSO> _dicTileSO = new();
     [HideInInspector] [SerializeField] private bool regenerateAtRuntime = false;
     [HideInInspector] [SerializeField] private bool recookedAtRuntime = false;
+    
+    
+
 
     private void Start()
     {
