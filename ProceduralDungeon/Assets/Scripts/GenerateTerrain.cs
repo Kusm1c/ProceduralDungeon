@@ -155,9 +155,9 @@ public class GenerateTerrain : MonoBehaviour
                     go = Instantiate(so.Model3D_S1[index], goP.transform);
 
                     Vector3 scale = go.transform.localScale;
-                    scale.x += (float)posTile;
+                    scale.x = (float)posTile;
                     go.transform.localScale = scale;
-                    go.transform.position = new Vector3((x + posTile) / 2f, scale.y / 2f, y);
+                    go.transform.position = new Vector3((x + posTile) / 2f - 0.5f, scale.y / 2f, y);
                 }
 
                 else if (XisGood && so.TillingTextureModel && so.Model3D_S1.Count > 0) // vertical scale
@@ -166,10 +166,9 @@ public class GenerateTerrain : MonoBehaviour
                     go = Instantiate(so.Model3D_S1[index], goP.transform);
 
                     Vector3 scale = go.transform.localScale;
-                    scale.x += (float)posTile;
+                    scale.x = (float)posTile + ((x == terrainDimensions.x - 1 && y == 1) ? 1  : -1);
                     go.transform.localScale = scale;
-                    go.transform.position = new Vector3(x, scale.y / 2f, (y + posTile) / 2f);
-                    //go.transform.Rotate(Vector3.up, 90);
+                    go.transform.position = new Vector3(x, scale.y / 2f, (y + posTile) / 2f - ((x == terrainDimensions.x - 1 && y == 1) ? 0  : 0.5f));
                 }
 
                 else if (XisGood && so.Model3D_S1.Count > 0) // just one tile
@@ -180,7 +179,7 @@ public class GenerateTerrain : MonoBehaviour
                     go.transform.position = new Vector3(x, transform.localScale.y / 2f, y);
                 }
                 if ((x == 0 && y == 0) || (x == terrainDimensions.x - 1 && y == 1) || so.RotationModel3D)
-                    go.transform.Rotate(Vector3.up, 90);
+                        go.transform.Rotate(Vector3.up, !so.RotationModel3D ? 90 : Random.Range(0, 4) * 90);
             }
         }
     }
