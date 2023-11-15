@@ -99,12 +99,17 @@ public class GenerateTerrain : MonoBehaviour
         goP.transform.parent = transform;
 
 
-        float[,] mapDataSave = new float[terrainDimensions.x, terrainDimensions.y];
+        float[][] mapDataSave = new float[terrainDimensions.x][];
+        for (int index = 0; index < terrainDimensions.x; index++)
+        {
+            mapDataSave[index] = new float[terrainDimensions.y];
+        }
+
         for (int x = 0; x < terrainDimensions.x; x++)
         {
             for (int y = 0; y < terrainDimensions.y; y++)
             {
-                mapDataSave[x, y] = mapData[x, y];
+                mapDataSave[x][y] = mapData[x, y];
             }
         }
 
@@ -112,74 +117,131 @@ public class GenerateTerrain : MonoBehaviour
         {
             for (int y = 0; y < terrainDimensions.y; y++)
             {
-                _dicTileSO.TryGetValue((int)mapDataSave[x, y], out TileSO so);
+                _dicTileSO.TryGetValue((int)mapDataSave[x][y], out TileSO so);
                 if (so == null) continue;
 
-                bool XisGood = true;
-
-                int posTile = 0;
-                int indexTile = (int)mapDataSave[x, y];
+                int posTileX = 0;
+                int posTileY = 0;
+                int indexTile = (int)mapDataSave[x][y];
                 if (indexTile != -1 && so.TillingTextureModel)
-                    while (posTile + y < terrainDimensions.y && indexTile == mapDataSave[x, y + posTile])
+                    while (posTileX + y < terrainDimensions.y && indexTile == mapDataSave[x][y + posTileX])
                     {
-                        if ((posTile + y + 1 < terrainDimensions.y && indexTile == mapDataSave[x, y + posTile + 1]) ||
-                            posTile > 0)
-                            mapDataSave[x, y + posTile] = -1;
+                        if ((posTileX + y + 1 < terrainDimensions.y && indexTile == mapDataSave[x][y + posTileX + 1]) ||
+                            posTileX > 0)
+                            mapDataSave[x][y + posTileX] = -1;
 
-                        posTile++;
+                        posTileX++;
                     }
 
-                if (posTile <= 1 && so.TillingTextureModel)
+                if (posTileX < 2)
                 {
-                    XisGood = false;
-                    posTile = 0;
-                    indexTile = (int)mapDataSave[x, y];
+                    indexTile = (int)mapDataSave[x][y];
                     if (indexTile != -1)
-                        while (posTile + x < terrainDimensions.x && indexTile == mapDataSave[x + posTile, y])
+                        while (posTileY + x < terrainDimensions.x && indexTile == mapDataSave[x + posTileY][y])
                         {
-                            if ((posTile + x + 1 < terrainDimensions.x &&
-                                 indexTile == mapDataSave[x + posTile + 1, y]) || posTile > 0)
-                                mapDataSave[x + posTile, y] = -1;
-                            posTile++;
+                            if ((posTileY + x + 1 < terrainDimensions.x &&
+                                 indexTile == mapDataSave[x + posTileY + 1][y]) || posTileY > 0)
+                                mapDataSave[x + posTileY][y] = -1;
+                            posTileY++;
                         }
-
-                    if (posTile <= 1)
-                        XisGood = true;
                 }
 
                 GameObject go = null;
-                if (!XisGood && so.TillingTextureModel && so.Model3D_S1.Count > 0) // horizontal scale
+                int index = 0;
+                Vector3 scale = Vector3.one;
+                if ((so.TillingTextureModel && so.Model3D_S1.Count > 0) || (posTileX <= 1 && posTileY <= 1 && !so.TillingTextureModel))
                 {
-                    int index = Random.Range(0, so.Model3D_S1.Count);
-
+                    index = Random.Range(0, so.Model3D_S1.Count);
                     go = Instantiate(so.Model3D_S1[index], goP.transform);
-
-                    Vector3 scale = go.transform.localScale;
-                    scale.x = (float)posTile;
-                    go.transform.localScale = scale;
-                    go.transform.position = new Vector3((x + posTile) / 2f - 0.5f, scale.y / 2f, y);
+                    go.transform.position = new Vector3(x, transform.localScale.y  *0.5f, y);
+                    scale = go.transform.localScale;
                 }
 
-                else if (XisGood && so.TillingTextureModel && so.Model3D_S1.Count > 0) // vertical scale
+                if (posTileY > 2 && so.TillingTextureModel && so.Model3D_S1.Count > 0) // horizontal scale
                 {
-                    int index = Random.Range(0, so.Model3D_S1.Count);
-                    go = Instantiate(so.Model3D_S1[index], goP.transform);
-
-                    Vector3 scale = go.transform.localScale;
-                    scale.x = (float)posTile + ((x == terrainDimensions.x - 1 && y == 1) ? 1  : -1);
-                    go.transform.localScale = scale;
-                    go.transform.position = new Vector3(x, scale.y / 2f, (y + posTile) / 2f - ((x == terrainDimensions.x - 1 && y == 1) ? 0  : 0.5f));
+                    scale.x = (float)posTileY;
+                    go.transform.position = new Vector3((x + posTileY) *0.5f - 0.5f, scale.y  *0.5f, y);
                 }
 
-                else if (XisGood && so.Model3D_S1.Count > 0) // just one tile
+                else if (posTileX > 2 && so.TillingTextureModel && so.Model3D_S1.Count > 0) // vertical scale
                 {
-                    int index = Random.Range(0, so.Model3D_S1.Count);
+                    scale.x = (float)posTileX + ((x == terrainDimensions.x - 1 && y == 1) ? 1 : -1);
 
-                    go = Instantiate(so.Model3D_S1[index], goP.transform);
-                    go.transform.position = new Vector3(x, transform.localScale.y / 2f, y);
+                    go.transform.position = new Vector3(x, scale.y / 2f,
+                        (y + posTileX) *0.5f - ((x == terrainDimensions.x - 1 && y == 1) ? 0 : 0.5f));
                 }
+
+                else if (posTileX > 1)
+                {
+                    int index2 = posTileX;
+                    if (so.Model3D_S2.Count > 0)
+                    {
+                        int nbToSpawn = Mathf.RoundToInt((index2 % 2 == 1 ? index2 - 1 : index2) *0.5f);
+                        index = Random.Range(0, so.Model3D_S2.Count);
+                        for (int i = 0; i < nbToSpawn; i++)
+                        {
+                            go = Instantiate(so.Model3D_S2[index], goP.transform);
+                            go.transform.position = new Vector3(x, transform.localScale.y *0.5f, y);
+                            go.transform.position += new Vector3(0, 0, i * 2 + 0.5f);
+                            scale = go.transform.localScale;
+                        }
+                        index2 -= nbToSpawn * 2;
+                    }
+
+                    if (index2 > 0 && so.Model3D_S1.Count > 0)
+                    {
+                        int position = posTileX - index2;
+                        for (int i = 0; i < index2; i++)
+                        {
+                            index = Random.Range(0, so.Model3D_S1.Count);
+                            go = Instantiate(so.Model3D_S1[index], goP.transform);
+                            go.transform.position = new Vector3(x, transform.localScale.y  *0.5f, y);
+                            go.transform.position += new Vector3(0, 0, position + i);
+                            scale = go.transform.localScale;
+                        }
+
+                    }
+                }
+                
+                else if (posTileY > 1)
+                {
+                    int index2 = posTileY;
+                    if (so.Model3D_S2.Count > 0)
+                    {
+                        int nbToSpawn = Mathf.RoundToInt((index2 % 2 == 1 ? index2 - 1 : index2) *0.5f);
+                        index = Random.Range(0, so.Model3D_S2.Count);
+                        for (int i = 0; i < nbToSpawn; i++)
+                        {
+                            go = Instantiate(so.Model3D_S2[index], goP.transform);
+                            go.transform.position = new Vector3(x, transform.localScale.y *0.5f, y);
+                            go.transform.position += new Vector3(i * 2 + 0.5f, 0, 0);
+                            scale = go.transform.localScale;
+                            
+                        }
+                        index2 -= nbToSpawn * 2;
+                    }
+
+                    if (index2 > 0 && so.Model3D_S1.Count > 0)
+                    {
+                        int position = posTileY - index2;
+                        for (int i = 0; i < index2; i++)
+                        {
+                            index = Random.Range(0, so.Model3D_S1.Count);
+                            go = Instantiate(so.Model3D_S1[index], goP.transform);
+                            go.transform.position = new Vector3(x, transform.localScale.y  *0.5f, y);
+                            go.transform.position += new Vector3(position + i, 0, 0);
+                            scale = go.transform.localScale;
+                        }
+                    }
+                }
+                
+                else if (so.Model3D_S1.Count > 0) // just one tile
+                {
+                    go.transform.position = new Vector3(x, transform.localScale.y *0.5f, y);
+                }
+                go.transform.localScale = scale;
                 if ((x == 0 && y == 0) || (x == terrainDimensions.x - 1 && y == 1) || so.RotationModel3D)
-                        go.transform.Rotate(Vector3.up, !so.RotationModel3D ? 90 : Random.Range(0, 4) * 90);
+                    go.transform.Rotate(Vector3.up, !so.RotationModel3D ? 90 : Random.Range(0, 4) * 90);
             }
         }
     }
