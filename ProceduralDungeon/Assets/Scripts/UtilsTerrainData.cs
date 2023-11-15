@@ -4,6 +4,9 @@ using UnityEngine;
 
 public static class UtilsTerrainData
 {
+    private static List<bool> conditions = new();
+
+    
     public static bool CheckAllConditions(List<TileSO> layers, int indexLayer, Vector2Int position,
         Vector2Int terrainDimensions, float[,] mapData)
     {
@@ -53,8 +56,26 @@ public static class UtilsTerrainData
             Possibility.MustNot => CheckMustOrNot(posCond, soCondition.type, mapData, false),
             Possibility.Can => CheckCanOrCant(posCond, soCondition.type, tile, mapData , true),
             Possibility.Cant => CheckCanOrCant(posCond, soCondition.type, tile, mapData , false),
+            Possibility.Choose => ChooseCondition(posCond, soCondition.type, tile, mapData),
             _ => throw new System.Exception("Error in UtilsTerrainData.CheckCondition")
         };
+    }
+
+    private static bool ChooseCondition(Vector2Int posCond, Type soConditionType, TileSO tile, float[,] mapData)
+    {
+        conditions.Add(CheckMustOrNot(posCond, soConditionType, mapData, true));
+        // if (tile.type == Type.Chair) Debug.Log("TableChoose: " + TableChoose);
+        if (conditions.Count == tile.conditions[0].position.Count - 1)
+        {
+            bool cond = mapData[posCond.x, posCond.y] == (int)soConditionType;
+            foreach (bool b in conditions)
+            {
+                cond = cond || b;
+            }
+            conditions.Clear();
+            return cond;
+        }
+        return true;
     }
 
     private static bool CheckCanOrCant(Vector2Int posCond, Type soConditionType, TileSO so, float[,] mapData, bool can)
