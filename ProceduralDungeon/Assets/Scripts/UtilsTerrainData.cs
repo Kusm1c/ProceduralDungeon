@@ -48,19 +48,19 @@ public static class UtilsTerrainData
         {
             Possibility.Must => CheckMustOrNot(posCond, soCondition.type, mapData, true),
             Possibility.MustNot => CheckMustOrNot(posCond, soCondition.type, mapData, false),
-            Possibility.Can => CheckCanOrCant(posCond, soCondition.type, mapData , true),
-            Possibility.Cant => CheckCanOrCant(posCond, soCondition.type, mapData , false),
+            Possibility.Can => CheckCanOrCant(posCond, soCondition.type, tile, mapData , true),
+            Possibility.Cant => CheckCanOrCant(posCond, soCondition.type, tile, mapData , false),
             _ => throw new System.Exception("Error in UtilsTerrainData.CheckCondition")
         };
     }
 
-    private static bool CheckCanOrCant(Vector2Int posCond, Type soConditionType, float[,] mapData, bool can)
+    private static bool CheckCanOrCant(Vector2Int posCond, Type soConditionType, TileSO so, float[,] mapData, bool can)
     {
         bool cond = mapData[posCond.x, posCond.y] == (int)soConditionType;
         return can switch
         {
-            true when Random.Range(0, 100) < 85 => true,
-            false when Random.Range(0, 100) < 85 => false,
+            true when Random.Range(0, 100) < so.canProbability => true,
+            false when Random.Range(0, 100) < so.cantProbability => false,
             _ => (can) ? cond : !cond
         };
     }

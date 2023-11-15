@@ -14,21 +14,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <tilePrefab>k__BackingField: {fileID: 3686948791130865070, guid: dbe3e06edf1863a48bf15fd52e0f12e4,
     type: 3}
-  <numMaxGenerated>k__BackingField: 20
-  <numMinGenerated>k__BackingField: 10
+  <Model3D_S1>k__BackingField: []
+  <Model3D_S2>k__BackingField: []
+  <TillingTextureModel>k__BackingField: 0
+  <numMaxGenerated>k__BackingField: 200
+  <numMinGenerated>k__BackingField: 100
   <type>k__BackingField: 2
   <conditions>k__BackingField:
-  - type: 1
+  - type: 2
     possibility: 0
     position: 0
-  - type: 1
-    possibility: 0
-    position: 1
-  - type: 1
-    possibility: 0
-    position: 3
-  - type: 1
+  - type: 2
     possibility: 0
     position: 2
+  - type: 2
+    possibility: 0
+    position: 1
+  - type: 2
+    possibility: 2
+    position: 3
+  - type: 1
+    possibility: 2
+    position: 3
+  - type: 1
+    possibility: 2
+    position: 2
+  - type: 1
+    possibility: 2
+    position: 1
+  - type: 1
+    possibility: 2
+    position: 0
   <color2D>k__BackingField: {fileID: 2100000, guid: 5a07c9bf703ead54f872ba47f301234a,
     type: 2}

@@ -16,8 +16,9 @@ MonoBehaviour:
     type: 3}
   <Model3D_S1>k__BackingField: []
   <Model3D_S2>k__BackingField: []
-  <numMaxGenerated>k__BackingField: 20
-  <numMinGenerated>k__BackingField: 10
+  <TillingTextureModel>k__BackingField: 0
+  <numMaxGenerated>k__BackingField: 0
+  <numMinGenerated>k__BackingField: 0
   <type>k__BackingField: 4
   <conditions>k__BackingField:
   - type: 1
@@ -32,5 +33,17 @@ MonoBehaviour:
   - type: 1
     possibility: 0
     position: 7
+  - type: 2
+    possibility: 0
+    position: 0
+  - type: 2
+    possibility: 0
+    position: 1
+  - type: 2
+    possibility: 0
+    position: 3
+  - type: 2
+    possibility: 0
+    position: 2
   <color2D>k__BackingField: {fileID: 2100000, guid: 414468581171d444a83ce6059f50455e,
     type: 2}
