@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -229,11 +230,7 @@ public class GenerateTerrain : MonoBehaviour
         {
             ValidPositions.Clear();
             _dicTileSO.Add((int)Layers[i].type, Layers[i]);
-            for (int j = 0; j < AvailablePositions.Count; j++)
-            {
-                if (UtilsTerrainData.CheckAllConditions(Layers, i, AvailablePositions[j], terrainDimensions, mapData))
-                    ValidPositions.Add(AvailablePositions[j]);
-            }
+            ValidPositions.AddRange(AvailablePositions.Where(t => UtilsTerrainData.CheckAllConditions(Layers, i, t, terrainDimensions, mapData)));
 
             ChoosePosToUse(Layers[i], ValidPositions);
         }
