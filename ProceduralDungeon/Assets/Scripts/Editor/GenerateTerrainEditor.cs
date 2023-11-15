@@ -26,12 +26,11 @@ public class GenerateTerrainEditor : Editor
             EditorGUILayout.IntSlider("Terrain Dimensions X", terrainDimensions.vector2IntValue.x, 1, 100),
             EditorGUILayout.IntSlider("Terrain Dimensions Y", terrainDimensions.vector2IntValue.y, 1, 100)
         );
-
-        EditorGUILayout.PropertyField(regenerateAtRuntime, new GUIContent("Regenerate At Runtime"));
+        
 
         if (EditorGUI.EndChangeCheck())
         {
-            // Update serialized property with new values
+            // Update serialized property with new values 
             terrainDimensions.vector2IntValue = newDimensions;
             serializedObject.ApplyModifiedProperties();
 
