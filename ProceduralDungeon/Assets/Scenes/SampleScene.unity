@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5302ed4e86dd92a44a0ea3afc6e8139d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainDimensions: {x: 50, y: 50}
+  terrainDimensions: {x: 10, y: 20}
   terrainTransform: {fileID: 9201668891353074973, guid: 1410e84462789fa45adb42e95d5024fc,
     type: 3}
   cameraLaveRT: {fileID: 8451260794894420190, guid: f0697b4f6b6522e4ca11e6dda8fd0b05,
@@ -171,6 +171,7 @@ MonoBehaviour:
   worldSeed: 6940
   useRandomSeed: 0
   regenerateAtRuntime: 1
+  recookedAtRuntime: 1
 --- !u!4 &378379764
 Transform:
   m_ObjectHideFlags: 0
@@ -403,7 +404,7 @@ Transform:
   m_GameObject: {fileID: 1400669233}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.96, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

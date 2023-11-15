@@ -16,10 +16,13 @@ MonoBehaviour:
     type: 3}
   <Model3D_S1>k__BackingField:
   - {fileID: 3705331789912959411, guid: c669c6bd715ad4c46acc5fb1b562f681, type: 3}
-  <Model3D_S2>k__BackingField: []
+  <Model3D_S2>k__BackingField:
+  - {fileID: 3140927148216986765, guid: be7f17351923cf44ea85f879f3a485d2, type: 3}
   <TillingTextureModel>k__BackingField: 0
   <numMaxGenerated>k__BackingField: 40
   <numMinGenerated>k__BackingField: 30
+  <canProbability>k__BackingField: 0
+  <cantProbability>k__BackingField: 0
   <type>k__BackingField: 3
   <conditions>k__BackingField:
   - type: 1
@@ -48,3 +51,4 @@ MonoBehaviour:
     position: 3
   <color2D>k__BackingField: {fileID: 2100000, guid: 06686c39726e4f64c9b9504d749f65df,
     type: 2}
+  <RotationModel3D>k__BackingField: 0

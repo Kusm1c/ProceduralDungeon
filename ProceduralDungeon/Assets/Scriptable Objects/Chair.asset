@@ -20,6 +20,8 @@ MonoBehaviour:
   <TillingTextureModel>k__BackingField: 0
   <numMaxGenerated>k__BackingField: 40
   <numMinGenerated>k__BackingField: 30
+  <canProbability>k__BackingField: 0
+  <cantProbability>k__BackingField: 0
   <type>k__BackingField: 5
   <conditions>k__BackingField:
   - type: 4
@@ -39,3 +41,4 @@ MonoBehaviour:
     position: 3
   <color2D>k__BackingField: {fileID: 2100000, guid: 896f0409a25d97448a8997d6595c28b4,
     type: 2}
+  <RotationModel3D>k__BackingField: 1
