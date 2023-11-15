@@ -15,7 +15,7 @@ MonoBehaviour:
   <tilePrefab>k__BackingField: {fileID: 3686948791130865070, guid: 8cc6e48c263fd2040b9e5820979f9dae,
     type: 3}
   <Model3D_S1>k__BackingField:
-  - {fileID: 3140927148216986765, guid: 03cdd79664766b04bbf43d5bc59dbd14, type: 3}
+  - {fileID: 3140927148216986765, guid: 67961f33b8392854381ea7f3aba64c40, type: 3}
   <Model3D_S2>k__BackingField: []
   <TillingTextureModel>k__BackingField: 0
   <numMaxGenerated>k__BackingField: 20

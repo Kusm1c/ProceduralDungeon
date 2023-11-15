@@ -46,7 +46,7 @@ public class GenerateTerrain : MonoBehaviour
     {
         GenerateTerrainMesh();
         GenerateData();
-        //Generate3DWorld();
+        Generate3DWorld();
         BuildNavMesh();
         PlayerManager.instance.SpawnPlayer();
     }
@@ -76,46 +76,46 @@ public class GenerateTerrain : MonoBehaviour
             name = so.type.ToString()
         };
         goP.transform.parent = transform;
-
+        
         for (int i = 0; i < numToUse; i++)
         {
             int index = Random.Range(0, positions.Count);
             Vector2Int pos = positions[index];
             AvailablePositions.Remove(pos);
-            mapData[pos.y, pos.x] = (int)so.type;
+            mapData[pos.x, pos.y] = (int)so.type;
             positions.RemoveAt(index);
-
+            
             GenerateTile(so.tilePrefab, goP.transform, new Vector3(pos.x, 0.1f, pos.y), so.color2D);
         }
     }
 
     private void Generate3DWorld()
     {
-        float[,] mapDataSave = new float[terrainDimensions.y, terrainDimensions.x];
-        for (int y = 0; y < terrainDimensions.y; y++)
+        float[,] mapDataSave = new float[terrainDimensions.x, terrainDimensions.y];
+        for (int x = 0; x < terrainDimensions.x; x++)
         {
-            for (int x = 0; x < terrainDimensions.x; x++)
+            for (int y = 0; y < terrainDimensions.y; y++)
             {
-                mapDataSave[y, x] = mapData[y, x];
+                mapDataSave[x, y] = mapData[x, y];
             }
         }
 
-        for (int y = 0; y < terrainDimensions.y; y++)
+        for (int x = 0; x < terrainDimensions.x; x++)
         {
-            for (int x = 0; x < terrainDimensions.x; x++)
+            for (int y = 0; y < terrainDimensions.y; y++)
             {
-                _dicTileSO.TryGetValue((int)mapDataSave[y, x], out TileSO so);
+                _dicTileSO.TryGetValue((int)mapDataSave[x, y], out TileSO so);
                 if (so == null) continue;
 
                 bool XisGood = true;
 
                 int posTile = 0;
-                int indexTile = (int)mapDataSave[y, x];
+                int indexTile = (int)mapDataSave[x, y];
                 if (indexTile != -1 && so.TillingTextureModel)
-                    while (posTile + x < terrainDimensions.x && indexTile == mapDataSave[y, x + posTile])
+                    while (posTile + y < terrainDimensions.y && indexTile == mapDataSave[x, y + posTile])
                     {
-                        if ((posTile + x + 1 < terrainDimensions.x && indexTile == mapDataSave[y, x + posTile + 1]) || posTile > 0)
-                            mapDataSave[y, x + posTile] = -1;
+                        if ((posTile + y + 1 < terrainDimensions.y && indexTile == mapDataSave[x, y + posTile + 1]) || posTile > 0)
+                            mapDataSave[x, y + posTile] = -1;
 
                         posTile++;
                     }
@@ -124,12 +124,12 @@ public class GenerateTerrain : MonoBehaviour
                 {
                     XisGood = false;
                     posTile = 0;
-                    indexTile = (int)mapDataSave[y, x];
+                    indexTile = (int)mapDataSave[x, y];
                     if (indexTile != -1)
-                        while (posTile + y < terrainDimensions.y && indexTile == mapDataSave[y + posTile, x])
+                        while (posTile + x < terrainDimensions.x && indexTile == mapDataSave[x + posTile, y])
                         {
-                            if ((posTile + y + 1 < terrainDimensions.y && indexTile == mapDataSave[y + posTile + 1, x]) || posTile > 0)
-                                mapDataSave[y + posTile, x] = -1;
+                            if ((posTile + x + 1 < terrainDimensions.x && indexTile == mapDataSave[x + posTile + 1, y]) || posTile > 0)
+                                mapDataSave[x + posTile, y] = -1;
                             posTile++;
                         }
 
@@ -137,7 +137,7 @@ public class GenerateTerrain : MonoBehaviour
                         XisGood = true;
                 }
                 GameObject go = null;
-                if (XisGood && so.TillingTextureModel && so.Model3D_S1.Count > 0) // horizontal scale
+                if (!XisGood && so.TillingTextureModel && so.Model3D_S1.Count > 0) // horizontal scale
                 {
                     int index = Random.Range(0, so.Model3D_S1.Count);
 
@@ -149,7 +149,7 @@ public class GenerateTerrain : MonoBehaviour
                     go.transform.position = new Vector3((x + posTile) / 2f, scale.y / 2f, y);
                 }
 
-                else if (!XisGood && so.TillingTextureModel && so.Model3D_S1.Count > 0) // vertical scale
+                else if (XisGood && so.TillingTextureModel && so.Model3D_S1.Count > 0) // vertical scale
                 {
                     int index = Random.Range(0, so.Model3D_S1.Count);
                     go = Instantiate(so.Model3D_S1[index], transform);
@@ -158,6 +158,7 @@ public class GenerateTerrain : MonoBehaviour
                     scale.x += (float)posTile ;
                     go.transform.localScale = scale;
                     go.transform.position = new Vector3(x, scale.y / 2f, (y + posTile) / 2f);
+                        go.transform.Rotate(Vector3.up, 90);
                 }
                 
                 else if (XisGood && so.Model3D_S1.Count > 0) // just one tile
@@ -165,11 +166,10 @@ public class GenerateTerrain : MonoBehaviour
                     int index = Random.Range(0, so.Model3D_S1.Count);
                     
                     go = Instantiate(so.Model3D_S1[index], transform);
-                    go.transform.position = new Vector3(y, transform.localScale.y / 2f, x);
+                    go.transform.position = new Vector3(x, transform.localScale.y / 2f, y);
                 }
                 
-                if (go != null && (x == 0 && y != 0) || x == terrainDimensions.x - 1)
-                    go.transform.Rotate(Vector3.up, 90);
+
             }
         }
     }
@@ -178,31 +178,31 @@ public class GenerateTerrain : MonoBehaviour
     {
         AvailablePositions.Clear();
         _dicTileSO.Clear();
-        mapData = new float[terrainDimensions.y, terrainDimensions.x];
+        mapData = new float[terrainDimensions.x, terrainDimensions.y];
     }
 
     public void GenerateData()
     {
         ResetData();
-
+        
         if (!useRandomSeed)
             Random.InitState(worldSeed);
         List<Vector2Int> unavailablePositions = new List<Vector2Int>();
         UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions,
-            ref unavailablePositions);
+            ref  unavailablePositions);
 
         GameObject goP = new GameObject
         {
             name = Wall.type.ToString()
         };
         goP.transform.parent = transform;
-
+        
         _dicTileSO.Add((int)Wall.type, Wall);
 
         for (int i = 0; i < unavailablePositions.Count; i++)
         {
-            GenerateTile(Wall.tilePrefab, goP.transform,
-                new Vector3(unavailablePositions[i].y, 0.1f, unavailablePositions[i].x), Wall.color2D);
+            GenerateTile(Wall.tilePrefab, goP.transform, 
+                new Vector3(unavailablePositions[i].x, 0.1f, unavailablePositions[i].y), Wall.color2D);
         }
 
         List<Vector2Int> ValidPositions = new List<Vector2Int>();
@@ -211,14 +211,11 @@ public class GenerateTerrain : MonoBehaviour
         {
             ValidPositions.Clear();
             _dicTileSO.Add((int)Layers[i].type, Layers[i]);
-            if (Layers[i].type == Type.Table) 
-            Debug.Log("Table");
             for (int j = 0; j < AvailablePositions.Count; j++)
             {
                 if (UtilsTerrainData.CheckAllConditions(Layers, i, AvailablePositions[j], terrainDimensions, mapData))
                     ValidPositions.Add(AvailablePositions[j]);
             }
-
             ChoosePosToUse(Layers[i], ValidPositions);
         }
     }

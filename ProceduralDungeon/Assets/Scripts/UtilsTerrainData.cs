@@ -73,9 +73,8 @@ public static class UtilsTerrainData
 
     private static bool CheckMustOrNot(Vector2Int pos, Type type, float[,] mapData, bool isMust)
     {
-        if (pos.y < 0 || pos.x < 0 || pos.y >= mapData.GetLength(0) || pos.x >= mapData.GetLength(1))
-            return false;
-        bool cond = mapData[pos.y, pos.x] == (int)type;
+        //Debug.Log(pos.y + " , " + pos.x);
+        bool cond = mapData[pos.x, pos.y] == (int)type;
         return (isMust) ? cond : !cond;
     }
 }

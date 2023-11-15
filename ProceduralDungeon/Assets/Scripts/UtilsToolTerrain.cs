@@ -110,16 +110,16 @@ public static class UtilsToolTerrain
     public static void InitData(ref float[,] mapData, ref List<Vector2Int> generatedPositions,
         Vector2Int size, ref List<Vector2Int> unavailablePositions)
     {
-        mapData = new float[size.y, size.x];
-        for (int y = 0; y < size.y; y++)
+        mapData = new float[size.x, size.y];
+        for (int x = 0; x < size.x; x++)
         {
-            for (int x = 0; x < size.x; x++)
+            for (int y = 0; y < size.y; y++)
             {
-                mapData[y, x] = (x == 0 || x == size.x - 1 || y == 0 || y == size.y - 1) ? (float)Type.Wall : 0.0f;
-                if (mapData[y, x] == 0.0f)
-                    generatedPositions.Add(new Vector2Int(y, x));
+                mapData[x, y] = (y == 0 || y == size.y - 1 || x == 0 || x == size.x - 1) ? (float)Type.Wall : 0.0f;
+                if (mapData[x, y] == 0.0f)
+                    generatedPositions.Add(new Vector2Int(x, y));
                 else
-                    unavailablePositions.Add(new Vector2Int(y, x));
+                    unavailablePositions.Add(new Vector2Int(x, y));
             }
         }
     }
