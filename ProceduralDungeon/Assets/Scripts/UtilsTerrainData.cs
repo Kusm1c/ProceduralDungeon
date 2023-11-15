@@ -64,8 +64,8 @@ public static class UtilsTerrainData
         bool cond = mapData[posCond.x, posCond.y] == (int)soConditionType;
         return can switch
         {
-            true when Random.Range(0, 100) < 75 => true,
-            false when Random.Range(0, 100) < 75 => false,
+            true when Random.Range(0, 100) < 25 => true,
+            false when Random.Range(0, 100) < 25 => false,
             _ => (can) ? cond : !cond
         };
     }
