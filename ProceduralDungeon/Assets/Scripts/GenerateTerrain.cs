@@ -13,7 +13,6 @@ public class GenerateTerrain : MonoBehaviour
 
     [SerializeField] private Transform terrainTransform;
     [SerializeField] private Transform cameraLaveRT;
-    [SerializeField] private TileSO Wall;
     [SerializeField] private List<TileSO> Layers = new();
 
     [Header("Shader Parameters")] [SerializeField]
@@ -163,16 +162,15 @@ public class GenerateTerrain : MonoBehaviour
 
                 if (posTileY > 2 && so.TillingTextureModel && so.Model3D_S1.Count > 0) // horizontal scale
                 {
-                    scale.x = (float)posTileY;
-                    go.transform.position = new Vector3((x + posTileY) *0.5f - 0.5f, scale.y  *0.5f, y);
+                    scale.x += (float)posTileY;
+                    go.transform.position = new Vector3((x + posTileY) *0.5f, scale.y  *0.5f, y);
                 }
 
                 else if (posTileX > 2 && so.TillingTextureModel && so.Model3D_S1.Count > 0) // vertical scale
                 {
-                    scale.x = (float)posTileX + ((x == terrainDimensions.x - 1 && y == 1) ? 1 : -1);
+                    scale.x = (float)posTileX + 1;
 
-                    go.transform.position = new Vector3(x, scale.y / 2f,
-                        (y + posTileX) *0.5f - ((x == terrainDimensions.x - 1 && y == 1) ? 0 : 0.5f));
+                    go.transform.position = new Vector3(x, scale.y / 2f, (y + posTileX) *0.5f );
                 }
 
                 else if (posTileX > 1)
@@ -274,24 +272,50 @@ public class GenerateTerrain : MonoBehaviour
         List<Vector2Int> unavailablePositions = new List<Vector2Int>();
         UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions,
             ref unavailablePositions);
-
-        GameObject goP = new GameObject
+        
+        //corner
+        GameObject goPCorner = new GameObject
         {
-            name = Wall.type.ToString()
+            name = Layers[0].type.ToString()
         };
-        goP.transform.parent = transform;
+        goPCorner.transform.parent = transform;
 
-        _dicTileSO.Add((int)Wall.type, Wall);
+        _dicTileSO.Add((int)Layers[0].type, Layers[0]);
+//wall
+        GameObject goPWall = new GameObject
+        {
+            name = Layers[1].type.ToString()
+        };
+        goPWall.transform.parent = transform;
+
+        _dicTileSO.Add((int)Layers[1].type, Layers[1]);
 
         for (int i = 0; i < unavailablePositions.Count; i++)
         {
-            GenerateTile(Wall.tilePrefab, goP.transform,
-                new Vector3(unavailablePositions[i].x, 0.1f, unavailablePositions[i].y), Wall.color2D);
+            Transform tr = null;
+            Material mat = null;
+            if (unavailablePositions[i] == Vector2Int.zero ||
+                unavailablePositions[i] == new Vector2Int(terrainDimensions.x - 1, 0) ||
+                unavailablePositions[i] == new Vector2Int(0, terrainDimensions.y - 1) ||
+                unavailablePositions[i] == new Vector2Int(terrainDimensions.x - 1, terrainDimensions.y - 1)
+                )
+            {
+                tr = goPCorner.transform;
+                mat = Layers[0].color2D;
+            }
+            else
+            {
+                tr = goPWall.transform;
+                mat = Layers[1].color2D;
+            }
+            
+            GenerateTile(Layers[1].tilePrefab, tr,
+                new Vector3(unavailablePositions[i].x, 0.1f, unavailablePositions[i].y), mat);
         }
 
         List<Vector2Int> ValidPositions = new List<Vector2Int>();
-
-        for (int i = 0; i < Layers.Count; i++)
+        
+        for (int i = 2; i < Layers.Count; i++)
         {
             ValidPositions.Clear();
             _dicTileSO.Add((int)Layers[i].type, Layers[i]);
