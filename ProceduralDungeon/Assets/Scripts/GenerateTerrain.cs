@@ -7,8 +7,8 @@ using Random = UnityEngine.Random;
 
 public class GenerateTerrain : MonoBehaviour
 {
-    [Header("Terrain Parameters")] [SerializeField]
-    private Vector2Int terrainDimensions;
+    [Header("Terrain Parameters")] 
+    [HideInInspector][SerializeField] private Vector2Int terrainDimensions;
 
     [SerializeField] private Transform terrainTransform;
     [SerializeField] private Transform cameraLaveRT;
@@ -30,8 +30,8 @@ public class GenerateTerrain : MonoBehaviour
     [HideInInspector] public GameObject terrainRef;
     [HideInInspector] public GameObject cameraLavaRef;
 
-    [Header("Random parameters")] [SerializeField] [Range(1, 10000)]
-    private int worldSeed = 1;
+    [Header("Random parameters")] 
+    [HideInInspector][SerializeField] [Range(1, 10000)] private int worldSeed = 1;
 
     [SerializeField] private bool useRandomSeed = false;
 
@@ -40,7 +40,7 @@ public class GenerateTerrain : MonoBehaviour
     private Random.State stateBeforeStep3;
 
     private Dictionary<int, TileSO> _dicTileSO = new();
-    private bool regenerateAtRuntime = false;
+    [HideInInspector] [SerializeField] private bool regenerateAtRuntime = false;
 
     private void Start()
     {

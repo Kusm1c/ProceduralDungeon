@@ -5,12 +5,14 @@ using UnityEngine;
 public class GenerateTerrainEditor : Editor
 {
     SerializedProperty terrainDimensions;
-    private SerializedProperty regenerateAtRuntime;
+    SerializedProperty worldSeed;
+    SerializedProperty regenerateAtRuntime;
 
     private void OnEnable()
     {
         terrainDimensions = serializedObject.FindProperty("terrainDimensions");
         regenerateAtRuntime = serializedObject.FindProperty("regenerateAtRuntime");
+        worldSeed = serializedObject.FindProperty("worldSeed");
     }
 
     public override void OnInspectorGUI()
@@ -22,18 +24,27 @@ public class GenerateTerrainEditor : Editor
 
         EditorGUI.BeginChangeCheck(); // Start change check
 
+        
         Vector2Int newDimensions = new Vector2Int(
             EditorGUILayout.IntSlider("Terrain Dimensions X", terrainDimensions.vector2IntValue.x, 1, 100),
             EditorGUILayout.IntSlider("Terrain Dimensions Y", terrainDimensions.vector2IntValue.y, 1, 100)
         );
+
+        EditorGUILayout.LabelField("Seed Parameters", EditorStyles.boldLabel);
+        int newWorldSeed = EditorGUILayout.IntSlider("World Seed", worldSeed.intValue, 1, 10000);
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Regenerate At Runtime", EditorStyles.boldLabel);
+        regenerateAtRuntime.boolValue = EditorGUILayout.Toggle(regenerateAtRuntime.boolValue);
+        EditorGUILayout.EndHorizontal();
         
 
         if (EditorGUI.EndChangeCheck())
-        {
-            // Update serialized property with new values 
+        { 
+            worldSeed.intValue = newWorldSeed;
             terrainDimensions.vector2IntValue = newDimensions;
             serializedObject.ApplyModifiedProperties();
-
+            
             if (regenerateAtRuntime.boolValue)
             {
                 terrain.GenerateTerrainMesh();

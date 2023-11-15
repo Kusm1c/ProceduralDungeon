@@ -12,6 +12,7 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     private void LateUpdate()
     {
+        if (player == null) return;
         Vector3 desiredPosition = player.transform.position + offset;
         Vector3 lerpedPosition = Vector3.Lerp(transform.position, desiredPosition, lerpingSpeed * Time.deltaTime);
         transform.position = lerpedPosition;

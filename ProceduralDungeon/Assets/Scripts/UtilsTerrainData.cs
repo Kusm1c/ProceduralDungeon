@@ -45,13 +45,29 @@ public static class UtilsTerrainData
         if (posCond is { x: -1, y: -1 }) return false;
 
         return (soCondition.possibility == Possibility.Must)
-            ?
-            CheckMustOrNot(posCond, soCondition.type, mapData, true)
+            ? CheckMustOrNot(posCond, soCondition.type, mapData, true)
             :
             (soCondition.possibility == Possibility.MustNot)
                 ? CheckMustOrNot(posCond, soCondition.type, mapData, false)
                 :
-                throw new System.Exception("Error");
+                (soCondition.possibility == Possibility.Can)
+                    ? CheckCanOrCant(posCond, soCondition.type, mapData , true)
+                    :
+                    (soCondition.possibility == Possibility.Cant)
+                        ? CheckCanOrCant(posCond, soCondition.type, mapData , false)
+                        :
+                        throw new System.Exception("Error in UtilsTerrainData.CheckCondition");
+    }
+
+    private static bool CheckCanOrCant(Vector2Int posCond, Type soConditionType, float[,] mapData, bool can)
+    {
+        bool cond = mapData[posCond.x, posCond.y] == (int)soConditionType;
+        return can switch
+        {
+            true when Random.Range(0, 100) < 25 => true,
+            false when Random.Range(0, 100) < 25 => false,
+            _ => (can) ? cond : !cond
+        };
     }
 
 
