@@ -157,14 +157,15 @@ MonoBehaviour:
     type: 3}
   cameraLaveRT: {fileID: 8451260794894420190, guid: f0697b4f6b6522e4ca11e6dda8fd0b05,
     type: 3}
-  Wall: {fileID: 11400000, guid: 66e3470d7bedbed49b7e3371f2f2269b, type: 2}
-  wallCorner: {fileID: 0}
   Layers:
+  - {fileID: 11400000, guid: f7e2b5809f978f643b66ff0da4fe92be, type: 2}
+  - {fileID: 11400000, guid: 66e3470d7bedbed49b7e3371f2f2269b, type: 2}
   - {fileID: 11400000, guid: 561ed819d17c65d4f857e4b3ae975999, type: 2}
   - {fileID: 11400000, guid: 564df3abf4cae55438522af8bc054073, type: 2}
   - {fileID: 11400000, guid: 17925000e7d7cc74dbf7137be28c925e, type: 2}
   - {fileID: 11400000, guid: 4fedac95d10c2fb4faef9024ca6155af, type: 2}
-  - {fileID: 11400000, guid: f7e2b5809f978f643b66ff0da4fe92be, type: 2}
+  positionsNotAvailable:
+  - {fileID: 8548566606290438240}
   thicknessParam: 0.95
   gridColor: {r: 0, g: 0.0377028, b: 1, a: 1}
   lineColor: {r: 1, g: 1, b: 1, a: 1}
@@ -621,12 +622,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8849684465523471756, guid: 218c4deffb3803b4493cfd9771319e86,
         type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 7201092581798076536, guid: b13e64d7db863d84daaf00fa851d9545,
-        type: 3}
-    - target: {fileID: 8849684465523471756, guid: 218c4deffb3803b4493cfd9771319e86,
-        type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1606572685}
@@ -635,6 +630,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 218c4deffb3803b4493cfd9771319e86, type: 3}
+--- !u!4 &8548566606290438240 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4756414529052408304, guid: 218c4deffb3803b4493cfd9771319e86,
+    type: 3}
+  m_PrefabInstance: {fileID: 8548566606290438239}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
