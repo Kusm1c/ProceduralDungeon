@@ -116,6 +116,9 @@ public static class UtilsToolTerrain
             for (int y = 0; y < size.y; y++)
             {
                 mapData[x, y] = (y == 0 || y == size.y - 1 || x == 0 || x == size.x - 1) ? (float)Type.Wall : 0.0f;
+                if ((x == 0 && y == 0) || (x == 0 && y == size.y - 1) || (x == size.x - 1 && y == 0) ||
+                    (x == size.x - 1 && y == size.y - 1))
+                    mapData[x, y] = (float)Type.WallCorner;
                 if (mapData[x, y] == 0.0f)
                     generatedPositions.Add(new Vector2Int(x, y));
                 else

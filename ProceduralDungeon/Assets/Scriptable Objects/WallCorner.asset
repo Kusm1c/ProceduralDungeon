@@ -10,22 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72c78ea971585e54cb2e3cd93993463b, type: 3}
-  m_Name: Wall
+  m_Name: WallCorner
   m_EditorClassIdentifier: 
   <tilePrefab>k__BackingField: {fileID: 3686948791130865070, guid: 8cc6e48c263fd2040b9e5820979f9dae,
     type: 3}
   <Model3D_S1>k__BackingField:
-  - {fileID: 124164, guid: e38067ccaff52424db35c2958d80cb11, type: 3}
-  - {fileID: 114202, guid: 15a08d7d20037d54a9c4a4a557df23e4, type: 3}
-  - {fileID: 192454, guid: edf36f15892d1fb4d913feaa9b0a6dc3, type: 3}
+  - {fileID: 128926, guid: c83073190e4a3614b9dbac2cf9c47f32, type: 3}
   <Model3D_S2>k__BackingField: []
   <TillingTextureModel>k__BackingField: 0
-  <RotationModel3D>k__BackingField: 0
   <numMaxGenerated>k__BackingField: 9999
   <numMinGenerated>k__BackingField: 9999
   <canProbability>k__BackingField: 0
   <cantProbability>k__BackingField: 0
-  <type>k__BackingField: 1
+  <type>k__BackingField: 6
   <conditions>k__BackingField: []
-  <color2D>k__BackingField: {fileID: 2100000, guid: 4e2b354c4043b544dbcfcbe5e230fd7b,
+  <color2D>k__BackingField: {fileID: 2100000, guid: 3eba06067f8a9d046a5f74edd4156b5d,
     type: 2}
+  <RotationModel3D>k__BackingField: 0

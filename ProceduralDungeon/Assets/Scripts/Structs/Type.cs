@@ -5,4 +5,5 @@
     Hole,
     Table,
     Chair,
+    WallCorner,
 }

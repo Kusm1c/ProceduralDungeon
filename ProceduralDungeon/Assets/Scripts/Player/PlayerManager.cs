@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     public NavMeshSurface surface { get; set; }
     [SerializeField] private GameObject player;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private Transform spawnPoint;
     private void Awake()
     {
         if (instance == null)
@@ -22,7 +23,7 @@ public class PlayerManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        GameObject go = Instantiate(player, new Vector3(2, 2, 2), Quaternion.identity);
+        GameObject go = Instantiate(player, spawnPoint.position, Quaternion.identity);
         mainCamera.GetComponent<CameraScript>().player = go;
         SetPlayersNavMeshAgent();
     }
