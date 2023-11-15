@@ -35,7 +35,7 @@ public class GenerateTerrain : MonoBehaviour
 
     [SerializeField] private bool useRandomSeed = false;
 
-    private float[,] mapData;
+    [HideInInspector][SerializeField] public float[,] mapData;
     private List<Vector2Int> AvailablePositions = new();
     private Random.State stateBeforeStep3;
 
@@ -192,6 +192,13 @@ public class GenerateTerrain : MonoBehaviour
         mapData = new float[terrainDimensions.x, terrainDimensions.y];
     }
 
+    private void ClearData()
+    {
+        AvailablePositions.Clear();
+        _dicTileSO.Clear();
+        mapData = null;
+    }
+
     public void GenerateData()
     {
         ResetData();
@@ -235,11 +242,7 @@ public class GenerateTerrain : MonoBehaviour
     [ContextMenu("Generate Terrain")]
     public void GenerateTerrainMesh()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            DestroyImmediate(transform.GetChild(i).gameObject);
-            i--;
-        }
+        ClearWorld();
 
         //Get Transform
         GameObject terrain = Instantiate(terrainTransform.gameObject, transform);
@@ -301,5 +304,15 @@ public class GenerateTerrain : MonoBehaviour
         cameraLava.transform.position = new Vector3((float)terrainDimensions.x / 2, 5, (float)terrainDimensions.y / 2);
         cameraLava.GetComponent<Camera>().orthographicSize = (float)(terrainDimensions.x + terrainDimensions.y) / 4;
         cameraLavaRef = cameraLava;
+    }
+
+    public void ClearWorld()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            DestroyImmediate(transform.GetChild(i).gameObject);
+            i--;
+        }
+        ClearData();
     }
 }
