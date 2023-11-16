@@ -59,7 +59,7 @@ public class PlayerControl : MonoBehaviour
                          _ => throw new System.Exception("Error in PlayerControl.Update")
                      }))
         {
-            generateTerrain.GenerateNextRoom(doorSide);
+            generateTerrain.UtilsDoors.GenerateNextRoom(doorSide);
         }
     }
 
