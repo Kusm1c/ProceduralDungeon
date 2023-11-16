@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 442396}
   - component: {fileID: 3367714}
   - component: {fileID: 2373556}
-  - component: {fileID: 5541617383768272439}
+  - component: {fileID: 3719475056240210772}
   m_Layer: 0
   m_Name: helmet
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &5541617383768272439
+--- !u!208 &3719475056240210772
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

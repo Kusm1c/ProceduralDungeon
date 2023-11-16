@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 454578}
   - component: {fileID: 3356616}
   - component: {fileID: 2345028}
-  - component: {fileID: -8651936786312889660}
+  - component: {fileID: -1186625103595455692}
   m_Layer: 0
   m_Name: pillar1
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &-8651936786312889660
+--- !u!208 &-1186625103595455692
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

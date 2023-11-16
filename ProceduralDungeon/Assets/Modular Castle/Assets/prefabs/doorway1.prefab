@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 499586}
   - component: {fileID: 3377978}
   - component: {fileID: 2399112}
-  - component: {fileID: 5535756554421505795}
+  - component: {fileID: -1016339727649536451}
   m_Layer: 0
   m_Name: doorway1
   m_TagString: Untagged
@@ -85,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &5535756554421505795
+--- !u!208 &-1016339727649536451
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &448720
 Transform:
   m_ObjectHideFlags: 0

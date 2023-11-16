@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 439872}
   - component: {fileID: 3312272}
   - component: {fileID: 2372786}
-  - component: {fileID: -4148487323126417441}
+  - component: {fileID: 614671462025961473}
   m_Layer: 0
   m_Name: candleholder3
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &-4148487323126417441
+--- !u!208 &614671462025961473
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,14 +1,17 @@
 ﻿using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
     public NavMeshSurface surface { get; set; }
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject playerPrefab;
+    private GameObject player;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Transform spawnPoint;
+    public GenerateTerrain generator;
     private void Awake()
     {
         if (instance == null)
@@ -23,13 +26,27 @@ public class PlayerManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        GameObject go = Instantiate(player, spawnPoint.position, Quaternion.identity);
-        mainCamera.GetComponent<CameraScript>().player = go;
+        player = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
+        player.GetComponent<PlayerControl>().generateTerrain = generator;
+        mainCamera.GetComponent<CameraScript>().player = player;
+        SetPlayersNavMeshAgent();
+    }
+    
+    public void SpawnPlayer(Vector3 position)
+    {
+        if (player != null)
+        {
+            Destroy(player);
+        }
+        player = Instantiate(playerPrefab, position, Quaternion.identity);
+        player.GetComponent<PlayerControl>().generateTerrain = generator;
+        mainCamera.GetComponent<CameraScript>().player = player;
         SetPlayersNavMeshAgent();
     }
 
+
     private void SetPlayersNavMeshAgent()
     {
-        player.GetComponent<NavMeshAgent>().enabled = true;
+        playerPrefab.GetComponent<NavMeshAgent>().enabled = true;
     }
 }

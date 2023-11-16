@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 451220}
   - component: {fileID: 3361718}
   - component: {fileID: 2361786}
-  - component: {fileID: 2669966967198351716}
+  - component: {fileID: 1540968229238326228}
   m_Layer: 0
   m_Name: sword
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &2669966967198351716
+--- !u!208 &1540968229238326228
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 469520}
   - component: {fileID: 3399694}
   - component: {fileID: 2369136}
-  - component: {fileID: 2950776048176014890}
+  - component: {fileID: 390375649860111925}
   m_Layer: 0
   m_Name: stand with weapons
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &2950776048176014890
+--- !u!208 &390375649860111925
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

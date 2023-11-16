@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 477766}
   - component: {fileID: 3320332}
   - component: {fileID: 2309200}
-  - component: {fileID: -5388134389434227054}
+  - component: {fileID: 4936216434946658117}
   m_Layer: 0
   m_Name: pillow
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &-5388134389434227054
+--- !u!208 &4936216434946658117
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

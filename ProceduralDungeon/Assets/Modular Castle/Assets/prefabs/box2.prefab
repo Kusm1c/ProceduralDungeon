@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 498814}
   - component: {fileID: 3355460}
   - component: {fileID: 2366970}
-  - component: {fileID: -1170902054865959891}
+  - component: {fileID: -6786170011701400020}
   m_Layer: 0
   m_Name: box2
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &-1170902054865959891
+--- !u!208 &-6786170011701400020
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

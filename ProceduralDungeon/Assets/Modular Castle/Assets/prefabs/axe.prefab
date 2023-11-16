@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 491678}
   - component: {fileID: 3329004}
   - component: {fileID: 2365138}
-  - component: {fileID: -7083553290112527406}
+  - component: {fileID: 2577311626638300925}
   m_Layer: 0
   m_Name: axe
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &-7083553290112527406
+--- !u!208 &2577311626638300925
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

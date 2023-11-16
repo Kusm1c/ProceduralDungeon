@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 420168}
   - component: {fileID: 3369086}
   - component: {fileID: 2365044}
-  - component: {fileID: 1436432550425221382}
+  - component: {fileID: -4203651865492130634}
   m_Layer: 0
   m_Name: litter1
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &1436432550425221382
+--- !u!208 &-4203651865492130634
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

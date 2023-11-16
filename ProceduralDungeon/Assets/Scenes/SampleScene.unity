@@ -171,8 +171,9 @@ MonoBehaviour:
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   terrainRef: {fileID: 0}
   cameraLavaRef: {fileID: 0}
-  doorPrefab: {fileID: 1768673871277918230, guid: dac5813b0ac8e124487a46293f9e0b4f,
+  doorPrefab2D: {fileID: 3686948791130865070, guid: c34e39bd1efb33d4a9f037258132cce5,
     type: 3}
+  doorPrefab3D: {fileID: 118334, guid: 0b7f3b033306b6d4b956436528383403, type: 3}
   worldSeed: 5313
   useRandomSeed: 0
   multipleDoorsOnSameSide: 0
@@ -181,12 +182,15 @@ MonoBehaviour:
   preview2DLayers: []
   preview3DLayers: []
   enabled3DPreview: 0
-  useMultiRoomOnStart: 1
+  useMultiRoomOnStart: 0
   numRoom: 5
   minSizeRoom: 20
   maxSizeRoom: 50
   offsetSeed: 10
   distanceBetweenRoom: 5
+  rooms: []
+  currentRoom: 0
+  nextRoomTilePosition: []
 --- !u!4 &378379764
 Transform:
   m_ObjectHideFlags: 0
@@ -582,9 +586,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8849684465523471756, guid: 218c4deffb3803b4493cfd9771319e86,
         type: 3}
+      propertyPath: generator
+      value: 
+      objectReference: {fileID: 378379763}
+    - target: {fileID: 8849684465523471756, guid: 218c4deffb3803b4493cfd9771319e86,
+        type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1606572685}
+    - target: {fileID: 8849684465523471756, guid: 218c4deffb3803b4493cfd9771319e86,
+        type: 3}
+      propertyPath: playerPrefab
+      value: 
+      objectReference: {fileID: 7201092581798076536, guid: b13e64d7db863d84daaf00fa851d9545,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

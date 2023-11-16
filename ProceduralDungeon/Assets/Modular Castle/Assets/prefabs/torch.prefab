@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 456730}
   - component: {fileID: 3389030}
   - component: {fileID: 2389554}
-  - component: {fileID: 6021709057595911945}
+  - component: {fileID: -1270998361853451805}
   m_Layer: 0
   m_Name: torch
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &6021709057595911945
+--- !u!208 &-1270998361853451805
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

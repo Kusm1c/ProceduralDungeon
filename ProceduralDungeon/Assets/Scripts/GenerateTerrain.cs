@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class GenerateTerrain : MonoBehaviour
 {
     [Header("Terrain Parameters")] [HideInInspector] [SerializeField]
-    private Vector2Int terrainDimensions;
+    public Vector2Int terrainDimensions;
 
     [SerializeField] private Transform terrainTransform;
     [SerializeField] private Transform cameraLaveRT;
@@ -32,7 +32,8 @@ public class GenerateTerrain : MonoBehaviour
     [HideInInspector] public GameObject terrainRef;
     [HideInInspector] public GameObject cameraLavaRef;
 
-    [SerializeField] private GameObject doorPrefab;
+    [SerializeField] public GameObject doorPrefab2D;
+    [SerializeField] public GameObject doorPrefab3D;
 
     [Header("Random parameters")] [HideInInspector] [SerializeField] [Range(1, 10000)]
     private int worldSeed = 1;
@@ -49,11 +50,11 @@ public class GenerateTerrain : MonoBehaviour
     [HideInInspector] [SerializeField] private bool regenerateAtRuntime = false;
     [HideInInspector] [SerializeField] private bool recookedAtRuntime = false;
     //Preview Debug the visualisation of cook
-    [HideInInspector][SerializeField] private List<GameObject> preview2DLayers;
-    [HideInInspector][SerializeField] private List<GameObject> preview3DLayers;
+    /*[HideInInspector]*/[SerializeField] private List<GameObject> preview2DLayers;
+    /*[HideInInspector]*/[SerializeField] private List<GameObject> preview3DLayers;
     [SerializeField] private bool enabled3DPreview = false;
 
-    [FormerlySerializedAs("useMultiRoom")] [Header("Multi room parameters")] [SerializeField]
+    [Header("Multi room parameters")] [SerializeField]
     private bool useMultiRoomOnStart = false;
     [SerializeField] private int numRoom = 5;
     [SerializeField] private int minSizeRoom = 5;
@@ -62,12 +63,19 @@ public class GenerateTerrain : MonoBehaviour
     [SerializeField] private int distanceBetweenRoom = 5;
     private GameObject rootParent;
     private Vector2 oldTerrainDim = Vector2.zero; //x = dimension y = pos
-    private List<Transform> rooms = new List<Transform>();
     private MapData currentMapDataRoom;
+    [SerializeField] public List<Transform> rooms = new();
+    public int currentRoom = 0;
+
+    public UtilsDoors UtilsDoors
+    {
+        get { return utilsDoors; }
+    }
 
 
     private void Start()
     {
+        UtilsDoors.isFirstRoom = true;
         GenerateMultiRooms();
     }
 
@@ -325,8 +333,7 @@ public class GenerateTerrain : MonoBehaviour
                 oldTerrainDim.x = terrainDimensions.x;
                 oldTerrainDim.y = rootParent.transform.position.x;
             }
-            if (useMultiRoomOnStart)
-                RandomizeSizeRoom();
+            if (useMultiRoomOnStart) RandomizeSizeRoom();
             AddNewRootParent(i);
             rootParent.transform.parent = rootParent.transform;
             GenerateTerrainMesh();
@@ -335,10 +342,12 @@ public class GenerateTerrain : MonoBehaviour
             BuildNavMesh();
             worldSeed += offsetSeed;
             rooms.Add(rootParent.transform);
-            //rootParent.gameObject.SetActive(false);
+            rootParent.gameObject.SetActive(false);
         }
-
+        
+        PlayerManager.instance.generator = this;
         PlayerManager.instance.SpawnPlayer();
+        rooms[0].gameObject.SetActive(true);
     }
 
     private void RandomizeSizeRoom()
@@ -350,13 +359,18 @@ public class GenerateTerrain : MonoBehaviour
     public void GenerateData()
     {
         ResetData();
-
+        if (rooms.Count == 0)
+        {
+            UtilsDoors.GenerateDoorsData(DoorSide.None);
+            UtilsDoors.GenerateDoors3D();
+        }
         if (!useRandomSeed)
             Random.InitState(worldSeed);
         List<Vector2Int> unavailablePositions = new List<Vector2Int>();
         UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions,
             ref unavailablePositions);
-        GenerateDoors();
+        
+        
         for (int i = 0; i < positionsNotAvailable.Count; i++)
         {
             mapData[(int)positionsNotAvailable[i].position.x, (int)positionsNotAvailable[i].position.z] = 99;
@@ -474,6 +488,16 @@ public class GenerateTerrain : MonoBehaviour
 
         //NavMesh
         terrain.AddComponent<NavMeshSurface>();
+        
+        GameObject go = new GameObject
+        {
+            name = "SizeOfTerain " + terrainDimensions.x + "x" + terrainDimensions.y,
+            transform =
+            {
+                parent = terrain.transform,
+                localScale = new Vector3(terrainDimensions.x, 0, terrainDimensions.y)
+            }
+        };
     }
 
 
@@ -513,7 +537,7 @@ public class GenerateTerrain : MonoBehaviour
     public void PreviewOnly3D()
     {
         bool enable2D = enabled3DPreview;
-
+        Debug.Log("prev2D" + preview2DLayers.Count);
         foreach (GameObject preview2DTile in preview2DLayers)
         {
             preview2DTile.SetActive(!enable2D);
@@ -525,60 +549,13 @@ public class GenerateTerrain : MonoBehaviour
         }
     }
 
-    private bool isFirstRoom = true;
-    private List<Vector2Int> positionOfDoors = new();
-    private int[] sideWithDoor = new int[4];
+    public List<Vector2> nextRoomTilePosition = new();
 
-    public void GenerateDoors()
+    private readonly UtilsDoors utilsDoors;
+
+    public GenerateTerrain()
     {
-        if (isFirstRoom)
-        {
-            int numDoors = Random.Range(1, 5);
-            for (int i = 0; i < numDoors; i++)
-            {
-                int x = Random.Range(0, terrainDimensions.x);
-                int y = Random.Range(0, terrainDimensions.y);
-                if (x == 0 || x == terrainDimensions.x - 1 || y == 0 || y == terrainDimensions.y - 1)
-                {
-                    if (!multipleDoorsOnSameSide)
-                    {
-                        PlaceDoor(new Vector2Int(x, y));
-                    }
-                    else
-                    {
-                        if (x == 0 && y == 0 || x == 0 && y == terrainDimensions.y - 1 ||
-                            x == terrainDimensions.x - 1 && y == 0 ||
-                            x == terrainDimensions.x - 1 && y == terrainDimensions.y - 1)
-                        {
-                            i--;
-                        }
-                        else
-                        {
-                            positionOfDoors.Add(new Vector2Int(x, y));
-                            PlaceDoor(new Vector2Int(x, y));
-                        }
-                    }
-                }
-                else
-                {
-                    i--;
-                }
-            }
-
-            // isFirstRoom = false;
-        }
-        else
-        {
-            //set a door directly next to the previous room's door then generate 1 to 3 more doors on the other sides
-            int index = Random.Range(0, positionOfDoors.Count);
-            Vector2Int pos = positionOfDoors[index];
-        }
-    }
-
-    private void PlaceDoor(Vector2Int positionOfDoor)
-    {
-        GameObject go = Instantiate(doorPrefab, transform);
-        go.transform.position = new Vector3(positionOfDoor.x, 0.1f, positionOfDoor.y);
+        utilsDoors = new UtilsDoors(this);
     }
 
     public Transform GetRoomByName(string name)
@@ -595,4 +572,18 @@ public class GenerateTerrain : MonoBehaviour
 
         return null;
     }
+    
+    public GameObject InstantiateDoor(bool is2D)
+    {
+        return Instantiate(is2D ? doorPrefab2D : doorPrefab3D, transform);
+    }
+}
+
+public enum DoorSide
+{
+    Top,
+    Bottom,
+    Left,
+    Right,
+    None
 }

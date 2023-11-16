@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 460346}
   - component: {fileID: 3354712}
   - component: {fileID: 2308020}
-  - component: {fileID: 925171842347917223}
+  - component: {fileID: -7732389486935632156}
   m_Layer: 0
   m_Name: bed1
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &925171842347917223
+--- !u!208 &-7732389486935632156
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
