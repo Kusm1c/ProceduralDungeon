@@ -50,6 +50,10 @@ public class GenerateTerrain : MonoBehaviour
 
     [Header("Multi room parameters")] [SerializeField]
     private bool useMultiRoom = false;
+    //Preview Debug the visualisation of cook
+    [HideInInspector][SerializeField] private List<GameObject> preview2DLayers;
+    [HideInInspector][SerializeField] private List<GameObject> preview3DLayers;
+    [SerializeField] private bool enabled3DPreview = false;
 
     [SerializeField] private int numRoom = 5;
     [SerializeField] private int minSizeRoom = 5;
@@ -91,6 +95,7 @@ public class GenerateTerrain : MonoBehaviour
         };
         goP.transform.parent = rootParent.transform;
         goP.transform.localPosition = Vector3.zero;
+        preview2DLayers.Add(goP);
 
         for (int i = 0; i < numToUse; i++)
         {
@@ -112,6 +117,7 @@ public class GenerateTerrain : MonoBehaviour
         };
         goP.transform.parent = rootParent.transform;
         goP.transform.localPosition = Vector3.zero;
+        preview3DLayers.Add(goP);
 
         float[][] mapDataSave = new float[terrainDimensions.x][];
         for (int index = 0; index < terrainDimensions.x; index++)
@@ -267,6 +273,9 @@ public class GenerateTerrain : MonoBehaviour
                     go.transform.Rotate(Vector3.up, !so.RotationModel3D ? 90 : Random.Range(0, 4) * 90);
             }
         }
+
+        enabled3DPreview = true;
+        PreviewOnly3D();
     }
 
     private void ResetData()
@@ -279,6 +288,8 @@ public class GenerateTerrain : MonoBehaviour
     private void ClearData()
     {
         AvailablePositions.Clear();
+        preview2DLayers.Clear();
+        preview3DLayers.Clear();
         _dicTileSO.Clear();
         mapData = null;
     }
@@ -354,8 +365,10 @@ public class GenerateTerrain : MonoBehaviour
         };
         goPCorner.transform.parent = rootParent.transform;
         goPCorner.transform.localPosition = Vector3.zero;
+        preview2DLayers.Add(goPCorner); //Add Corner Elements to Preview 2D
 
         _dicTileSO.Add((int)Layers[0].type, Layers[0]);
+
         //wall
         GameObject goPWall = new GameObject
         {
@@ -363,6 +376,7 @@ public class GenerateTerrain : MonoBehaviour
         };
         goPWall.transform.parent = rootParent.transform;
         goPWall.transform.localPosition = Vector3.zero;
+        preview2DLayers.Add(goPWall); //Add Wall Elements to Preview 2D
 
         _dicTileSO.Add((int)Layers[1].type, Layers[1]);
 
@@ -473,6 +487,7 @@ public class GenerateTerrain : MonoBehaviour
 
     public void ClearWorld()
     {
+        ClearData();
         for (int i = 0; i < transform.childCount; i++)
         {
             DestroyImmediate(transform.GetChild(i).gameObject);
@@ -482,6 +497,21 @@ public class GenerateTerrain : MonoBehaviour
         rootParent = null;
 
         ClearData();
+    }
+
+    public void PreviewOnly3D()
+    {
+        bool enable2D = enabled3DPreview;
+
+        foreach (GameObject preview2DTile in preview2DLayers)
+        {
+            preview2DTile.SetActive(!enable2D);
+        }
+
+        foreach (GameObject preview3DTile in preview3DLayers)
+        {
+            preview3DTile.SetActive(enable2D);
+        }
     }
 
     private bool isFirstRoom = true;
