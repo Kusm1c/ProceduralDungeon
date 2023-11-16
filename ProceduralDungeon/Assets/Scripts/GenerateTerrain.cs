@@ -110,7 +110,7 @@ public class GenerateTerrain : MonoBehaviour
 
     public void Generate3DWorld()
     {
-        GenerateDoors(false);
+        GenerateDoors3D();
         
         GameObject goP = new GameObject
         {
@@ -343,7 +343,7 @@ public class GenerateTerrain : MonoBehaviour
         UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions,
             ref unavailablePositions);
         
-        GenerateDoors(true);
+        GenerateDoorsData();
         
         for (int i = 0; i < positionsNotAvailable.Count; i++)
         {
@@ -495,7 +495,7 @@ public class GenerateTerrain : MonoBehaviour
     private Dictionary<DoorSide,Vector2Int> positionOfDoors = new();
     private bool[] sideWithDoor = new bool[4];
 
-    public void GenerateDoors(bool is2D)
+    public void GenerateDoorsData()
     {
         positionOfDoors.Clear();
         if (isFirstRoom)
@@ -530,7 +530,7 @@ public class GenerateTerrain : MonoBehaviour
             
             foreach (var door in positionOfDoors)
             {
-                PlaceDoor(door.Value, is2D);
+                PlaceDoor(door.Value, true);
             }
 
             // isFirstRoom = false;
@@ -538,6 +538,14 @@ public class GenerateTerrain : MonoBehaviour
         else
         {
             
+        }
+    }
+
+    public void GenerateDoors3D()
+    {
+        foreach (var door in positionOfDoors)
+        {
+            PlaceDoor(door.Value, false);
         }
     }
 
