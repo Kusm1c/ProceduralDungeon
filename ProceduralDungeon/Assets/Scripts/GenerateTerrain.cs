@@ -54,7 +54,7 @@ public class GenerateTerrain : MonoBehaviour
     /*[HideInInspector]*/[SerializeField] private List<GameObject> preview3DLayers;
     [SerializeField] private bool enabled3DPreview = false;
 
-    [FormerlySerializedAs("useMultiRoom")] [Header("Multi room parameters")] [SerializeField]
+    [Header("Multi room parameters")] [SerializeField]
     private bool useMultiRoomOnStart = false;
     [SerializeField] private int numRoom = 5;
     [SerializeField] private int minSizeRoom = 5;
@@ -333,7 +333,7 @@ public class GenerateTerrain : MonoBehaviour
                 oldTerrainDim.x = terrainDimensions.x;
                 oldTerrainDim.y = rootParent.transform.position.x;
             }
-            if (useMultiRoom) RandomizeSizeRoom();
+            if (useMultiRoomOnStart) RandomizeSizeRoom();
             AddNewRootParent(i);
             rootParent.transform.parent = rootParent.transform;
             GenerateTerrainMesh();
@@ -571,6 +571,11 @@ public class GenerateTerrain : MonoBehaviour
         }
 
         return null;
+    }
+    
+    public GameObject InstantiateDoor(bool is2D)
+    {
+        return Instantiate(is2D ? doorPrefab2D : doorPrefab3D, transform);
     }
 }
 

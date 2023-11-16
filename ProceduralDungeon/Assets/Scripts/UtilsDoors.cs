@@ -109,7 +109,7 @@ public class UtilsDoors
 
     private void PlaceDoor(KeyValuePair<DoorSide, Vector2Int> positionOfDoor, bool is2D)
     {
-        GameObject go = Object.Instantiate((Object)(is2D ? generateTerrain.doorPrefab2D : generateTerrain.doorPrefab3D), generateTerrain.transform) as GameObject;
+        GameObject go = generateTerrain.InstantiateDoor(is2D);
         go.transform.position = new Vector3(positionOfDoor.Value.x, 0.1f, positionOfDoor.Value.y);
         switch (positionOfDoor.Key)
         {
@@ -134,6 +134,8 @@ public class UtilsDoors
         }
         go.transform.parent = is2D ? door2DParent.transform : door3DParent.transform;
     }
+
+    
 
     public void GenerateNextRoom(DoorSide directionDoor)
     {
