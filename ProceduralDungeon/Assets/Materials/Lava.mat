@@ -8,7 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Lava
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 11628a6a5cc6a58468b70cb47a52a737,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -17,8 +18,7 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -44,8 +44,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DistortTexture:
+        m_Texture: {fileID: 2800000, guid: 183d10162c0c48a40bb21709520ced7b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FloorTexture:
+        m_Texture: {fileID: 2800000, guid: 03aa854289b0c3142ab4250e9638f91b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LavaTexture:
+        m_Texture: {fileID: 2800000, guid: 1be08cb1da03da14091d14a07d99a527, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -82,41 +94,65 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - Vector1_2560D906: 0.3
+    - Vector1_B70459B8: 0.5
+    - Vector1_C11943F1: -0.27
+    - Vector1_ECBD0369: 0.1
+    - Vector1_F4FD793F: 0.1
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _Blend: 0
+    - _Blend: 16
     - _BlendModePreserveSpecular: 1
+    - _BrightUnderLava: 2
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
+    - _CutoffTop: 0.4
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DistortScale: 0.4
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _EdgeBlur: 0.1
+    - _Edge_TopBrightness: 1.2
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Height: 1
+    - _LavaTextureTiling: 0.4
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _S_ETintOffset: 1.7
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _SpeedDistortX: 1
+    - _SpeedDistortY: 1
+    - _SpeedLavaX: 0.1
+    - _SpeedLavaY: 0.1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _TopBlur: 0.1
+    - _UseVertexDisplacement: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_6D41895: {r: 0.4811321, g: 0.03177286, b: 0.03177286, a: 0}
+    - Color_D89EBD41: {r: 0.6886792, g: 0.44800073, b: 0.12344248, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EdgeColor: {r: 1, g: 0.5615011, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _TopLayerTint: {r: 1, g: 0.7542857, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &7596549373270078587
 MonoBehaviour:
