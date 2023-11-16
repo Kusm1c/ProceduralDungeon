@@ -494,6 +494,8 @@ public class GenerateTerrain : MonoBehaviour
     private bool isFirstRoom = true;
     private Dictionary<DoorSide,Vector2Int> positionOfDoors = new();
     private bool[] sideWithDoor = new bool[4];
+    private GameObject door2DParent;
+    private GameObject door3DParent;
 
     public void GenerateDoorsData()
     {
@@ -527,10 +529,19 @@ public class GenerateTerrain : MonoBehaviour
                         break;
                 }
             }
-            
+            // if (door2DParent)
+            //     DestroyImmediate(door2DParent);
+            door2DParent = new GameObject
+            {
+                name = "Door 2D",
+                transform =
+                {
+                    parent = transform
+                }
+            };
             foreach (var door in positionOfDoors)
             {
-                PlaceDoor(door.Value, true);
+                PlaceDoor(door, true);
             }
 
             // isFirstRoom = false;
@@ -543,23 +554,51 @@ public class GenerateTerrain : MonoBehaviour
 
     public void GenerateDoors3D()
     {
+        // if (door3DParent)
+        //     DestroyImmediate(door3DParent);
+        door3DParent = new GameObject
+        {
+            name = "Door 3D",
+            transform =
+            {
+                parent = transform
+            }
+        };
         foreach (var door in positionOfDoors)
         {
-            PlaceDoor(door.Value, false);
+            PlaceDoor(door, false);
         }
     }
 
-    private void PlaceDoor(Vector2Int positionOfDoor, bool is2D)
+    private void PlaceDoor(KeyValuePair<DoorSide, Vector2Int> positionOfDoor, bool is2D)
     {
         if (is2D)
         {
             GameObject go = Instantiate(doorPrefab2D, transform);
-            go.transform.position = new Vector3(positionOfDoor.x, 0.1f, positionOfDoor.y);
+            go.transform.position = new Vector3(positionOfDoor.Value.x, 0.1f, positionOfDoor.Value.y);
+            go.transform.rotation = positionOfDoor.Key switch
+            {
+                DoorSide.Top => Quaternion.Euler(0, 0, 0),
+                DoorSide.Bottom => Quaternion.Euler(0, 180, 0),
+                DoorSide.Left => Quaternion.Euler(0, 90, 0),
+                DoorSide.Right => Quaternion.Euler(0, 270, 0),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+            go.transform.parent = door2DParent.transform;
         }
         else
         {
             GameObject go = Instantiate(doorPrefab3D, transform);
-            go.transform.position = new Vector3(positionOfDoor.x, 0.1f, positionOfDoor.y);
+            go.transform.position = new Vector3(positionOfDoor.Value.x, 0.1f, positionOfDoor.Value.y);
+            go.transform.rotation = positionOfDoor.Key switch
+            {
+                DoorSide.Top => Quaternion.Euler(0, 0, 0),
+                DoorSide.Bottom => Quaternion.Euler(0, 180, 0),
+                DoorSide.Left => Quaternion.Euler(0, 90, 0),
+                DoorSide.Right => Quaternion.Euler(0, 270, 0),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+            go.transform.parent = door3DParent.transform;
         }
     }
 }
