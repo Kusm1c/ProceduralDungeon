@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5302ed4e86dd92a44a0ea3afc6e8139d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainDimensions: {x: 10, y: 20}
+  terrainDimensions: {x: 50, y: 50}
   terrainTransform: {fileID: 9201668891353074973, guid: 1410e84462789fa45adb42e95d5024fc,
     type: 3}
   cameraLaveRT: {fileID: 8451260794894420190, guid: f0697b4f6b6522e4ca11e6dda8fd0b05,
@@ -171,10 +171,16 @@ MonoBehaviour:
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   terrainRef: {fileID: 0}
   cameraLavaRef: {fileID: 0}
-  worldSeed: 6940
+  worldSeed: 2352
   useRandomSeed: 0
   regenerateAtRuntime: 1
   recookedAtRuntime: 1
+  useMultiRoom: 0
+  numRoom: 2
+  minSizeRoom: 500
+  maxSizeRoom: 600
+  offsetSeed: 10
+  distanceBetweenRoom: 5
 --- !u!4 &378379764
 Transform:
   m_ObjectHideFlags: 0
