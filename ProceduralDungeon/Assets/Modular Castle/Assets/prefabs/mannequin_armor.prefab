@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 470182}
   - component: {fileID: 3390278}
   - component: {fileID: 2344146}
-  - component: {fileID: 6904330243570859307}
+  - component: {fileID: 1564655930037570995}
   m_Layer: 0
   m_Name: mannequin_armor
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &6904330243570859307
+--- !u!208 &1564655930037570995
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

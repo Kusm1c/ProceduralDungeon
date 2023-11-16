@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 465224}
   - component: {fileID: 3394902}
   - component: {fileID: 2377886}
-  - component: {fileID: 7548704660409958758}
+  - component: {fileID: 93792157753913682}
   m_Layer: 0
   m_Name: stairs2
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!208 &7548704660409958758
+--- !u!208 &93792157753913682
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

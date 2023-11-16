@@ -605,34 +605,17 @@ public class GenerateTerrain : MonoBehaviour
 
     private void PlaceDoor(KeyValuePair<DoorSide, Vector2Int> positionOfDoor, bool is2D)
     {
-        if (is2D)
+        GameObject go = Instantiate(is2D ? doorPrefab2D : doorPrefab3D, transform);
+        go.transform.position = new Vector3(positionOfDoor.Value.x, 0.1f, positionOfDoor.Value.y);
+        go.transform.rotation = positionOfDoor.Key switch
         {
-            GameObject go = Instantiate(doorPrefab2D, transform);
-            go.transform.position = new Vector3(positionOfDoor.Value.x, 0.1f, positionOfDoor.Value.y);
-            go.transform.rotation = positionOfDoor.Key switch
-            {
-                DoorSide.Top => Quaternion.Euler(0, 0, 0),
-                DoorSide.Bottom => Quaternion.Euler(0, 180, 0),
-                DoorSide.Left => Quaternion.Euler(0, 90, 0),
-                DoorSide.Right => Quaternion.Euler(0, 270, 0),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            go.transform.parent = door2DParent.transform;
-        }
-        else
-        {
-            GameObject go = Instantiate(doorPrefab3D, transform);
-            go.transform.position = new Vector3(positionOfDoor.Value.x, 0.1f, positionOfDoor.Value.y);
-            go.transform.rotation = positionOfDoor.Key switch
-            {
-                DoorSide.Top => Quaternion.Euler(0, 0, 0),
-                DoorSide.Bottom => Quaternion.Euler(0, 180, 0),
-                DoorSide.Left => Quaternion.Euler(0, 90, 0),
-                DoorSide.Right => Quaternion.Euler(0, 270, 0),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            go.transform.parent = door3DParent.transform;
-        }
+            DoorSide.Top => Quaternion.Euler(0, 0, 0),
+            DoorSide.Bottom => Quaternion.Euler(0, 180, 0),
+            DoorSide.Left => Quaternion.Euler(0, 90, 0),
+            DoorSide.Right => Quaternion.Euler(0, 270, 0),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        go.transform.parent = is2D ? door2DParent.transform : door3DParent.transform;
     }
 }
 
