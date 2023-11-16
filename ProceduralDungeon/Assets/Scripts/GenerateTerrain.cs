@@ -42,6 +42,7 @@ public class GenerateTerrain : MonoBehaviour
     [SerializeField] private bool multipleDoorsOnSameSide = false;
 
     [HideInInspector] [SerializeField] public float[,] mapData;
+    [HideInInspector] [SerializeField] public float[,] mapDataRotation;
     private List<Vector2Int> AvailablePositions = new();
     private Random.State stateBeforeStep3;
 
@@ -214,10 +215,10 @@ public class GenerateTerrain : MonoBehaviour
                                 transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(0, 0, i * 2 + 0.5f);
                             scale = go.transform.localScale;
-                            mapData[x, y + i * 2] =
-                                (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
-                            mapData[x, y + i * 2 + 1] =
-                                (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
+                            mapData[x, y + i * 2] = 100.0f +
+                                                    (float)so.type +
+                                                    (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
+                            mapData[x, y + i * 2 + 1] = (float)99.0f; // ca marchera pas si on a plus de 8 models
                         }
 
                         index2 -= nbToSpawn * 2;
@@ -254,10 +255,10 @@ public class GenerateTerrain : MonoBehaviour
                                 go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(i * 2 + 0.5f, 0, 0);
                             scale = go.transform.localScale;
-                            mapData[x + i * 2, y] =
-                                (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
-                            mapData[x + i * 2 + 1, y] =
-                                (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
+                            mapData[x + i * 2, y] = 100.0f +
+                                                    (float)so.type +
+                                                    (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
+                            mapData[x + i * 2 + 1, y] = (float)99.0f; // ca marchera pas si on a plus de 8 models
                         }
 
                         index2 -= nbToSpawn * 2;
@@ -289,13 +290,16 @@ public class GenerateTerrain : MonoBehaviour
 
                 go.transform.localScale = scale;
                 if ((x == 0) || (x == terrainDimensions.x - 1) || so.RotationModel3D)
+                {
                     go.transform.Rotate(Vector3.up, !so.RotationModel3D ? 90 : Random.Range(0, 4) * 90);
+                    mapDataRotation[x, y] = go.transform.rotation.eulerAngles.y;
+                }
             }
         }
 
         enabled3DPreview = true;
         PreviewOnly3D();
-        currentMapDataRoom.CopyMap(mapData);
+        currentMapDataRoom.CopyMap(mapData, mapDataRotation);
     }
 
     private void ResetData()
@@ -303,6 +307,7 @@ public class GenerateTerrain : MonoBehaviour
         AvailablePositions.Clear();
         _dicTileSO.Clear();
         mapData = new float[terrainDimensions.x, terrainDimensions.y];
+        mapDataRotation = new float[terrainDimensions.x, terrainDimensions.y];
     }
 
     private void ClearData()
@@ -312,6 +317,7 @@ public class GenerateTerrain : MonoBehaviour
         preview3DLayers.Clear();
         _dicTileSO.Clear();
         mapData = null;
+        mapDataRotation = null;
     }
 
     private void AddNewRootParent(int index)
@@ -370,7 +376,7 @@ public class GenerateTerrain : MonoBehaviour
         if (!useRandomSeed)
             Random.InitState(worldSeed);
         List<Vector2Int> unavailablePositions = new List<Vector2Int>();
-        UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions,
+        UtilsToolTerrain.InitData(ref mapData, ref mapDataRotation, ref AvailablePositions, terrainDimensions,
             ref unavailablePositions);
         GenerateDoors();
         for (int i = 0; i < positionsNotAvailable.Count; i++)
@@ -439,7 +445,7 @@ public class GenerateTerrain : MonoBehaviour
             ChoosePosToUse(Layers[i], ValidPositions);
         }
 
-        currentMapDataRoom.CopyMap(mapData);
+        currentMapDataRoom.CopyMap(mapData, mapDataRotation);
     }
 
     [ContextMenu("Generate Terrain")]
@@ -609,8 +615,9 @@ public class GenerateTerrain : MonoBehaviour
         return null;
     }
 
-    public void SetRoomByName(string roomToSaveName, float[,] map)
+    public void SetRoomByName(string roomToSaveName, float[,] map, float[,] mapRotation)
     {
+        ClearWorld();
         rootParent = new GameObject
         {
             name = roomToSaveName
@@ -619,7 +626,63 @@ public class GenerateTerrain : MonoBehaviour
         currentMapDataRoom = rootParent.AddComponent<MapData>();
         rootParent.transform.position = Vector3.zero;
         terrainDimensions = new Vector2Int(map.GetLength(0), map.GetLength(1));
+
+        mapData = new float[terrainDimensions.x, terrainDimensions.y];
+        mapDataRotation = new float[terrainDimensions.x, terrainDimensions.y];
+
+        for (int i = 0; i < terrainDimensions.x; i++)
+        {
+            for (int j = 0; j < terrainDimensions.y; j++)
+            {
+                mapData[i, j] = map[i, j];
+                mapDataRotation[i, j] = mapRotation[i, j];
+            }
+        }
+
+        _dicTileSO.Clear();
+        foreach (var layer in Layers)
+        {
+            _dicTileSO.Add((int)layer.type, layer);
+        }
+
         GenerateTerrainMesh();
         Generate3DWorldWithMapData();
+    }
+
+    private void Generate3DWorldWithMapData()
+    {
+        for (int i = 0; i < terrainDimensions.x; i++)
+        {
+            for (int j = 0; j < terrainDimensions.y; j++)
+            {
+                if (mapData[i, j] < 99f)
+                {
+                    float index = mapData[i, j];
+                    if ((int)index == 0) continue;
+                    //its a simple tile yes,
+                    TileSO so = _dicTileSO[(int)index];
+                    Debug.Log("index : " + (int)index + " was try to get obj index " + (int)((index - (int)index) * 10 - 1));
+                    GameObject obj = Instantiate(so.Model3D_S1[(int)((index - (int)index) * 10 - 1)], currentMapDataRoom.transform);
+                    obj.transform.position = new Vector3(i, obj.transform.localScale.y * so.CustomOffsetY, j);
+                    if (mapDataRotation[i, j] != 0)
+                    {
+                        obj.transform.Rotate(Vector3.up, mapDataRotation[i, j]);
+                    }
+                }
+
+                if (mapData[i, j] > 100.0f)
+                {
+                    //its a 4D size ahaha
+                    float index = mapData[i, j] - 100.0f;
+                    TileSO so = _dicTileSO[(int)index];
+                    GameObject obj = Instantiate(so.Model3D_S2[(int)((index - (int)index) * 10 - 1)], currentMapDataRoom.transform);
+                    obj.transform.position = new Vector3(i, obj.transform.localScale.y * so.CustomOffsetY, j);
+                    if (mapDataRotation[i, j] != 0)
+                    {
+                        obj.transform.Rotate(Vector3.up, mapDataRotation[i, j]);
+                    }
+                }
+            }
+        }
     }
 }

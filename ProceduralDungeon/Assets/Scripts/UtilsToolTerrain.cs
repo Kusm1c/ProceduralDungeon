@@ -107,10 +107,11 @@ public static class UtilsToolTerrain
         return triangles;
     }
 
-    public static void InitData(ref float[,] mapData, ref List<Vector2Int> generatedPositions,
+    public static void InitData(ref float[,] mapData, ref float[,] mapRotData, ref List<Vector2Int> generatedPositions,
         Vector2Int size, ref List<Vector2Int> unavailablePositions)
     {
         mapData = new float[size.x, size.y];
+        mapRotData = new float[size.x, size.y];
         for (int x = 0; x < size.x; x++)
         {
             for (int y = 0; y < size.y; y++)
@@ -123,6 +124,7 @@ public static class UtilsToolTerrain
                     generatedPositions.Add(new Vector2Int(x, y));
                 else
                     unavailablePositions.Add(new Vector2Int(x, y));
+                mapRotData[x, y] = 0.0f;
             }
         }
     }
