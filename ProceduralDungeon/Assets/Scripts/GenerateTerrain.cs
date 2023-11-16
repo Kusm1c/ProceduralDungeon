@@ -447,6 +447,7 @@ public class GenerateTerrain : MonoBehaviour
         mesh.triangles = UtilsToolTerrain.GenerateSimpleFloorTriangles();
         mesh.uv = UtilsToolTerrain.GenerateSimpleFloorUV(terrainDimensions);
         mesh.RecalculateNormals();
+        terrain.layer = LayerMask.NameToLayer("Ground");
 
         //RendererPart
         terrain.AddComponent<MeshRenderer>();
