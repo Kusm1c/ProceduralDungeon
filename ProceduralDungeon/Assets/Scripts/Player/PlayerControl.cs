@@ -14,7 +14,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float speed = 5f;
     
     private float distanceThreshold = 0.1f;
-    private float distanceThreshold2 = 1.0f;
+    private float distanceThreshold2 = 0.5f;
 
 
 
