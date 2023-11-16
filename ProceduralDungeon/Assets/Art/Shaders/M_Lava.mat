@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit_Stencil
+  m_Name: M_Lava
   m_Shader: {fileID: -6465566751694194690, guid: 11628a6a5cc6a58468b70cb47a52a737,
     type: 3}
   m_Parent: {fileID: 0}
