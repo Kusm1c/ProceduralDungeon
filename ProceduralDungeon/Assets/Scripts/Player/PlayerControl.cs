@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,10 +9,13 @@ public class PlayerControl : MonoBehaviour
     private NavMeshAgent agent;
     private Vector3 target;
     private bool isMoving;
+    public GenerateTerrain generateTerrain;
     
     [SerializeField] private float speed = 5f;
     
     private float distanceThreshold = 0.1f;
+    private float distanceThreshold2 = 1.0f;
+
 
 
     private void MoveTo(Vector3 target)
@@ -41,6 +45,21 @@ public class PlayerControl : MonoBehaviour
         if (Vector3.Distance(transform.position, target) < distanceThreshold)
         {
             isMoving = false;
+        }
+        if (generateTerrain.nextRoomTilePosition.Count == 0) return;
+        foreach (var doorSide in generateTerrain.nextRoomTilePosition.ToList()
+                     .Where(tile => Vector2.Distance(new Vector2(transform.position.x, transform.position.z), tile) <
+                                    distanceThreshold2)
+                     .Select(tile => generateTerrain.nextRoomTilePosition.IndexOf(tile) switch
+                     {
+                         0 => DoorSide.Bottom,
+                         1 => DoorSide.Top,
+                         2 => DoorSide.Right,
+                         3 => DoorSide.Left,
+                         _ => throw new System.Exception("Error in PlayerControl.Update")
+                     }))
+        {
+            generateTerrain.GenerateNextRoom(doorSide);
         }
     }
 

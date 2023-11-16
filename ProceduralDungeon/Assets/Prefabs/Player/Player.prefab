@@ -143,4 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c569bf61a98fb8749bf4e868c753bc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generateTerrain: {fileID: 2270753030408880788, guid: 2c2c6a4b517bcdb4ca13e59e1e2befdd,
+    type: 3}
   speed: 5
