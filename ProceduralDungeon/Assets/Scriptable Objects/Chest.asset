@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c78ea971585e54cb2e3cd93993463b, type: 3}
+  m_Name: Chest
+  m_EditorClassIdentifier: 
+  <tilePrefab>k__BackingField: {fileID: 3686948791130865070, guid: 8cc6e48c263fd2040b9e5820979f9dae,
+    type: 3}
+  <Model3D_S1>k__BackingField:
+  - {fileID: 144614, guid: 8799b841d75370f44ba4ccf79bc7658b, type: 3}
+  - {fileID: 124724, guid: a67e15b1ca208c641a5b4e1e20844590, type: 3}
+  - {fileID: 121954, guid: cc099d4b9ab7d3b4287693466cb6ff9e, type: 3}
+  - {fileID: 101554, guid: 40064a3eba9f8ef4db78ee0fbcd75c8c, type: 3}
+  <Model3D_S2>k__BackingField:
+  - {fileID: 140542, guid: 4262c5895a7ed7f47b98ea94be746d7b, type: 3}
+  <TillingTextureModel>k__BackingField: 0
+  <CustomOffsetY>k__BackingField: 0
+  <RotationModel3D>k__BackingField: 1
+  <numMaxGenerated>k__BackingField: 40
+  <numMinGenerated>k__BackingField: 30
+  <canProbability>k__BackingField: 30
+  <cantProbability>k__BackingField: 70
+  <type>k__BackingField: 6
+  <conditions>k__BackingField:
+  - type: 2
+    possibility: 2
+    position: 00000000020000000300000001000000
+  - type: 5
+    possibility: 3
+    position: 0300000001000000
+  <color2D>k__BackingField: {fileID: 2100000, guid: 896f0409a25d97448a8997d6595c28b4,
+    type: 2}

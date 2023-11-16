@@ -26,29 +26,14 @@ MonoBehaviour:
   <cantProbability>k__BackingField: 0
   <type>k__BackingField: 2
   <conditions>k__BackingField:
-  - type: 2
+  - type: 3
     possibility: 0
-    position: 
-  - type: 2
+    position: 0000000002000000030000000100000004000000050000000600000007000000
+  - type: 1
     possibility: 0
-    position: 
-  - type: 2
+    position: 0000000002000000030000000100000004000000050000000600000007000000
+  - type: 4
     possibility: 0
-    position: 
-  - type: 2
-    possibility: 2
-    position: 
-  - type: 1
-    possibility: 2
-    position: 
-  - type: 1
-    possibility: 2
-    position: 
-  - type: 1
-    possibility: 2
-    position: 
-  - type: 1
-    possibility: 2
-    position: 
+    position: 0000000002000000030000000100000004000000050000000600000007000000
   <color2D>k__BackingField: {fileID: 2100000, guid: 5a07c9bf703ead54f872ba47f301234a,
     type: 2}
