@@ -31,10 +31,14 @@ public class GenerateTerrain : MonoBehaviour
     [HideInInspector] public GameObject terrainRef;
     [HideInInspector] public GameObject cameraLavaRef;
 
+    [SerializeField] private GameObject doorPrefab;
+
     [Header("Random parameters")] [HideInInspector] [SerializeField] [Range(1, 10000)]
     private int worldSeed = 1;
 
     [SerializeField] private bool useRandomSeed = false;
+    
+    [SerializeField] private bool multipleDoorsOnSameSide = false;
 
     [HideInInspector] [SerializeField] public float[,] mapData;
     private List<Vector2Int> AvailablePositions = new();
@@ -333,7 +337,7 @@ public class GenerateTerrain : MonoBehaviour
         List<Vector2Int> unavailablePositions = new List<Vector2Int>();
         UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions,
             ref unavailablePositions);
-
+        GenerateDoors();
         for (int i = 0; i < positionsNotAvailable.Count; i++)
         {
             mapData[(int)positionsNotAvailable[i].position.x, (int)positionsNotAvailable[i].position.z] = 99;
@@ -478,5 +482,61 @@ public class GenerateTerrain : MonoBehaviour
         rootParent = null;
 
         ClearData();
+    }
+
+    private bool isFirstRoom = true;
+    private List<Vector2Int> positionOfDoors = new();
+    private int[] sideWithDoor = new int[4];
+
+    public void GenerateDoors()
+    {
+        if (isFirstRoom)
+        {
+            int numDoors = Random.Range(1, 5);
+            for (int i = 0; i < numDoors; i++)
+            {
+                int x = Random.Range(0, terrainDimensions.x);
+                int y = Random.Range(0, terrainDimensions.y);
+                if (x == 0 || x == terrainDimensions.x - 1 || y == 0 || y == terrainDimensions.y - 1)
+                {
+                    if (!multipleDoorsOnSameSide)
+                    {
+                        PlaceDoor(new Vector2Int(x, y));
+                    }
+                    else
+                    {
+                        if (x == 0 && y == 0 || x == 0 && y == terrainDimensions.y - 1 ||
+                            x == terrainDimensions.x - 1 && y == 0 ||
+                            x == terrainDimensions.x - 1 && y == terrainDimensions.y - 1)
+                        {
+                            i--;
+                        }
+                        else
+                        {
+                            positionOfDoors.Add(new Vector2Int(x, y));
+                            PlaceDoor(new Vector2Int(x, y));
+                        }
+                    }
+                }
+                else
+                {
+                    i--;
+                }
+            }
+
+            // isFirstRoom = false;
+        }
+        else
+        {
+            //set a door directly next to the previous room's door then generate 1 to 3 more doors on the other sides
+            int index = Random.Range(0, positionOfDoors.Count);
+            Vector2Int pos = positionOfDoors[index];
+        }
+    }
+
+    private void PlaceDoor(Vector2Int positionOfDoor)
+    {
+        GameObject go = Instantiate(doorPrefab, transform);
+        go.transform.position = new Vector3(positionOfDoor.x, 0.1f, positionOfDoor.y);
     }
 }

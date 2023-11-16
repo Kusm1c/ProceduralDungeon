@@ -65,6 +65,7 @@ public class GenerateTerrainEditor : Editor
 
             if (regenerateAtRuntime.boolValue)
             {
+                terrain.ClearWorld();
                 terrain.GenerateTerrainMesh();
                 terrain.GenerateData();
                 terrain.BuildNavMesh();
