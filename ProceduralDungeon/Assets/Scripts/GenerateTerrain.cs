@@ -110,14 +110,14 @@ public class GenerateTerrain : MonoBehaviour
 
     public void Generate3DWorld()
     {
-        GenerateDoors3D();
-        
         GameObject goP = new GameObject
         {
             name = "Generated 3DWorld"
         };
         goP.transform.parent = rootParent.transform;
         goP.transform.localPosition = Vector3.zero;
+        
+        GenerateDoors3D(goP);
 
         float[][] mapDataSave = new float[terrainDimensions.x][];
         for (int index = 0; index < terrainDimensions.x; index++)
@@ -325,6 +325,7 @@ public class GenerateTerrain : MonoBehaviour
         }
 
         PlayerManager.instance.SpawnPlayer();
+        rooms[0].gameObject.SetActive(true);
     }
 
     private void RandomizeSizeRoom()
@@ -529,14 +530,12 @@ public class GenerateTerrain : MonoBehaviour
                         break;
                 }
             }
-            // if (door2DParent)
-            //     DestroyImmediate(door2DParent);
             door2DParent = new GameObject
             {
                 name = "Door 2D",
                 transform =
                 {
-                    parent = transform
+                    parent = rootParent.transform
                 }
             };
             foreach (var door in positionOfDoors)
@@ -544,7 +543,7 @@ public class GenerateTerrain : MonoBehaviour
                 PlaceDoor(door, true);
             }
 
-            // isFirstRoom = false;
+            isFirstRoom = false;
         }
         else
         {
@@ -552,16 +551,14 @@ public class GenerateTerrain : MonoBehaviour
         }
     }
 
-    public void GenerateDoors3D()
+    public void GenerateDoors3D(GameObject goP)
     {
-        // if (door3DParent)
-        //     DestroyImmediate(door3DParent);
         door3DParent = new GameObject
         {
             name = "Door 3D",
             transform =
             {
-                parent = transform
+                parent = goP.transform
             }
         };
         foreach (var door in positionOfDoors)
