@@ -21,7 +21,16 @@ public class SaveAndLoad : MonoBehaviour
         }
         float[,] map = tr.GetComponent<MapData>().GetMap();
 
-        string data = JsonUtility.ToJson(map); // marche pas
+        string data = map.GetLength(0) + ":" + map.GetLength(1) + ":";
+        //je parcours toute ma data et je la met dans un string
+        for (int i = 0; i < map.GetLength(0); i++)
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
+                data += map[i, j] + ":";
+        }
+        return;
+        
+        
         System.IO.Directory.CreateDirectory(_filePath);
         System.IO.File.WriteAllText(_filePath + _fileName, data);
         Debug.Log("Saved Done");
