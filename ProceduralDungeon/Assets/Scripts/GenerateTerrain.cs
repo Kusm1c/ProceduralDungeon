@@ -73,7 +73,7 @@ public class GenerateTerrain : MonoBehaviour
     private GameObject GenerateTile(GameObject prefab, Transform parent, Vector3 pos, Material _mat)
     {
         GameObject go = Instantiate(prefab, parent);
-        
+
         go.transform.position = pos + parent.transform.position;
         go.GetComponent<Renderer>().material = _mat;
         return go;
@@ -168,21 +168,24 @@ public class GenerateTerrain : MonoBehaviour
                 {
                     index = Random.Range(0, so.Model3D_S1.Count);
                     go = Instantiate(so.Model3D_S1[index], goP.transform);
-                    go.transform.position = new Vector3(x, transform.localScale.y * so.CustomOffsetY, y);
+                    go.transform.position = new Vector3(x + goP.transform.position.x,
+                        transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                     scale = go.transform.localScale;
                 }
 
                 if (posTileY > 2 && so.TillingTextureModel && so.Model3D_S1.Count > 0) // horizontal scale
                 {
                     scale.x += (float)posTileY;
-                    go.transform.position = new Vector3((x + posTileY) * 0.5f +goP.transform.position.x, scale.y * so.CustomOffsetY, y +goP.transform.position.z);
+                    go.transform.position = new Vector3((x + posTileY) * 0.5f + goP.transform.position.x,
+                        scale.y * so.CustomOffsetY, y + goP.transform.position.z);
                 }
 
                 else if (posTileX > 2 && so.TillingTextureModel && so.Model3D_S1.Count > 0) // vertical scale
                 {
                     scale.x = (float)posTileX + 1;
 
-                    go.transform.position = new Vector3(x +goP.transform.position.x, scale.y * so.CustomOffsetY, (y + posTileX) * 0.5f +goP.transform.position.z);
+                    go.transform.position = new Vector3(x + goP.transform.position.x, scale.y * so.CustomOffsetY,
+                        (y + posTileX) * 0.5f + goP.transform.position.z);
                 }
 
                 else if (posTileX > 1)
@@ -195,7 +198,8 @@ public class GenerateTerrain : MonoBehaviour
                         for (int i = 0; i < nbToSpawn; i++)
                         {
                             go = Instantiate(so.Model3D_S2[index], goP.transform);
-                            go.transform.position = new Vector3(x +goP.transform.position.x, transform.localScale.y * so.CustomOffsetY, y +goP.transform.position.z);
+                            go.transform.position = new Vector3(x + goP.transform.position.x,
+                                transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(0, 0, i * 2 + 0.5f);
                             scale = go.transform.localScale;
                         }
@@ -210,7 +214,8 @@ public class GenerateTerrain : MonoBehaviour
                         {
                             index = Random.Range(0, so.Model3D_S1.Count);
                             go = Instantiate(so.Model3D_S1[index], goP.transform);
-                            go.transform.position = new Vector3(x +goP.transform.position.x, go.transform.localScale.y * so.CustomOffsetY, y +goP.transform.position.z);
+                            go.transform.position = new Vector3(x + goP.transform.position.x,
+                                go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(0, 0, position + i);
                             scale = go.transform.localScale;
                         }
@@ -227,7 +232,8 @@ public class GenerateTerrain : MonoBehaviour
                         for (int i = 0; i < nbToSpawn; i++)
                         {
                             go = Instantiate(so.Model3D_S2[index], goP.transform);
-                            go.transform.position = new Vector3(x +goP.transform.position.x, go.transform.localScale.y * so.CustomOffsetY, y +goP.transform.position.z);
+                            go.transform.position = new Vector3(x + goP.transform.position.x,
+                                go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(i * 2 + 0.5f, 0, 0);
                             scale = go.transform.localScale;
                         }
@@ -242,7 +248,8 @@ public class GenerateTerrain : MonoBehaviour
                         {
                             index = Random.Range(0, so.Model3D_S1.Count);
                             go = Instantiate(so.Model3D_S1[index], goP.transform);
-                            go.transform.position = new Vector3(x +goP.transform.position.x, go.transform.localScale.y * so.CustomOffsetY, y +goP.transform.position.z);
+                            go.transform.position = new Vector3(x + goP.transform.position.x,
+                                go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(position + i, 0, 0);
                             scale = go.transform.localScale;
                         }
@@ -251,7 +258,8 @@ public class GenerateTerrain : MonoBehaviour
 
                 else if (so.Model3D_S1.Count > 0) // just one tile
                 {
-                    go.transform.position = new Vector3(x +goP.transform.position.x, go.transform.localScale.y * so.CustomOffsetY, y +goP.transform.position.z);
+                    go.transform.position = new Vector3(x + goP.transform.position.x,
+                        go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                 }
 
                 go.transform.localScale = scale;
@@ -282,8 +290,13 @@ public class GenerateTerrain : MonoBehaviour
             name = "Room " + index
         };
         rootParent.transform.parent = transform;
-        rootParent.transform.position = new Vector3(terrainDimensions.x * index + index > 0 ? distanceBetweenRoom : 0,
-            0, 0);
+        Debug.Log("Room dimensions : " + terrainDimensions);
+        Vector3 newPos = new Vector3(terrainDimensions.x * index, 0, 0);
+        newPos += Vector3.right * (index > 0 ? distanceBetweenRoom : 0);
+        Debug.Log("newPos " + index + " : " + newPos);
+
+        rootParent.transform.position = newPos;
+        
     }
 
     private void GenerateMultiRooms()
@@ -293,16 +306,26 @@ public class GenerateTerrain : MonoBehaviour
         int nbRoomToSpawn = useMultiRoom ? numRoom : 1;
         for (int i = 0; i < nbRoomToSpawn; i++)
         {
+            if (useMultiRoom)
+                RandomizeSizeRoom();
             AddNewRootParent(i);
             rootParent.transform.parent = rootParent.transform;
-            rooms.Add(rootParent.transform);
             GenerateTerrainMesh();
             GenerateData();
             Generate3DWorld();
             BuildNavMesh();
             worldSeed += offsetSeed;
-            PlayerManager.instance.SpawnPlayer();
+            rooms.Add(rootParent.transform);
+            //rootParent.gameObject.SetActive(false);
         }
+
+        PlayerManager.instance.SpawnPlayer();
+    }
+
+    private void RandomizeSizeRoom()
+    {
+        terrainDimensions = new Vector2Int(Random.Range(minSizeRoom, maxSizeRoom),
+            Random.Range(minSizeRoom, maxSizeRoom));
     }
 
     public void GenerateData()
