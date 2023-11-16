@@ -2,8 +2,10 @@
 {
     Wall = 1,
     Lava,
-    Hole,
+    Pillars,
     Candle,
+    StandForWeapon,
+    Chest,
     Chair,
     WallCorner,
 }

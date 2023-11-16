@@ -13,7 +13,7 @@ public class GenerateTerrain : MonoBehaviour
 
     [SerializeField] private Transform terrainTransform;
     [SerializeField] private Transform cameraLaveRT;
-    [SerializeField] private List<TileSO> Layers = new();
+    [HideInInspector] [SerializeField] private List<TileSO> Layers = new();
     [SerializeField] private List<Transform> positionsNotAvailable = new();
 
     [Header("Shader Parameters")] [SerializeField]
@@ -44,6 +44,10 @@ public class GenerateTerrain : MonoBehaviour
     [HideInInspector] [SerializeField] private bool regenerateAtRuntime = false;
     [HideInInspector] [SerializeField] private bool recookedAtRuntime = false;
 
+    //Preview Debug the visualisation of cook
+    [HideInInspector][SerializeField] private List<GameObject> preview2DLayers;
+    [HideInInspector][SerializeField] private List<GameObject> preview3DLayers;
+    [SerializeField] private bool enabled3DPreview = false;
 
     private void Start()
     {
@@ -79,6 +83,7 @@ public class GenerateTerrain : MonoBehaviour
             name = so.type.ToString()
         };
         goP.transform.parent = transform;
+        preview2DLayers.Add(goP);
 
         for (int i = 0; i < numToUse; i++)
         {
@@ -99,6 +104,7 @@ public class GenerateTerrain : MonoBehaviour
             name = "Generated 3DWorld"
         };
         goP.transform.parent = transform;
+        preview3DLayers.Add(goP);
 
 
         float[][] mapDataSave = new float[terrainDimensions.x][];
@@ -156,7 +162,7 @@ public class GenerateTerrain : MonoBehaviour
                 {
                     index = Random.Range(0, so.Model3D_S1.Count);
                     go = Instantiate(so.Model3D_S1[index], goP.transform);
-                    go.transform.position = new Vector3(x, transform.localScale.y * so.CustomOffsetY , y);
+                    go.transform.position = new Vector3(x, transform.localScale.y * so.CustomOffsetY, y);
                     scale = go.transform.localScale;
                 }
 
@@ -247,6 +253,9 @@ public class GenerateTerrain : MonoBehaviour
                     go.transform.Rotate(Vector3.up, !so.RotationModel3D ? 90 : Random.Range(0, 4) * 90);
             }
         }
+
+        enabled3DPreview = true;
+        PreviewOnly3D();
     }
 
     private void ResetData()
@@ -259,6 +268,8 @@ public class GenerateTerrain : MonoBehaviour
     private void ClearData()
     {
         AvailablePositions.Clear();
+        preview2DLayers.Clear();
+        preview3DLayers.Clear();
         _dicTileSO.Clear();
         mapData = null;
     }
@@ -288,14 +299,17 @@ public class GenerateTerrain : MonoBehaviour
             name = Layers[0].type.ToString()
         };
         goPCorner.transform.parent = transform;
+        preview2DLayers.Add(goPCorner); //Add Corner Elements to Preview 2D
 
         _dicTileSO.Add((int)Layers[0].type, Layers[0]);
+
         //wall
         GameObject goPWall = new GameObject
         {
             name = Layers[1].type.ToString()
         };
         goPWall.transform.parent = transform;
+        preview2DLayers.Add(goPWall); //Add Wall Elements to Preview 2D
 
         _dicTileSO.Add((int)Layers[1].type, Layers[1]);
 
@@ -404,12 +418,27 @@ public class GenerateTerrain : MonoBehaviour
 
     public void ClearWorld()
     {
+        ClearData();
         for (int i = 0; i < transform.childCount; i++)
         {
             DestroyImmediate(transform.GetChild(i).gameObject);
             i--;
         }
 
-        ClearData();
+    }
+
+    public void PreviewOnly3D()
+    {
+        bool enable2D = enabled3DPreview;
+
+        foreach (GameObject preview2DTile in preview2DLayers)
+        {
+            preview2DTile.SetActive(!enable2D);
+        }
+
+        foreach (GameObject preview3DTile in preview3DLayers)
+        {
+            preview3DTile.SetActive(enable2D);
+        }
     }
 }

@@ -10,36 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72c78ea971585e54cb2e3cd93993463b, type: 3}
-  m_Name: Chair
+  m_Name: Pilars
   m_EditorClassIdentifier: 
   <tilePrefab>k__BackingField: {fileID: 3686948791130865070, guid: 8cc6e48c263fd2040b9e5820979f9dae,
     type: 3}
   <Model3D_S1>k__BackingField:
-  - {fileID: 3705331789912959411, guid: 079c11ce8b76864428ca84e798ed6b3d, type: 3}
-  <Model3D_S2>k__BackingField: []
+  - {fileID: 154658, guid: 7250e3ee64608cf4ebd2df16b04e2e4b, type: 3}
+  - {fileID: 144706, guid: fb3f840c826314847ba67aaf7e4aef4e, type: 3}
+  <Model3D_S2>k__BackingField:
+  - {fileID: 2554740935057206988, guid: 30fc1b48a1df0d54994c9b0114c589fb, type: 3}
   <TillingTextureModel>k__BackingField: 0
   <CustomOffsetY>k__BackingField: 0.5
-  <RotationModel3D>k__BackingField: 1
+  <RotationModel3D>k__BackingField: 0
   <numMaxGenerated>k__BackingField: 40
   <numMinGenerated>k__BackingField: 30
   <canProbability>k__BackingField: 0
   <cantProbability>k__BackingField: 0
-  <type>k__BackingField: 5
+  <type>k__BackingField: 3
   <conditions>k__BackingField:
-  - type: 4
-    possibility: 1
-    position: 
-  - type: 2
+  - type: 1
     possibility: 0
-    position: 
-  - type: 2
+    position: 0000000002000000
+  - type: 1
     possibility: 0
-    position: 
-  - type: 2
-    possibility: 0
-    position: 
-  - type: 2
-    possibility: 0
-    position: 
-  <color2D>k__BackingField: {fileID: 2100000, guid: 896f0409a25d97448a8997d6595c28b4,
+    position: 00000000
+  <color2D>k__BackingField: {fileID: 2100000, guid: 06686c39726e4f64c9b9504d749f65df,
     type: 2}

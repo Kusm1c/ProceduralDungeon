@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c78ea971585e54cb2e3cd93993463b, type: 3}
+  m_Name: StandForWeapons
+  m_EditorClassIdentifier: 
+  <tilePrefab>k__BackingField: {fileID: 3686948791130865070, guid: 8cc6e48c263fd2040b9e5820979f9dae,
+    type: 3}
+  <Model3D_S1>k__BackingField:
+  - {fileID: 192682, guid: 16d6f63f1f03dc64c8c86de4122100c6, type: 3}
+  - {fileID: 172812, guid: 4ac7440a8935c0c4294d324e56d64987, type: 3}
+  - {fileID: 193028, guid: 48c040965861d8c40befca832709a45c, type: 3}
+  - {fileID: 156812, guid: e6188d8b8dc4a3648b2d90a9707953dc, type: 3}
+  <Model3D_S2>k__BackingField:
+  - {fileID: 185420, guid: acf8a0d570d766442b8574649973226e, type: 3}
+  - {fileID: 116166, guid: 43672fd8c9f63724ca03d766c52c8568, type: 3}
+  - {fileID: 116510, guid: 12aa655f8b99b354ead2d832d68b25d3, type: 3}
+  <TillingTextureModel>k__BackingField: 0
+  <CustomOffsetY>k__BackingField: 0.125
+  <RotationModel3D>k__BackingField: 0
+  <numMaxGenerated>k__BackingField: 20
+  <numMinGenerated>k__BackingField: 10
+  <canProbability>k__BackingField: 0
+  <cantProbability>k__BackingField: 0
+  <type>k__BackingField: 5
+  <conditions>k__BackingField:
+  - type: 1
+    possibility: 0
+    position: 
+  - type: 1
+    possibility: 0
+    position: 
+  - type: 1
+    possibility: 0
+    position: 
+  - type: 1
+    possibility: 0
+    position: 
+  - type: 2
+    possibility: 0
+    position: 
+  - type: 2
+    possibility: 0
+    position: 
+  - type: 2
+    possibility: 0
+    position: 
+  - type: 2
+    possibility: 0
+    position: 
+  <color2D>k__BackingField: {fileID: 2100000, guid: 414468581171d444a83ce6059f50455e,
+    type: 2}

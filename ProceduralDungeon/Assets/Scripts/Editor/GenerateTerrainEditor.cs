@@ -9,6 +9,7 @@ public class GenerateTerrainEditor : Editor
     SerializedProperty worldSeed;
     SerializedProperty regenerateAtRuntime;
     SerializedProperty recookedAtRuntime;
+    SerializedProperty preview3DTiles;
 
     SerializedProperty layers;
 
@@ -17,10 +18,12 @@ public class GenerateTerrainEditor : Editor
     private void OnEnable()
     {
         terrainDimensions = serializedObject.FindProperty("terrainDimensions");
+        worldSeed = serializedObject.FindProperty("worldSeed");
         regenerateAtRuntime = serializedObject.FindProperty("regenerateAtRuntime");
         recookedAtRuntime = serializedObject.FindProperty("recookedAtRuntime");
-        worldSeed = serializedObject.FindProperty("worldSeed");
+        preview3DTiles = serializedObject.FindProperty("enabled3DPreview");
 
+        //Reordable List
         layers = serializedObject.FindProperty("Layers");
         layersReorderable = new ReorderableList(serializedObject, layers, true, true, true, true);
         
@@ -55,8 +58,7 @@ public class GenerateTerrainEditor : Editor
         GUI.enabled = regenerateAtRuntime.boolValue;
         recookedAtRuntime.boolValue = EditorGUILayout.Toggle("ReCooked", recookedAtRuntime.boolValue);
         GUI.enabled = true;
-
-
+        
         if (EditorGUI.EndChangeCheck())
         {
             worldSeed.intValue = newWorldSeed;
