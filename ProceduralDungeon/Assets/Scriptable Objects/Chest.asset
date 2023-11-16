@@ -26,24 +26,15 @@ MonoBehaviour:
   <RotationModel3D>k__BackingField: 1
   <numMaxGenerated>k__BackingField: 40
   <numMinGenerated>k__BackingField: 30
-  <canProbability>k__BackingField: 0
-  <cantProbability>k__BackingField: 0
+  <canProbability>k__BackingField: 30
+  <cantProbability>k__BackingField: 70
   <type>k__BackingField: 6
   <conditions>k__BackingField:
-  - type: 4
-    possibility: 1
-    position: 
   - type: 2
-    possibility: 0
-    position: 
-  - type: 2
-    possibility: 0
-    position: 
-  - type: 2
-    possibility: 0
-    position: 
-  - type: 2
-    possibility: 0
-    position: 
+    possibility: 2
+    position: 00000000020000000300000001000000
+  - type: 5
+    possibility: 3
+    position: 0300000001000000
   <color2D>k__BackingField: {fileID: 2100000, guid: 896f0409a25d97448a8997d6595c28b4,
     type: 2}
