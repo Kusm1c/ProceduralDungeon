@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class GenerateTerrain : MonoBehaviour
@@ -48,14 +49,13 @@ public class GenerateTerrain : MonoBehaviour
     private Dictionary<int, TileSO> _dicTileSO = new();
     [HideInInspector] [SerializeField] private bool regenerateAtRuntime = false;
     [HideInInspector] [SerializeField] private bool recookedAtRuntime = false;
-
-    [Header("Multi room parameters")] [SerializeField]
-    private bool useMultiRoom = false;
     //Preview Debug the visualisation of cook
     /*[HideInInspector]*/[SerializeField] private List<GameObject> preview2DLayers;
     /*[HideInInspector]*/[SerializeField] private List<GameObject> preview3DLayers;
     [SerializeField] private bool enabled3DPreview = false;
 
+    [FormerlySerializedAs("useMultiRoom")] [Header("Multi room parameters")] [SerializeField]
+    private bool useMultiRoomOnStart = false;
     [SerializeField] private int numRoom = 5;
     [SerializeField] private int minSizeRoom = 5;
     [SerializeField] private int maxSizeRoom = 10;
@@ -63,6 +63,7 @@ public class GenerateTerrain : MonoBehaviour
     [SerializeField] private int distanceBetweenRoom = 5;
     private GameObject rootParent;
     private Vector2 oldTerrainDim = Vector2.zero; //x = dimension y = pos
+    private MapData currentMapDataRoom;
     [SerializeField] public List<Transform> rooms = new();
     public int currentRoom = 0;
 
@@ -309,8 +310,9 @@ public class GenerateTerrain : MonoBehaviour
 
         rootParent = new GameObject
         {
-            name = "Room " + index
+            name = "Room" + index
         };
+        currentMapDataRoom = rootParent.AddComponent<MapData>();
         rootParent.transform.parent = transform;
         Vector3 newPos = new Vector3(oldTerrainDim.x *0.5f + oldTerrainDim.y, 0, 0);
         newPos += Vector3.right * (index > 0 ? terrainDimensions.x + distanceBetweenRoom : 0);
@@ -321,8 +323,8 @@ public class GenerateTerrain : MonoBehaviour
 
     private void GenerateMultiRooms()
     {
-
-        int nbRoomToSpawn = useMultiRoom ? numRoom : 1;
+        rooms.Clear();
+        int nbRoomToSpawn = useMultiRoomOnStart ? numRoom : 1;
         for (int i = 0; i < nbRoomToSpawn; i++)
         {
             oldTerrainDim = Vector2.zero;
@@ -434,12 +436,14 @@ public class GenerateTerrain : MonoBehaviour
 
             ChoosePosToUse(Layers[i], ValidPositions);
         }
+        
+        currentMapDataRoom.CopyMap(mapData);
     }
 
     [ContextMenu("Generate Terrain")]
     public void GenerateTerrainMesh()
     {
-        if (!useMultiRoom)
+        if (!useMultiRoomOnStart)
             ClearWorld();
         if (!rootParent)
             AddNewRootParent(0);
@@ -457,6 +461,7 @@ public class GenerateTerrain : MonoBehaviour
         mesh.triangles = UtilsToolTerrain.GenerateSimpleFloorTriangles();
         mesh.uv = UtilsToolTerrain.GenerateSimpleFloorUV(terrainDimensions);
         mesh.RecalculateNormals();
+        terrain.layer = LayerMask.NameToLayer("Ground");
 
         //RendererPart
         terrain.AddComponent<MeshRenderer>();
@@ -551,6 +556,21 @@ public class GenerateTerrain : MonoBehaviour
     public GenerateTerrain()
     {
         utilsDoors = new UtilsDoors(this);
+    }
+
+    public Transform GetRoomByName(string name)
+    {
+        Debug.Log(rooms.Count + " rooms founds");
+        foreach (var room in rooms)
+        {
+            Debug.Log(room.name);
+            if (room.name == name)
+            {
+                return room;
+            }
+        }
+
+        return null;
     }
 }
 

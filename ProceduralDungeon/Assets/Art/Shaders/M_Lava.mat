@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5885131997335425522
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Lava
+  m_Shader: {fileID: -6465566751694194690, guid: 11628a6a5cc6a58468b70cb47a52a737,
+    type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_132C60F8:
+        m_Texture: {fileID: 2800000, guid: 183d10162c0c48a40bb21709520ced7b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_64F7E809:
+        m_Texture: {fileID: 2800000, guid: 1be08cb1da03da14091d14a07d99a527, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DistortTexture:
+        m_Texture: {fileID: 2800000, guid: 183d10162c0c48a40bb21709520ced7b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FloorTexture:
+        m_Texture: {fileID: 2800000, guid: 03aa854289b0c3142ab4250e9638f91b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GroundTexture:
+        m_Texture: {fileID: 2800000, guid: 03aa854289b0c3142ab4250e9638f91b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LavaTexture:
+        m_Texture: {fileID: 2800000, guid: 1be08cb1da03da14091d14a07d99a527, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Vector1_2560D906: 0.3
+    - Vector1_2E6661E6: 3
+    - Vector1_3ED71A56: 0.1
+    - Vector1_5214E2BE: 0.1
+    - Vector1_7B9C2379: 0.2
+    - Vector1_88114E4A: 0.4
+    - Vector1_A0F0BBF5: 0.4
+    - Vector1_B70459B8: 0.5
+    - Vector1_BDCBE303: 0.1
+    - Vector1_C11943F1: -0.27
+    - Vector1_DEBF9F77: 0.4
+    - Vector1_E512B7AC: 1.7
+    - Vector1_E8E0DC8: 2
+    - Vector1_E97BF845: 0.1
+    - Vector1_ECBD0369: 0.1
+    - Vector1_EEB61C8: 0.1
+    - Vector1_F2179F34: 0.1
+    - Vector1_F4FD793F: 0.1
+    - _Blend: 16
+    - _BrightUnderLava: 2
+    - _CutoffTop: 0.4
+    - _DistortScale: 0.4
+    - _EdgeBlur: 0.1
+    - _Edge_TopBrightness: 2
+    - _Height: 1
+    - _LavaTextureTiling: 0.33
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _S_ETintOffset: 1.7
+    - _SpeedDistortX: 0.2
+    - _SpeedDistortY: 0.2
+    - _SpeedLavaX: 0.1
+    - _SpeedLavaY: 0.1
+    - _StencilID: 1
+    - _Tiling: 1
+    - _TopBlur: 0.1
+    - _UseVertexDisplacement: 0
+    m_Colors:
+    - Color_6D41895: {r: 0.4811321, g: 0.03177286, b: 0.03177286, a: 1}
+    - Color_B8D925A3: {r: 1, g: 0.5615011, b: 0, a: 0}
+    - Color_C0AA5855: {r: 0.8773585, g: 0.7104708, b: 0.19037017, a: 0}
+    - Color_D89EBD41: {r: 0.6886792, g: 0.44800067, b: 0.12344245, a: 1}
+    - _EdgeColor: {r: 1, g: 0.5615011, b: 0, a: 1}
+    - _TopLayerTint: {r: 0.8784314, g: 0.7098039, b: 0.19215682, a: 1}
+  m_BuildTextureStacks: []
