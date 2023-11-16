@@ -211,8 +211,8 @@ public class GenerateTerrain : MonoBehaviour
                                 transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(0, 0, i * 2 + 0.5f);
                             scale = go.transform.localScale;
-                            mapData[x, y + i * 2] = (float)so.type + index * 0.1f; // ca marchera pas si on a plus de 10 models
-                            mapData[x, y + i * 2 + 1] = (float)so.type + index * 0.1f; // ca marchera pas si on a plus de 10 models
+                            mapData[x, y + i * 2] = (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
+                            mapData[x, y + i * 2 + 1] = (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
                         }
 
                         index2 -= nbToSpawn * 2;
@@ -230,7 +230,7 @@ public class GenerateTerrain : MonoBehaviour
                                 go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(0, 0, position + i);
                             scale = go.transform.localScale;
-                            mapData[x, y + position + i] = (float)so.type + index * 0.1f;// ca marchera pas si on a plus de 10 models
+                            mapData[x, y + position + i] = (float)so.type + (index + 1) * 0.1f;// ca marchera pas si on a plus de 8 models
                         }
                     }
                 }
@@ -249,8 +249,8 @@ public class GenerateTerrain : MonoBehaviour
                                 go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(i * 2 + 0.5f, 0, 0);
                             scale = go.transform.localScale;
-                            mapData[x + i * 2, y] = (float)so.type + index * 0.1f;// ca marchera pas si on a plus de 10 models
-                            mapData[x + i * 2 + 1, y] = (float)so.type + index * 0.1f;// ca marchera pas si on a plus de 10 models
+                            mapData[x + i * 2, y] = (float)so.type + (index + 1) * 0.1f;// ca marchera pas si on a plus de 8 models
+                            mapData[x + i * 2 + 1, y] = (float)so.type + (index + 1) * 0.1f;// ca marchera pas si on a plus de 8 models
                         }
 
                         index2 -= nbToSpawn * 2;
@@ -267,7 +267,7 @@ public class GenerateTerrain : MonoBehaviour
                                 go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(position + i, 0, 0);
                             scale = go.transform.localScale;
-                            mapData[x + position + i, y] = (float)so.type + index * 0.1f;// ca marchera pas si on a plus de 10 models
+                            mapData[x + position + i, y] = (float)so.type + (index + 1) * 0.1f;// ca marchera pas si on a plus de 8 models
                         }
                     }
                 }
@@ -276,7 +276,7 @@ public class GenerateTerrain : MonoBehaviour
                 {
                     go.transform.position = new Vector3(x + goP.transform.position.x,
                         go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
-                    mapData[x, y] = (float)so.type + index * 0.1f; // ca marchera pas si on a plus de 10 models
+                    mapData[x, y] = (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
                 }
 
                 go.transform.localScale = scale;
@@ -287,6 +287,7 @@ public class GenerateTerrain : MonoBehaviour
 
         enabled3DPreview = true;
         PreviewOnly3D();
+        currentMapDataRoom.CopyMap(mapData);
     }
 
     private void ResetData()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SaveAndLoad : MonoBehaviour
 {
     [SerializeField] private string _fileName = "saveData.json";
-    [SerializeField] private string _filePath = "Assets/";
+    [SerializeField] private string _filePath = "Assets/Resources/Save/";
     [SerializeField] private string roomToSaveName;
 
     [Space(10)] [SerializeField] private GenerateTerrain _generateTerrain;
@@ -28,8 +28,7 @@ public class SaveAndLoad : MonoBehaviour
             for (int j = 0; j < map.GetLength(1); j++)
                 data += map[i, j] + ":";
         }
-        return;
-        
+        Debug.Log(data);
         
         System.IO.Directory.CreateDirectory(_filePath);
         System.IO.File.WriteAllText(_filePath + _fileName, data);
@@ -40,8 +39,19 @@ public class SaveAndLoad : MonoBehaviour
     private void Load()
     {
         string data = System.IO.File.ReadAllText(_filePath + _fileName);
-        float[,] map = JsonUtility.FromJson<float[,]>(data);
-
+        string[] dataSplit = data.Split(':');
+        int x = int.Parse(dataSplit[0]);
+        int y = int.Parse(dataSplit[1]);
+        float[,] map = new float[x, y];
+        int index = 2;
+        //je parcours toute ma data et je la met dans un string
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++, index++)
+                map[i, j] = float.Parse(dataSplit[index]);
+        }
+        
+        _generateTerrain.SetRoomByName(roomToSaveName, map);
     //la il faut pop le terrain
     }
 }
