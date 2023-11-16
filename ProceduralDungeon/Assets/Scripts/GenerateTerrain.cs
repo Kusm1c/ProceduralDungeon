@@ -38,7 +38,7 @@ public class GenerateTerrain : MonoBehaviour
     private int worldSeed = 1;
 
     [SerializeField] private bool useRandomSeed = false;
-    
+
     [SerializeField] private bool multipleDoorsOnSameSide = false;
 
     [HideInInspector] [SerializeField] public float[,] mapData;
@@ -47,14 +47,17 @@ public class GenerateTerrain : MonoBehaviour
 
     private Dictionary<int, TileSO> _dicTileSO = new();
     [HideInInspector] [SerializeField] private bool regenerateAtRuntime = false;
+
     [HideInInspector] [SerializeField] private bool recookedAtRuntime = false;
+
     //Preview Debug the visualisation of cook
-    [HideInInspector][SerializeField] private List<GameObject> preview2DLayers;
-    [HideInInspector][SerializeField] private List<GameObject> preview3DLayers;
+    [HideInInspector] [SerializeField] private List<GameObject> preview2DLayers;
+    [HideInInspector] [SerializeField] private List<GameObject> preview3DLayers;
     [SerializeField] private bool enabled3DPreview = false;
 
     [FormerlySerializedAs("useMultiRoom")] [Header("Multi room parameters")] [SerializeField]
     private bool useMultiRoomOnStart = false;
+
     [SerializeField] private int numRoom = 5;
     [SerializeField] private int minSizeRoom = 5;
     [SerializeField] private int maxSizeRoom = 10;
@@ -211,12 +214,13 @@ public class GenerateTerrain : MonoBehaviour
                                 transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(0, 0, i * 2 + 0.5f);
                             scale = go.transform.localScale;
-                            mapData[x, y + i * 2] = (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
-                            mapData[x, y + i * 2 + 1] = (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
+                            mapData[x, y + i * 2] =
+                                (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
+                            mapData[x, y + i * 2 + 1] =
+                                (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
                         }
 
                         index2 -= nbToSpawn * 2;
-                        
                     }
 
                     if (index2 > 0 && so.Model3D_S1.Count > 0)
@@ -230,7 +234,8 @@ public class GenerateTerrain : MonoBehaviour
                                 go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(0, 0, position + i);
                             scale = go.transform.localScale;
-                            mapData[x, y + position + i] = (float)so.type + (index + 1) * 0.1f;// ca marchera pas si on a plus de 8 models
+                            mapData[x, y + position + i] =
+                                (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
                         }
                     }
                 }
@@ -249,8 +254,10 @@ public class GenerateTerrain : MonoBehaviour
                                 go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(i * 2 + 0.5f, 0, 0);
                             scale = go.transform.localScale;
-                            mapData[x + i * 2, y] = (float)so.type + (index + 1) * 0.1f;// ca marchera pas si on a plus de 8 models
-                            mapData[x + i * 2 + 1, y] = (float)so.type + (index + 1) * 0.1f;// ca marchera pas si on a plus de 8 models
+                            mapData[x + i * 2, y] =
+                                (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
+                            mapData[x + i * 2 + 1, y] =
+                                (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
                         }
 
                         index2 -= nbToSpawn * 2;
@@ -267,7 +274,8 @@ public class GenerateTerrain : MonoBehaviour
                                 go.transform.localScale.y * so.CustomOffsetY, y + goP.transform.position.z);
                             go.transform.position += new Vector3(position + i, 0, 0);
                             scale = go.transform.localScale;
-                            mapData[x + position + i, y] = (float)so.type + (index + 1) * 0.1f;// ca marchera pas si on a plus de 8 models
+                            mapData[x + position + i, y] =
+                                (float)so.type + (index + 1) * 0.1f; // ca marchera pas si on a plus de 8 models
                         }
                     }
                 }
@@ -308,18 +316,16 @@ public class GenerateTerrain : MonoBehaviour
 
     private void AddNewRootParent(int index)
     {
-
         rootParent = new GameObject
         {
             name = "Room" + index
         };
         currentMapDataRoom = rootParent.AddComponent<MapData>();
         rootParent.transform.parent = transform;
-        Vector3 newPos = new Vector3(oldTerrainDim.x *0.5f + oldTerrainDim.y, 0, 0);
+        Vector3 newPos = new Vector3(oldTerrainDim.x * 0.5f + oldTerrainDim.y, 0, 0);
         newPos += Vector3.right * (index > 0 ? terrainDimensions.x + distanceBetweenRoom : 0);
 
         rootParent.transform.position = newPos;
-        
     }
 
     private void GenerateMultiRooms()
@@ -334,6 +340,7 @@ public class GenerateTerrain : MonoBehaviour
                 oldTerrainDim.x = terrainDimensions.x;
                 oldTerrainDim.y = rootParent.transform.position.x;
             }
+
             if (useMultiRoomOnStart)
                 RandomizeSizeRoom();
             AddNewRootParent(i);
@@ -431,7 +438,7 @@ public class GenerateTerrain : MonoBehaviour
 
             ChoosePosToUse(Layers[i], ValidPositions);
         }
-        
+
         currentMapDataRoom.CopyMap(mapData);
     }
 
@@ -600,5 +607,19 @@ public class GenerateTerrain : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void SetRoomByName(string roomToSaveName, float[,] map)
+    {
+        rootParent = new GameObject
+        {
+            name = roomToSaveName
+        };
+        rootParent.transform.parent = transform;
+        currentMapDataRoom = rootParent.AddComponent<MapData>();
+        rootParent.transform.position = Vector3.zero;
+        terrainDimensions = new Vector2Int(map.GetLength(0), map.GetLength(1));
+        GenerateTerrainMesh();
+        Generate3DWorldWithMapData();
     }
 }
