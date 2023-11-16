@@ -99,7 +99,7 @@ Material:
     - _DistortScale: 0.4
     - _EdgeBlur: 0.1
     - _Edge_TopBrightness: 2
-    - _Height: 0
+    - _Height: 1
     - _LavaTextureTiling: 0.33
     - _QueueControl: 0
     - _QueueOffset: 0
