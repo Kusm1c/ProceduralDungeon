@@ -581,14 +581,14 @@ public class GenerateTerrain : MonoBehaviour
 
     public Transform GetRoomByName(string name)
     {
-        foreach (var room in rooms)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            if (room.name == name)
+            Transform child = transform.GetChild(i);
+            if (child.name == name)
             {
-                return room;
+                return child;
             }
         }
-
         return null;
     }
     
