@@ -12,6 +12,7 @@ public class TileSO : ScriptableObject
     [field:SerializeField] public List<GameObject> Model3D_S2{ get; private set; }
     
     [field:SerializeField] public bool TillingTextureModel { get; private set; }
+    [field:SerializeField] public float CustomOffsetY { get; private set; }
     [field:SerializeField] public bool RotationModel3D { get; set; }
     
     [field:SerializeField] public int numMaxGenerated{ get; private set; }

@@ -156,21 +156,21 @@ public class GenerateTerrain : MonoBehaviour
                 {
                     index = Random.Range(0, so.Model3D_S1.Count);
                     go = Instantiate(so.Model3D_S1[index], goP.transform);
-                    go.transform.position = new Vector3(x, transform.localScale.y * 0.5f, y);
+                    go.transform.position = new Vector3(x, transform.localScale.y * so.CustomOffsetY , y);
                     scale = go.transform.localScale;
                 }
 
                 if (posTileY > 2 && so.TillingTextureModel && so.Model3D_S1.Count > 0) // horizontal scale
                 {
                     scale.x += (float)posTileY;
-                    go.transform.position = new Vector3((x + posTileY) * 0.5f, scale.y * 0.5f, y);
+                    go.transform.position = new Vector3((x + posTileY) * 0.5f, scale.y * so.CustomOffsetY, y);
                 }
 
                 else if (posTileX > 2 && so.TillingTextureModel && so.Model3D_S1.Count > 0) // vertical scale
                 {
                     scale.x = (float)posTileX + 1;
 
-                    go.transform.position = new Vector3(x, scale.y / 2f, (y + posTileX) * 0.5f);
+                    go.transform.position = new Vector3(x, scale.y * so.CustomOffsetY, (y + posTileX) * 0.5f);
                 }
 
                 else if (posTileX > 1)
@@ -183,7 +183,7 @@ public class GenerateTerrain : MonoBehaviour
                         for (int i = 0; i < nbToSpawn; i++)
                         {
                             go = Instantiate(so.Model3D_S2[index], goP.transform);
-                            go.transform.position = new Vector3(x, transform.localScale.y * 0.5f, y);
+                            go.transform.position = new Vector3(x, transform.localScale.y * so.CustomOffsetY, y);
                             go.transform.position += new Vector3(0, 0, i * 2 + 0.5f);
                             scale = go.transform.localScale;
                         }
@@ -198,7 +198,7 @@ public class GenerateTerrain : MonoBehaviour
                         {
                             index = Random.Range(0, so.Model3D_S1.Count);
                             go = Instantiate(so.Model3D_S1[index], goP.transform);
-                            go.transform.position = new Vector3(x, transform.localScale.y * 0.5f, y);
+                            go.transform.position = new Vector3(x, transform.localScale.y * so.CustomOffsetY, y);
                             go.transform.position += new Vector3(0, 0, position + i);
                             scale = go.transform.localScale;
                         }
@@ -215,7 +215,7 @@ public class GenerateTerrain : MonoBehaviour
                         for (int i = 0; i < nbToSpawn; i++)
                         {
                             go = Instantiate(so.Model3D_S2[index], goP.transform);
-                            go.transform.position = new Vector3(x, transform.localScale.y * 0.5f, y);
+                            go.transform.position = new Vector3(x, transform.localScale.y * so.CustomOffsetY, y);
                             go.transform.position += new Vector3(i * 2 + 0.5f, 0, 0);
                             scale = go.transform.localScale;
                         }
@@ -230,7 +230,7 @@ public class GenerateTerrain : MonoBehaviour
                         {
                             index = Random.Range(0, so.Model3D_S1.Count);
                             go = Instantiate(so.Model3D_S1[index], goP.transform);
-                            go.transform.position = new Vector3(x, transform.localScale.y * 0.5f, y);
+                            go.transform.position = new Vector3(x, transform.localScale.y * so.CustomOffsetY, y);
                             go.transform.position += new Vector3(position + i, 0, 0);
                             scale = go.transform.localScale;
                         }
@@ -239,7 +239,7 @@ public class GenerateTerrain : MonoBehaviour
 
                 else if (so.Model3D_S1.Count > 0) // just one tile
                 {
-                    go.transform.position = new Vector3(x, transform.localScale.y * 0.5f, y);
+                    go.transform.position = new Vector3(x, transform.localScale.y * so.CustomOffsetY, y);
                 }
 
                 go.transform.localScale = scale;
