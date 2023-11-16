@@ -61,6 +61,7 @@ public class GenerateTerrain : MonoBehaviour
     [SerializeField] private int offsetSeed = 10;
     [SerializeField] private int distanceBetweenRoom = 5;
     private GameObject rootParent;
+    private Vector2 oldTerrainDim = Vector2.zero; //x = dimension y = pos
 
 
     private void Start()
@@ -296,15 +297,14 @@ public class GenerateTerrain : MonoBehaviour
 
     private void AddNewRootParent(int index)
     {
+
         rootParent = new GameObject
         {
             name = "Room " + index
         };
         rootParent.transform.parent = transform;
-        Debug.Log("Room dimensions : " + terrainDimensions);
-        Vector3 newPos = new Vector3(terrainDimensions.x * index, 0, 0);
-        newPos += Vector3.right * (index > 0 ? distanceBetweenRoom : 0);
-        Debug.Log("newPos " + index + " : " + newPos);
+        Vector3 newPos = new Vector3(oldTerrainDim.x *0.5f + oldTerrainDim.y, 0, 0);
+        newPos += Vector3.right * (index > 0 ? terrainDimensions.x + distanceBetweenRoom : 0);
 
         rootParent.transform.position = newPos;
         
@@ -317,6 +317,12 @@ public class GenerateTerrain : MonoBehaviour
         int nbRoomToSpawn = useMultiRoom ? numRoom : 1;
         for (int i = 0; i < nbRoomToSpawn; i++)
         {
+            oldTerrainDim = Vector2.zero;
+            if (rootParent)
+            {
+                oldTerrainDim.x = terrainDimensions.x;
+                oldTerrainDim.y = rootParent.transform.position.x;
+            }
             if (useMultiRoom)
                 RandomizeSizeRoom();
             AddNewRootParent(i);

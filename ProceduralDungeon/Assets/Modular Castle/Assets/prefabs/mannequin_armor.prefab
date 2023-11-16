@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 470182}
   - component: {fileID: 3390278}
   - component: {fileID: 2344146}
+  - component: {fileID: 6904330243570859307}
   m_Layer: 0
   m_Name: mannequin_armor
   m_TagString: Untagged
@@ -83,3 +84,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &6904330243570859307
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156812}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.135, y: 0.24900001, z: 0.120000005}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.002, y: 0.24900001, z: -0.001}
+  m_TimeToStationary: 0.5
