@@ -31,7 +31,8 @@ public class GenerateTerrain : MonoBehaviour
     [HideInInspector] public GameObject terrainRef;
     [HideInInspector] public GameObject cameraLavaRef;
 
-    [SerializeField] private GameObject doorPrefab;
+    [SerializeField] private GameObject doorPrefab2D;
+    [SerializeField] private GameObject doorPrefab3D;
 
     [Header("Random parameters")] [HideInInspector] [SerializeField] [Range(1, 10000)]
     private int worldSeed = 1;
@@ -57,10 +58,13 @@ public class GenerateTerrain : MonoBehaviour
     [SerializeField] private int offsetSeed = 10;
     [SerializeField] private int distanceBetweenRoom = 5;
     private GameObject rootParent;
+    private List<Transform> rooms = new List<Transform>();
+
 
 
     private void Start()
     {
+        isFirstRoom = true;
         GenerateMultiRooms();
     }
 
@@ -106,6 +110,8 @@ public class GenerateTerrain : MonoBehaviour
 
     public void Generate3DWorld()
     {
+        GenerateDoors(false);
+        
         GameObject goP = new GameObject
         {
             name = "Generated 3DWorld"
@@ -301,7 +307,6 @@ public class GenerateTerrain : MonoBehaviour
 
     private void GenerateMultiRooms()
     {
-        List<Transform> rooms = new List<Transform>();
 
         int nbRoomToSpawn = useMultiRoom ? numRoom : 1;
         for (int i = 0; i < nbRoomToSpawn; i++)
@@ -316,7 +321,7 @@ public class GenerateTerrain : MonoBehaviour
             BuildNavMesh();
             worldSeed += offsetSeed;
             rooms.Add(rootParent.transform);
-            //rootParent.gameObject.SetActive(false);
+            rootParent.gameObject.SetActive(false);
         }
 
         PlayerManager.instance.SpawnPlayer();
@@ -337,7 +342,9 @@ public class GenerateTerrain : MonoBehaviour
         List<Vector2Int> unavailablePositions = new List<Vector2Int>();
         UtilsToolTerrain.InitData(ref mapData, ref AvailablePositions, terrainDimensions,
             ref unavailablePositions);
-        GenerateDoors();
+        
+        GenerateDoors(true);
+        
         for (int i = 0; i < positionsNotAvailable.Count; i++)
         {
             mapData[(int)positionsNotAvailable[i].position.x, (int)positionsNotAvailable[i].position.z] = 99;
@@ -485,58 +492,74 @@ public class GenerateTerrain : MonoBehaviour
     }
 
     private bool isFirstRoom = true;
-    private List<Vector2Int> positionOfDoors = new();
-    private int[] sideWithDoor = new int[4];
+    private Dictionary<DoorSide,Vector2Int> positionOfDoors = new();
+    private bool[] sideWithDoor = new bool[4];
 
-    public void GenerateDoors()
+    public void GenerateDoors(bool is2D)
     {
+        positionOfDoors.Clear();
         if (isFirstRoom)
         {
             int numDoors = Random.Range(1, 5);
+            sideWithDoor = new[]{false,false,false,false};
             for (int i = 0; i < numDoors; i++)
             {
-                int x = Random.Range(0, terrainDimensions.x);
-                int y = Random.Range(0, terrainDimensions.y);
-                if (x == 0 || x == terrainDimensions.x - 1 || y == 0 || y == terrainDimensions.y - 1)
-                {
-                    if (!multipleDoorsOnSameSide)
-                    {
-                        PlaceDoor(new Vector2Int(x, y));
-                    }
-                    else
-                    {
-                        if (x == 0 && y == 0 || x == 0 && y == terrainDimensions.y - 1 ||
-                            x == terrainDimensions.x - 1 && y == 0 ||
-                            x == terrainDimensions.x - 1 && y == terrainDimensions.y - 1)
-                        {
-                            i--;
-                        }
-                        else
-                        {
-                            positionOfDoors.Add(new Vector2Int(x, y));
-                            PlaceDoor(new Vector2Int(x, y));
-                        }
-                    }
-                }
-                else
+                int side = Random.Range(0, 4);
+                if (sideWithDoor[side])
                 {
                     i--;
+                    continue;
                 }
+                sideWithDoor[side] = true;
+                switch (side)
+                {
+                    case 0:
+                        positionOfDoors.Add(DoorSide.Top, new Vector2Int(Random.Range(1, terrainDimensions.x-1), 0));
+                        break;
+                    case 1:
+                        positionOfDoors.Add(DoorSide.Bottom, new Vector2Int(Random.Range(1, terrainDimensions.x-1), terrainDimensions.y - 1));
+                        break;
+                    case 2:
+                        positionOfDoors.Add(DoorSide.Left, new Vector2Int(0, Random.Range(1, terrainDimensions.y-1)));
+                        break;
+                    case 3:
+                        positionOfDoors.Add(DoorSide.Right, new Vector2Int(terrainDimensions.x - 1, Random.Range(1, terrainDimensions.y-1)));
+                        break;
+                }
+            }
+            
+            foreach (var door in positionOfDoors)
+            {
+                PlaceDoor(door.Value, is2D);
             }
 
             // isFirstRoom = false;
         }
         else
         {
-            //set a door directly next to the previous room's door then generate 1 to 3 more doors on the other sides
-            int index = Random.Range(0, positionOfDoors.Count);
-            Vector2Int pos = positionOfDoors[index];
+            
         }
     }
 
-    private void PlaceDoor(Vector2Int positionOfDoor)
+    private void PlaceDoor(Vector2Int positionOfDoor, bool is2D)
     {
-        GameObject go = Instantiate(doorPrefab, transform);
-        go.transform.position = new Vector3(positionOfDoor.x, 0.1f, positionOfDoor.y);
+        if (is2D)
+        {
+            GameObject go = Instantiate(doorPrefab2D, transform);
+            go.transform.position = new Vector3(positionOfDoor.x, 0.1f, positionOfDoor.y);
+        }
+        else
+        {
+            GameObject go = Instantiate(doorPrefab3D, transform);
+            go.transform.position = new Vector3(positionOfDoor.x, 0.1f, positionOfDoor.y);
+        }
     }
+}
+
+public enum DoorSide
+{
+    Top,
+    Bottom,
+    Left,
+    Right
 }
