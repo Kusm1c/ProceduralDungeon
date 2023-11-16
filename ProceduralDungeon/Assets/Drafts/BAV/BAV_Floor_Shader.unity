@@ -587,16 +587,24 @@ MonoBehaviour:
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   terrainRef: {fileID: 529798426}
   cameraLavaRef: {fileID: 1593429525}
+  doorPrefab: {fileID: 0}
   worldSeed: 6478
   useRandomSeed: 0
+  multipleDoorsOnSameSide: 0
   regenerateAtRuntime: 1
   recookedAtRuntime: 1
+  useMultiRoom: 0
   preview2DLayers:
   - {fileID: 523882493}
   - {fileID: 770772999}
   - {fileID: 1061275152}
   preview3DLayers: []
   enabled3DPreview: 1
+  numRoom: 5
+  minSizeRoom: 5
+  maxSizeRoom: 10
+  offsetSeed: 10
+  distanceBetweenRoom: 5
 --- !u!1 &36789312
 GameObject:
   m_ObjectHideFlags: 0
@@ -25478,7 +25486,7 @@ Material:
     - _DebugGrid: 0
     - _DebugUV: 0
     - _LineThickness: 0.95
-    - _QueueControl: -1
+    - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
     - _GridColor: {r: 0.5076095, g: 0.5754717, b: 0.57007354, a: 1}
