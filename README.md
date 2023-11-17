@@ -4,10 +4,13 @@
     2. Open the scene `Assets/Scenes/SampleScene.unity`
     3. Add the Package `AI Navigation` to the project
 
+
+
+# Générateur
+
 ## Features
 ![Alt text](Generator.png?raw=true "Title")
 
-# Générateur
 ## Terrain Dimensions (zone Rouge) :
     - Défini si on souhaite une génération à partir d’un nombre aléatoire ou d’une seed défini.
 
@@ -50,3 +53,26 @@
 
 ### Shader Parameters (zone Bleu clair) :
     -	🔨 WIP 🔨=> Permet de display une grid en 2D et de contrôler l’épaisseur des lignes.
+
+# Layers
+
+
+![Alt text](SOLayer.png?raw=true "Title")
+
+### Prefab 2D Preview Parameter(zone Violette)
+    - Permet de définir le prefab qui sera utilisé pour la prévisualisation 2D.
+
+### Model 3D S1 Parameters (zone Bleu clair) :
+    - Permet de définir les modèles 3D de l’élément.
+
+### Model 3D S2 Parameters (zone Rouge clair) :
+    - Permet de définir les modèles 3D de l’élément si deux modeles de taille 1 sont adjacents.
+
+### Type Parameter(zone Vert clair) :
+    - Permet de définir le type de l’élément.
+
+### Conditions Parameters (zone 0range clair) :
+    - Permet de définir les conditions de génération des éléments 2D.
+
+### Color2D Parameters (zone Jaune clair) :
+    - Permet de définir la couleur des éléments 2D en fonction de leurs types.
