@@ -574,7 +574,7 @@ public class GenerateTerrain : MonoBehaviour
     public void PreviewOnly3D()
     {
         bool enable2D = enabled3DPreview;
-        Debug.Log("prev2D" + preview2DLayers.Count);
+        // Debug.Log("prev2D" + preview2DLayers.Count);
         foreach (GameObject preview2DTile in preview2DLayers)
         {
             preview2DTile.SetActive(!enable2D);
