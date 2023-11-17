@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.WSA;
 using Random = UnityEngine.Random;
 
 public class GenerateTerrain : MonoBehaviour
@@ -80,7 +81,7 @@ public class GenerateTerrain : MonoBehaviour
     private void Start()
     {
         UtilsDoors.isFirstRoom = true;
-        GenerateMultiRooms();
+        //GenerateMultiRooms();
     }
 
     public void BuildNavMesh()
@@ -609,59 +610,66 @@ public class GenerateTerrain : MonoBehaviour
         rootParent.transform.position = Vector3.zero;
         terrainDimensions = new Vector2Int(map.GetLength(0), map.GetLength(1));
 
-        mapData = new float[terrainDimensions.x, terrainDimensions.y];
+        float[,] myMap = new float[terrainDimensions.x, terrainDimensions.y];
         mapDataRotation = new float[terrainDimensions.x, terrainDimensions.y];
+        float[,] mymapDataRotation = new float[terrainDimensions.x, terrainDimensions.y];
+        mapData = new float[terrainDimensions.x, terrainDimensions.y];
 
         for (int i = 0; i < terrainDimensions.x; i++)
         {
             for (int j = 0; j < terrainDimensions.y; j++)
             {
+                myMap[i, j] = map[i, j];
                 mapData[i, j] = map[i, j];
                 mapDataRotation[i, j] = mapRotation[i, j];
+                mymapDataRotation[i, j] = mapRotation[i, j];
             }
         }
 
+        _dicTileSO = new Dictionary<int, TileSO>();
         _dicTileSO.Clear();
+        Dictionary<int, TileSO> myDic = new Dictionary<int, TileSO>();
+        
         foreach (var layer in Layers)
         {
             _dicTileSO.Add((int)layer.type, layer);
+            myDic.Add((int)layer.type, layer);
         }
 
         GenerateTerrainMesh();
-        Generate3DWorldWithMapData();
+        Generate3DWorldWithMapData(myMap, mymapDataRotation, myDic);
     }
 
-    private void Generate3DWorldWithMapData()
+    private void Generate3DWorldWithMapData(float[,] myMap, float[,] mymapDataRotation, Dictionary<int, TileSO> myDic)
     {
         for (int i = 0; i < terrainDimensions.x; i++)
         {
             for (int j = 0; j < terrainDimensions.y; j++)
             {
-                if (mapData[i, j] < 99f)
+                if (myMap[i, j] < 99f)
                 {
-                    float index = mapData[i, j];
+                    float index = myMap[i, j];
                     if ((int)index == 0) continue;
                     //its a simple tile yes,
-                    TileSO so = _dicTileSO[(int)index];
-                    Debug.Log("index : " + (int)index + " was try to get obj index " + (int)((index - (int)index) * 10 - 1));
+                    TileSO so = myDic[(int)index];
                     GameObject obj = Instantiate(so.Model3D_S1[(int)((index - (int)index) * 10 - 1)], currentMapDataRoom.transform);
                     obj.transform.position = new Vector3(i, obj.transform.localScale.y * so.CustomOffsetY, j);
-                    if (mapDataRotation[i, j] != 0)
+                    if (mymapDataRotation[i, j] != 0)
                     {
-                        obj.transform.Rotate(Vector3.up, mapDataRotation[i, j]);
+                        obj.transform.Rotate(Vector3.up, mymapDataRotation[i, j]);
                     }
                 }
 
-                if (mapData[i, j] > 100.0f)
+                if (myMap[i, j] > 100.0f)
                 {
                     //its a 4D size ahaha
-                    float index = mapData[i, j] - 100.0f;
-                    TileSO so = _dicTileSO[(int)index];
+                    float index = myMap[i, j] - 100.0f;
+                    TileSO so = myDic[(int)index];
                     GameObject obj = Instantiate(so.Model3D_S2[(int)((index - (int)index) * 10 - 1)], currentMapDataRoom.transform);
                     obj.transform.position = new Vector3(i, obj.transform.localScale.y * so.CustomOffsetY, j);
-                    if (mapDataRotation[i, j] != 0)
+                    if (mymapDataRotation[i, j] != 0)
                     {
-                        obj.transform.Rotate(Vector3.up, mapDataRotation[i, j]);
+                        obj.transform.Rotate(Vector3.up, mymapDataRotation[i, j]);
                     }
                 }
             }

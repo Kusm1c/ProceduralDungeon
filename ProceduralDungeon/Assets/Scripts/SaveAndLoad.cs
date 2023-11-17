@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -78,5 +79,10 @@ public class SaveAndLoad : MonoBehaviour
         
         _generateTerrain.SetRoomByName(roomToSaveName, map, mapRotation);
     //la il faut pop le terrain
+    }
+
+    private void Start()
+    {
+        Load();
     }
 }
