@@ -80,9 +80,4 @@ public class SaveAndLoad : MonoBehaviour
         _generateTerrain.SetRoomByName(roomToSaveName, map, mapRotation);
     //la il faut pop le terrain
     }
-
-    private void Start()
-    {
-        Load();
-    }
 }

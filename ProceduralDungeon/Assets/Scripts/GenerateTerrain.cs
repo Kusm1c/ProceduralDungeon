@@ -81,7 +81,7 @@ public class GenerateTerrain : MonoBehaviour
     private void Start()
     {
         UtilsDoors.isFirstRoom = true;
-        //GenerateMultiRooms();
+        GenerateMultiRooms();
     }
 
     public void BuildNavMesh()
