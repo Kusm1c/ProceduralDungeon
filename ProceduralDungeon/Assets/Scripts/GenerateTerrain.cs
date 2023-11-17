@@ -14,32 +14,26 @@ public class GenerateTerrain : MonoBehaviour
     public Vector2Int terrainDimensions;
 
     [SerializeField] private Transform terrainTransform;
-    [SerializeField] private Transform cameraLaveRT;
+    [HideInInspector] [SerializeField] private Transform cameraLaveRT;
     [HideInInspector] [SerializeField] private List<TileSO> Layers = new();
     [SerializeField] private List<Transform> positionsNotAvailable = new();
+    
+    [Header("Door Parameters")]
+    [SerializeField] public GameObject doorPrefab2D;
+    [SerializeField] public GameObject doorPrefab3D;
+    
 
-    [Header("Shader Parameters")] [SerializeField]
-    private float thicknessParam = 0.95f;
 
-    [SerializeField] private Color gridColor = Color.red;
-    [SerializeField] private Color lineColor = Color.white;
-    private string pathFloorShader = "ProceduralDungeon/Floor/SG_Floor";
-    private string pathTilingInShader = "_Tiling";
-    private string pathThicknessInShader = "_LineThickness";
-    private string pathGridColorInShader = "_GridColor";
-    private string pathLineColorInShader = "_LineGridColor";
 
+    
     //Reférence Object
     [HideInInspector] public GameObject terrainRef;
     [HideInInspector] public GameObject cameraLavaRef;
-
-    [SerializeField] public GameObject doorPrefab2D;
-    [SerializeField] public GameObject doorPrefab3D;
-
+    
     [Header("Random parameters")] [HideInInspector] [SerializeField] [Range(1, 10000)]
     private int worldSeed = 1;
 
-    [SerializeField] private bool useRandomSeed = false;
+    [HideInInspector][SerializeField] private bool useRandomSeed = false;
 
     [SerializeField] private bool multipleDoorsOnSameSide = false;
 
@@ -56,7 +50,7 @@ public class GenerateTerrain : MonoBehaviour
     //Preview Debug the visualisation of cook
     [HideInInspector] [SerializeField] private List<GameObject> preview2DLayers;
     [HideInInspector] [SerializeField] private List<GameObject> preview3DLayers;
-    [SerializeField] private bool enabled3DPreview = false;
+    [HideInInspector] [SerializeField] private bool enabled3DPreview = false;
 
     [Header("Multi room parameters")] [SerializeField]
     private bool useMultiRoomOnStart = false;
@@ -71,7 +65,20 @@ public class GenerateTerrain : MonoBehaviour
     private MapData currentMapDataRoom;
     [SerializeField] public List<Transform> rooms = new();
     public int currentRoom = 0;
+    
+    [Header("Shader Parameters")] [SerializeField]
+    private float thicknessParam = 0.95f;
+    [SerializeField] private Color gridColor = Color.red;
+    [SerializeField] private Color lineColor = Color.white;
+    private string pathFloorShader = "ProceduralDungeon/Floor/SG_Floor";
+    private string pathTilingInShader = "_Tiling";
+    private string pathThicknessInShader = "_LineThickness";
+    private string pathGridColorInShader = "_GridColor";
+    private string pathLineColorInShader = "_LineGridColor";
+    
+    [HideInInspector]public List<Vector2> nextRoomTilePosition = new();
 
+    
     public UtilsDoors UtilsDoors
     {
         get { return utilsDoors; }
@@ -491,8 +498,8 @@ public class GenerateTerrain : MonoBehaviour
         meshRenderer.sharedMaterial = new Material(Shader.Find(pathFloorShader));
         meshRenderer.sharedMaterial.name = "M_Terrain_01";
 
-        //Setup Camera
-        SetupCameraLava();
+        // //Setup Camera
+        // SetupCameraLava();
 
         //Setup Shader 
         meshRenderer.sharedMaterial.SetFloat(pathThicknessInShader, thicknessParam);
@@ -571,7 +578,6 @@ public class GenerateTerrain : MonoBehaviour
         }
     }
 
-    public List<Vector2> nextRoomTilePosition = new();
 
     private readonly UtilsDoors utilsDoors;
 

@@ -9,7 +9,7 @@ public class GenerateTerrainEditor : Editor
     SerializedProperty worldSeed;
     SerializedProperty regenerateAtRuntime;
     SerializedProperty recookedAtRuntime;
-    SerializedProperty preview3DTiles;
+    SerializedProperty useRandomSeed;
 
     SerializedProperty layers;
 
@@ -21,7 +21,7 @@ public class GenerateTerrainEditor : Editor
         worldSeed = serializedObject.FindProperty("worldSeed");
         regenerateAtRuntime = serializedObject.FindProperty("regenerateAtRuntime");
         recookedAtRuntime = serializedObject.FindProperty("recookedAtRuntime");
-        preview3DTiles = serializedObject.FindProperty("enabled3DPreview");
+        useRandomSeed = serializedObject.FindProperty("useRandomSeed");
 
         //Reordable List
         layers = serializedObject.FindProperty("Layers");
@@ -50,7 +50,11 @@ public class GenerateTerrainEditor : Editor
         layersReorderable.DoLayoutList();
         
         EditorGUILayout.LabelField("Seed Parameters", EditorStyles.boldLabel);
+        useRandomSeed.boolValue = EditorGUILayout.Toggle("Use Random Seed", useRandomSeed.boolValue);
+        GUI.enabled = !useRandomSeed.boolValue;
         int newWorldSeed = EditorGUILayout.IntSlider("World Seed", worldSeed.intValue, 1, 10000);
+        GUI.enabled = true;
+
 
 
         EditorGUILayout.LabelField("Runtime Parameters", EditorStyles.boldLabel);
