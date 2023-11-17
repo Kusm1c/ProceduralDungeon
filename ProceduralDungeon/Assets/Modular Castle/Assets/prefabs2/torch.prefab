@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 406854}
   - component: {fileID: 3318244}
   - component: {fileID: 2399676}
+  - component: {fileID: 5510705496690565422}
   m_Layer: 0
   m_Name: torch
   m_TagString: Untagged
@@ -84,6 +85,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &5510705496690565422
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158424}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.05, y: 0.133, z: 0.064}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.052, z: 0.064}
+  m_TimeToStationary: 0.5
 --- !u!1 &158954
 GameObject:
   m_ObjectHideFlags: 0

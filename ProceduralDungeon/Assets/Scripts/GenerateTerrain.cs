@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 using UnityEngine.WSA;
 using Random = UnityEngine.Random;
@@ -94,6 +95,13 @@ public class GenerateTerrain : MonoBehaviour
     public void BuildNavMesh()
     {
         NavMeshSurface navMeshSurface = terrainRef.GetComponent<NavMeshSurface>();
+        //set slopes to 0
+        navMeshSurface.collectObjects = CollectObjects.Children;
+        navMeshSurface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
+        navMeshSurface.overrideTileSize = true;
+        navMeshSurface.tileSize = 1;
+        navMeshSurface.overrideVoxelSize = true;
+        navMeshSurface.voxelSize = 0.1f;
         navMeshSurface.BuildNavMesh();
     }
 
@@ -601,7 +609,18 @@ public class GenerateTerrain : MonoBehaviour
     
     public GameObject InstantiateDoor(bool is2D)
     {
-        return Instantiate(is2D ? doorPrefab2D : doorPrefab3D, transform);
+        if (is2D)
+        {
+            GameObject door = Instantiate(doorPrefab2D, transform);
+            preview2DLayers.Add(door);
+            return door;
+        }
+        else
+        {
+            GameObject door = Instantiate(doorPrefab3D, transform);
+            preview3DLayers.Add(door);
+            return door;
+        }
     }
 
     public void SetRoomByName(string roomToSaveName, float[,] map, float[,] mapRotation)

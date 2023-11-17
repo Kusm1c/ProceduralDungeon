@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 413752}
   - component: {fileID: 3349168}
   - component: {fileID: 2301870}
+  - component: {fileID: 1936523528603636810}
   m_Layer: 0
   m_Name: decoration3 1
   m_TagString: Untagged
@@ -168,6 +169,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &1936523528603636810
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196898}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.127, y: 0.26500002, z: 0.008}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.002, y: -0.061000004, z: 0.015000001}
+  m_TimeToStationary: 0.5
 --- !u!1 &199136
 GameObject:
   m_ObjectHideFlags: 0

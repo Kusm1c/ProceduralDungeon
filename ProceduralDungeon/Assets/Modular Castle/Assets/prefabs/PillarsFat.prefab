@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 6477193535209418018}
   - component: {fileID: 457149414034010347}
   - component: {fileID: 1551901036167020139}
+  - component: {fileID: 7341244560980824905}
   m_Layer: 0
   m_Name: pillar_small1
   m_TagString: Untagged
@@ -115,6 +116,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &7341244560980824905
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4610802137989600894}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.17600001, y: 0.625, z: 0.062000003}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.625, z: 0.062000003}
+  m_TimeToStationary: 0.5
 --- !u!1 &4756496795218020345
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +232,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.625, z: 0.5}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.625, z: 0}
   m_TimeToStationary: 0.5
@@ -230,6 +247,7 @@ GameObject:
   - component: {fileID: 6375359962746425753}
   - component: {fileID: 6140400264332856258}
   - component: {fileID: 4650393352924100300}
+  - component: {fileID: 7925234971419484167}
   m_Layer: 0
   m_Name: pillar_small1 (1)
   m_TagString: Untagged
@@ -302,6 +320,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &7925234971419484167
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7287610504766340675}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.17600001, y: 0.625, z: 0.062000003}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.625, z: 0.062000003}
+  m_TimeToStationary: 0.5
 --- !u!1 &8413221784840341084
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,6 +347,7 @@ GameObject:
   - component: {fileID: 3589085407113285538}
   - component: {fileID: 943707727885963444}
   - component: {fileID: 8220916115919795673}
+  - component: {fileID: 464186060398063634}
   m_Layer: 0
   m_Name: pillar_small1 (3)
   m_TagString: Untagged
@@ -385,6 +420,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &464186060398063634
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8413221784840341084}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.17600001, y: 0.625, z: 0.062000003}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.625, z: 0.062000003}
+  m_TimeToStationary: 0.5
 --- !u!1 &8617183842683989607
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +447,7 @@ GameObject:
   - component: {fileID: 2256296247201905352}
   - component: {fileID: 5102199697055260735}
   - component: {fileID: 7273618956252881355}
+  - component: {fileID: 8016545901142734140}
   m_Layer: 0
   m_Name: pillar_small1 (2)
   m_TagString: Untagged
@@ -468,3 +520,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &8016545901142734140
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617183842683989607}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.17600001, y: 0.625, z: 0.062000003}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.625, z: 0.062000003}
+  m_TimeToStationary: 0.5

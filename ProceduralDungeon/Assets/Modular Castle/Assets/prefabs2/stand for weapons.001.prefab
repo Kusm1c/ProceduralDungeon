@@ -261,6 +261,7 @@ GameObject:
   - component: {fileID: 499496}
   - component: {fileID: 3363610}
   - component: {fileID: 2334972}
+  - component: {fileID: -6376000508724047851}
   m_Layer: 0
   m_Name: stand for weapons.001
   m_TagString: Untagged
@@ -341,6 +342,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &-6376000508724047851
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143994}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.37600002, y: 0.14, z: 0.086}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.135, z: -0.035}
+  m_TimeToStationary: 0.5
 --- !u!1 &147270
 GameObject:
   m_ObjectHideFlags: 0

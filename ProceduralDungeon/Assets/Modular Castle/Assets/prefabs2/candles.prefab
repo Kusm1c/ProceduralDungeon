@@ -14351,6 +14351,7 @@ GameObject:
   - component: {fileID: 460254}
   - component: {fileID: 3357246}
   - component: {fileID: 2359332}
+  - component: {fileID: 4159510677032870795}
   m_Layer: 0
   m_Name: candle2
   m_TagString: Untagged
@@ -14424,6 +14425,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &4159510677032870795
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129356}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.019000001, y: 0.022000002, z: 0.019000001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.020000001, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &135738
 GameObject:
   m_ObjectHideFlags: 0
@@ -28810,6 +28827,7 @@ GameObject:
   - component: {fileID: 487230}
   - component: {fileID: 3334902}
   - component: {fileID: 2321888}
+  - component: {fileID: 1387338799250002548}
   m_Layer: 0
   m_Name: candle4
   m_TagString: Untagged
@@ -28886,6 +28904,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &1387338799250002548
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157782}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.026, y: 0.034, z: 0.057000004}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.012, y: 0.033, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &158294
 GameObject:
   m_ObjectHideFlags: 0
@@ -28896,6 +28930,7 @@ GameObject:
   m_Component:
   - component: {fileID: 401414}
   - component: {fileID: 10849684}
+  - component: {fileID: 4584578039108509442}
   m_Layer: 0
   m_Name: light
   m_TagString: Untagged
@@ -28980,6 +29015,29 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &4584578039108509442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &168232
 GameObject:
   m_ObjectHideFlags: 0
@@ -33770,6 +33828,7 @@ GameObject:
   m_Component:
   - component: {fileID: 442806}
   - component: {fileID: 10802828}
+  - component: {fileID: 6538976928405618181}
   m_Layer: 0
   m_Name: light
   m_TagString: Untagged
@@ -33854,6 +33913,29 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &6538976928405618181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &185068
 GameObject:
   m_ObjectHideFlags: 0
@@ -33865,6 +33947,7 @@ GameObject:
   - component: {fileID: 473926}
   - component: {fileID: 3350936}
   - component: {fileID: 2300528}
+  - component: {fileID: 430974124406977971}
   m_Layer: 0
   m_Name: candle1
   m_TagString: Untagged
@@ -33938,6 +34021,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &430974124406977971
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185068}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.019000001, y: 0.032, z: 0.019000001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.031000001, z: -0.001}
+  m_TimeToStationary: 0.5
 --- !u!1 &189878
 GameObject:
   m_ObjectHideFlags: 0
@@ -33949,6 +34048,7 @@ GameObject:
   - component: {fileID: 474488}
   - component: {fileID: 3378024}
   - component: {fileID: 2328980}
+  - component: {fileID: 4396250623733732342}
   m_Layer: 0
   m_Name: candle3
   m_TagString: Untagged
@@ -34025,6 +34125,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &4396250623733732342
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189878}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.026, y: 0.034, z: 0.057000004}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.012, y: 0.033, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &197192
 GameObject:
   m_ObjectHideFlags: 0
