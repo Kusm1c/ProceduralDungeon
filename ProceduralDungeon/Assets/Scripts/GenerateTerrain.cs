@@ -609,6 +609,7 @@ public class GenerateTerrain : MonoBehaviour
         currentMapDataRoom = rootParent.AddComponent<MapData>();
         rootParent.transform.position = Vector3.zero;
         terrainDimensions = new Vector2Int(map.GetLength(0), map.GetLength(1));
+        GenerateTerrainMesh();
 
         float[,] myMap = new float[terrainDimensions.x, terrainDimensions.y];
         mapDataRotation = new float[terrainDimensions.x, terrainDimensions.y];
@@ -636,40 +637,39 @@ public class GenerateTerrain : MonoBehaviour
             myDic.Add((int)layer.type, layer);
         }
 
-        GenerateTerrainMesh();
-        Generate3DWorldWithMapData(myMap, mymapDataRotation, myDic);
+        Generate3DWorldWithMapData();
     }
 
-    private void Generate3DWorldWithMapData(float[,] myMap, float[,] mymapDataRotation, Dictionary<int, TileSO> myDic)
+    private void Generate3DWorldWithMapData()
     {
         for (int i = 0; i < terrainDimensions.x; i++)
         {
             for (int j = 0; j < terrainDimensions.y; j++)
             {
-                if (myMap[i, j] < 99f)
+                if (mapData[i, j] < 99f)
                 {
-                    float index = myMap[i, j];
+                    float index = mapData[i, j];
                     if ((int)index == 0) continue;
                     //its a simple tile yes,
-                    TileSO so = myDic[(int)index];
+                    TileSO so = _dicTileSO[(int)index];
                     GameObject obj = Instantiate(so.Model3D_S1[(int)((index - (int)index) * 10 - 1)], currentMapDataRoom.transform);
                     obj.transform.position = new Vector3(i, obj.transform.localScale.y * so.CustomOffsetY, j);
-                    if (mymapDataRotation[i, j] != 0)
+                    if (mapDataRotation[i, j] != 0)
                     {
-                        obj.transform.Rotate(Vector3.up, mymapDataRotation[i, j]);
+                        obj.transform.Rotate(Vector3.up, mapDataRotation[i, j]);
                     }
                 }
 
-                if (myMap[i, j] > 100.0f)
+                if (mapData[i, j] > 100.0f)
                 {
                     //its a 4D size ahaha
-                    float index = myMap[i, j] - 100.0f;
-                    TileSO so = myDic[(int)index];
+                    float index = mapData[i, j] - 100.0f;
+                    TileSO so = _dicTileSO[(int)index];
                     GameObject obj = Instantiate(so.Model3D_S2[(int)((index - (int)index) * 10 - 1)], currentMapDataRoom.transform);
                     obj.transform.position = new Vector3(i, obj.transform.localScale.y * so.CustomOffsetY, j);
-                    if (mymapDataRotation[i, j] != 0)
+                    if (mapDataRotation[i, j] != 0)
                     {
-                        obj.transform.Rotate(Vector3.up, mymapDataRotation[i, j]);
+                        obj.transform.Rotate(Vector3.up, mapDataRotation[i, j]);
                     }
                 }
             }
